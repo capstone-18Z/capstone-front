@@ -1,0 +1,37 @@
+import "./index.css";
+
+function Index() {
+
+    return (
+        <div className="teambuildingform">
+            <h1>팀 빌딩 폼</h1>
+            <form>                
+                <p>프로젝트 한줄 설명<input type="text"/></p>
+                <p>프로젝트 과목 <input type="text"/></p>
+                <p>언어 </p>
+                <p>C언어 <input name= 'C언어' type='range' min={1}
+                max={10} step={1}  className='custom-slider'/></p>
+                <p>Java <input name= 'Java' type='range' min={1}
+                max={10} step={1}  className='custom-slider'/></p>
+                <p>C++ <input name= 'C++' type='range' min={1}
+                max={10} step={1}  className='custom-slider'/></p>
+                <p>선호트랙</p>
+                    <input type="checkbox" id="btn1" name="checkWrap" value="웹공학트랙" />
+                    <label htmlFor="btn1">웹공학트랙</label>
+                    <input type="checkbox" id="btn2" name="checkWrap" value="모바일트랙" />
+                    <label htmlFor="btn2">모바일트랙</label>
+                    <input type="checkbox" id="btn3" name="checkWrap" value="빅데이터트랙" />
+                    <label htmlFor="btn3">빅데이터트랙</label>
+                    <input type="checkbox" id="btn4" name="checkWrap" value="디지털콘텐츠트랙" />
+                    <label htmlFor="btn4">디지털콘텐츠트랙</label>
+                <p>현재팀원수:  프론트 <input type="number"/> 백 <input type="number"/></p>
+                <p>사용 DB <input type="text"/></p>
+                <p>모집 기간</p>
+                <p>내용 <textarea id="story" name="story"
+                rows={5} cols={33}/></p>
+                <button>등록하기</button>
+            </form>
+        </div>        
+    );
+}
+export default Index;
