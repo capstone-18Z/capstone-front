@@ -1,18 +1,17 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import {Link} from "react-router-dom";
-import Index from './component/teambuildingform';
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import MainPage from "./pages/MainPage";
+import PostPage from "./pages/PostPage";
 
-function App() { 
-  
-    return (
+function App() {
+  return (
     <div className="App">
-      <BrowserRouter>	
-      <p><Link to="/index">팀빌딩하기</Link></p>
-      <p><Link to="/index2">팀구하기</Link></p>
-				<Routes>          
-					<Route path="/index" element={<Index/>}></Route>					
-				</Routes>
-			</BrowserRouter>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<MainPage />}></Route>
+          {/* 중첩라우팅 */}
+          <Route path="/post/*" element={<PostPage />}></Route>
+        </Routes>
+      </BrowserRouter>
     </div>
   );
 }

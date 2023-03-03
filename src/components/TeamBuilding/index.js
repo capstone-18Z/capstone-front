@@ -1,7 +1,7 @@
 import "./index.css";
 import { useState } from "react";
 
-function Index() {
+function TeamBuilding() {
     //현재 프론트, 백 팀원수 관리
     const [frontnumber, setfrontNumber] = useState(0);
     const [backnumber, setbackNumber] = useState(0);
@@ -86,4 +86,4 @@ function Index() {
         </div>        
     );
 }
-export default Index;
+export default TeamBuilding;
