@@ -9,6 +9,7 @@ function PostPage() {
       <Routes>
         <Route path="team" element={<TeamBuilding />}></Route>
         <Route path="user" element={<UserBuilding />}></Route>
+       
       </Routes>
     </div>
   );
