@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import Team from "../components/Teams/team";
 
 function MainPage() {
   return (
@@ -9,6 +10,9 @@ function MainPage() {
       <p>
         <Link to="/post/user">사용자 등록</Link>
       </p>
+      <div>
+        <Team />
+      </div>
     </div>
   );
 }
