@@ -1,16 +1,25 @@
 import "./index.css";
 import { useState } from "react";
-import { TextField, Slider, Box, Button } from "@mui/material";
+import { TextField, Slider, Box, Button, Checkbox, FormGroup ,FormControlLabel, Select, MenuItem  } from "@mui/material";
 
 function TeamBuilding() {
+    //유저가 글쓰는 날짜 시간 저장 
+    const today = new Date();
+    const time = today.toLocaleTimeString(); 
+    const date = today.toLocaleDateString();
+    const now = date+time;
+  
     const [inputs, setInputs] = useState({
         //프로젝트 제목, 설명, 과목 데이터 관리
         title: "",
-        project_explan: "",
+        detail: "",
         project_subject: "",
         //현재 프론트, 백 팀원수 데이터 관리
-        current_front_member: 0,
-        current_back_member:0,
+        currentFrontMember: 0,
+        currentBackMember:0,
+        //모집 프론트, 백 팀원수 데이터 관리
+        wantedFrontMember: 0,
+        wantedBackEndMember: 0,
         //언어 점수 관리
         c:0,
         java:0,
@@ -19,8 +28,11 @@ function TeamBuilding() {
         python:0,
         javascript:0,
         vb:0,
+        sqlLang:0,
+        createDate: now,
+        updateDate: now,
     });
-    const {current_front_member, current_back_member, title,project_explan, project_subject, c,java,cpp,cs,python,javascript,vb } = inputs;	//비구조화 할당
+    const {currentFrontMember, currentBackMember,wantedFrontMember,wantedBackEndMember, title,detail, project_subject, c,java,cpp,cs,python,javascript,vb,sqlLang,createDate, updateDate} = inputs;	//비구조화 할당
    
     const onChange = (e) => {
         const {name, value} = e.target;
@@ -34,53 +46,21 @@ function TeamBuilding() {
     };
     const test = () => {
         console.log(inputs);
-      };    
-       
-    //유저가 글쓰는 날짜 시간 저장 
-    const today = new Date();
-    const now = today.toLocaleTimeString(); 
-
-/*
-    const addNumber = () =>{
-        setfrontNumber(current_front_member+1);
-    }
-    const minusNumber = () =>{
-        if(current_front_member>0){
-            setfrontNumber(current_front_member-1);
-        }    
-    }
-    const addbackNumber = () =>{
-        setbackNumber(current_back_member+1);
-    }
-    const minusbackNumber = () =>{
-        if(current_back_member>0){
-            setbackNumber(current_back_member-1);
-        }    
-    }  */
-   
-   
+        console.log(now);
+      };   
 
     const PostRequest = (e) => {
         e.preventDefault();
         console.log("막음");
     }
     const onSubmitHandler = (e) => {
-        fetch('http://1871166.iptime.org:8080/team/new',{
+        fetch('https://port-0-capstoneback-6g2llf7te70n.sel3.cloudtype.app/teams/new',{
           method: 'POST',
           headers: {
             'Content-Type' : 'application/json',
           },
             body: JSON.stringify(
                 inputs
-                /*
-                title,
-                detail : project_explan,
-                currentFrontMember: current_front_member,
-                currentBackMember: current_back_member,
-               
-                createDate : now,
-                updateDate : now,
-                 */
           ),
         });
       };
@@ -120,8 +100,8 @@ function TeamBuilding() {
                 <TextField                 
                     required
                     label="프로젝트 한줄 설명"
-                    value={project_explan}
-                    name="project_explan"
+                    value={detail}
+                    name="detail"
                     variant="standard"
                     onChange={onChange}
                 />
@@ -166,6 +146,9 @@ function TeamBuilding() {
                     valueLabelDisplay="auto" marks={marks}onChange={onChange}/>
                 </Box></p>
                 <p>선호트랙</p>
+                <FormGroup>
+                    <FormControlLabel control={<Checkbox />} value label="웹공학트랙" />                
+                </FormGroup>
                     <input type="checkbox" id="btn1" name="checkWrap" value="웹공학트랙" />
                     <label htmlFor="btn1">웹공학트랙</label>
                     <input type="checkbox" id="btn2" name="checkWrap" value="모바일트랙" />
@@ -174,15 +157,70 @@ function TeamBuilding() {
                     <label htmlFor="btn3">빅데이터트랙</label>
                     <input type="checkbox" id="btn4" name="checkWrap" value="디지털콘텐츠트랙" />
                     <label htmlFor="btn4">디지털콘텐츠트랙</label>
-                <p>현재 팀원 수:  프론트  
-                <Button variant="outlined">-1</Button>
-                    {current_front_member}
-                <Button variant="outlined">+1</Button>
+                <p>현재 팀원 수</p>
+                프론트
+                <Select
+                name="currentFrontMember"
+                value={currentFrontMember}
+                label="프론트"
+                onChange={onChange}
+                >
+                <MenuItem value={0}>0</MenuItem>
+                <MenuItem value={1}>1</MenuItem>
+                <MenuItem value={2}>2</MenuItem>
+                <MenuItem value={3}>3</MenuItem>
+                <MenuItem value={4}>4</MenuItem>
+                <MenuItem value={5}>5</MenuItem>
+                </Select>  
                 백
-                    {current_back_member}            
-                    </p>
+                <Select
+                name="currentBackMember"
+                value={currentBackMember}
+                label="백"
+                onChange={onChange}
+                >
+                <MenuItem value={0}>0</MenuItem>
+                <MenuItem value={1}>1</MenuItem>
+                <MenuItem value={2}>2</MenuItem>
+                <MenuItem value={3}>3</MenuItem>
+                <MenuItem value={4}>4</MenuItem>
+                <MenuItem value={5}>5</MenuItem>
+                </Select>       
+                    
                 <p>모집하는 팀원 수</p>
-                <p>사용 DB <input type="text"/></p>
+                프론트 : 
+                <Select
+                name="wantedFrontMember"
+                value={wantedFrontMember}
+                label="백"
+                onChange={onChange}
+                >
+                <MenuItem value={0}>0</MenuItem>
+                <MenuItem value={1}>1</MenuItem>
+                <MenuItem value={2}>2</MenuItem>
+                <MenuItem value={3}>3</MenuItem>
+                <MenuItem value={4}>4</MenuItem>
+                <MenuItem value={5}>5</MenuItem>
+                </Select>   
+                백 : 
+                <Select
+                name="wantedBackEndMember"
+                value={wantedBackEndMember}
+                label="백"
+                onChange={onChange}
+                >
+                <MenuItem value={0}>0</MenuItem>
+                <MenuItem value={1}>1</MenuItem>
+                <MenuItem value={2}>2</MenuItem>
+                <MenuItem value={3}>3</MenuItem>
+                <MenuItem value={4}>4</MenuItem>
+                <MenuItem value={5}>5</MenuItem>
+                </Select> 
+                <p>사용 DB
+                SQL: <Box sx={{ width: 300 }}>
+                    <Slider aria-label="Custom marks" name ="sqlLang" value ={sqlLang} step={null} 
+                    valueLabelDisplay="auto" marks={marks}onChange={onChange}/>
+                </Box></p>
                 <p>모집 기간</p>
                 <p>내용 <textarea id="story" name="story"
                 rows={5} cols={33}/></p>
