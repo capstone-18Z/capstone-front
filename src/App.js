@@ -8,7 +8,7 @@ function App() {
     <div className="App">
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<LoginPage />}></Route>
+          <Route path="/*" element={<LoginPage />}></Route>
           <Route path="/main" element={<MainPage />}></Route>
           {/* 중첩라우팅 */}
           <Route path="/post/*" element={<PostPage />}></Route>
