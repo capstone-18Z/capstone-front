@@ -45,28 +45,30 @@ function Login() {
   };
 
   return (
-    <div>
-      <div>로그인</div>
-      <form>
-        <div>
-          <TextField label="EMAIL" variant="outlined" value={email} name="email" onChange={onChange} />
+    <div className="login-box">
+      <h1 className="login-title">로그인</h1>
+      <form className="login-form-box">
+        <div className="login-text">
+          <TextField margin="normal" label="이메일" variant="outlined" value={email} name="email" onChange={onChange} />
         </div>
-        <div>
+        <div className="login-text">
           <TextField
             margin="normal"
-            label="PASSWORD"
+            label="비밀번호"
             variant="outlined"
             value={password}
             name="password"
             onChange={onChange}
           />
         </div>
-        <Button variant="contained" onClick={onClick}>
-          제출
-        </Button>
-        <Button variant="contained" onClick={goToSignUp}>
-          회원가입
-        </Button>
+        <div className="login-button">
+          <Button variant="contained" onClick={onClick}>
+            로그인
+          </Button>
+        </div>
+        <div className="signup-button">
+          <Button onClick={goToSignUp}>회원가입</Button>
+        </div>
       </form>
     </div>
   );

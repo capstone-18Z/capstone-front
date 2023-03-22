@@ -1,3 +1,4 @@
+import "./style.css";
 import { TextField, Button } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -29,6 +30,7 @@ function SignUp() {
       .then((response) => {
         if (response.data) {
           alert("회원가입 완료");
+          navigate("/");
         }
       })
       .catch((err) => {
@@ -41,14 +43,34 @@ function SignUp() {
     navigate("/");
   };
 
+  const checkOverlap = (value) => {
+    //e.preventDefault();
+    if (value === email) {
+      axios.get(`https://port-0-capstone-back-6g2llf7te70n.sel3.cloudtype.app/${signUpInfo.email}/check_email/`);
+    } else if (value === nickname) {
+      axios.get(`https://port-0-capstone-back-6g2llf7te70n.sel3.cloudtype.app/${signUpInfo.nickname}/check_nickname/`);
+    }
+  };
+
   return (
-    <div>
-      <div>회원가입</div>
+    <div className="signup-box">
+      <h1 className="signup-title">회원가입</h1>
       <form>
-        <div>
+        <div className="signup-text">
           <TextField margin="normal" label="이메일" variant="outlined" value={email} name="email" onChange={onChange} />
+          <Button
+            onClick={(e) => {
+              checkOverlap(email);
+            }}
+            sx={{
+              padding: "15px",
+              marginBlockStart: "18px",
+            }}
+          >
+            중복확인
+          </Button>
         </div>
-        <div>
+        <div className="signup-text">
           <TextField
             margin="normal"
             label="닉네임"
@@ -57,23 +79,33 @@ function SignUp() {
             name="nickname"
             onChange={onChange}
           />
+          <Button
+            onClick={(e) => {
+              checkOverlap(nickname);
+            }}
+            sx={{
+              padding: "15px",
+              marginBlockStart: "18px",
+            }}
+          >
+            중복확인
+          </Button>
         </div>
-        <div>
+        <div className="password-text">
           <TextField
+            label="비밀번호"
             margin="normal"
-            label="PASSWORD"
             variant="outlined"
             value={password}
             name="password"
             onChange={onChange}
           />
         </div>
-        <Button variant="contained" onClick={onClick}>
-          제출
-        </Button>
-        <Button variant="contained" onClick={goToLogin}>
-          로그인
-        </Button>
+        <div className="signup-button">
+          <Button variant="contained" onClick={onClick}>
+            회원가입 완료
+          </Button>
+        </div>
       </form>
     </div>
   );

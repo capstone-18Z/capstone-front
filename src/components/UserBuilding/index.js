@@ -1,73 +1,92 @@
-import "./index.css";
-import { TextField, Typography, Rating, Button } from "@mui/material";
+import "./style.css";
+import { TextField, Typography, Rating, Button, InputLabel, Select, MenuItem } from "@mui/material";
 import { useState } from "react";
+import axios from "axios";
 
 function UserBuilding() {
-  const [lang, setLang] = useState({
-    subject: "",
-    track1: "",
-    track2: "",
+  const [userform, setUserForm] = useState({
+    title: "",
+    field: "",
     detail: "",
     c: "",
+    cs: "",
+    cpp: "",
+    vb: "",
+    //assembly: "",
     java: "",
+    javascript: "",
     python: "",
-    js: "",
-    os: "",
+    sqllang: "",
   });
 
-  const { subject, track1, track2, detail, c, java, python, js, os } = lang; // 비구조화 할당을 통해 값 추출
+  const { title, field, detail, c, cs, cpp, vb, java, javascript, python, sqllang } = userform; // 비구조화 할당을 통해 값 추출
 
   const onChange = (e) => {
     const { value, name } = e.target; // 우선 e.target 에서 name 과 value 를 추출
-    setLang({
-      ...lang, // 기존의 input 객체를 복사한 뒤
+    setUserForm({
+      ...userform, // 기존의 input 객체를 복사한 뒤
       [name]: value, // name 키를 가진 값을 value 로 설정
     });
   };
 
   const onClick = (e) => {
-    console.log(lang);
+    console.log(userform);
+    //데이터 보내기
+    axios
+      .post("https://port-0-capstone-back-6g2llf7te70n.sel3.cloudtype.app/member/new", userform)
+      .then((response) => {
+        if (response.data) {
+          alert("등록 완료");
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+        alert("등록 실패");
+      });
   };
 
   return (
-    <div className="wrap-box">
-      <div>사용자 입력 폼</div>
+    <div className="userform-box">
+      <h1 className="userform-title">사용자 정보 등록 폼</h1>
       <form>
-        <div className="text-box">
-          <TextField
-            fullWidth
-            label="프로젝트 과목"
-            variant="outlined"
-            value={subject}
-            name="subject"
-            onChange={onChange}
-          />
+        <div className="userform-text">
+          <TextField fullWidth label="제목" variant="outlined" value={title} name="title" onChange={onChange} />
         </div>
-        <div className="text-box">
-          <div>언어</div>
+        <div>
+          <h3>희망 참여 분야</h3>
+          <Select fullWidth labelId="demo-simple-select-label" name="field" value={field} label="" onChange={onChange}>
+            <MenuItem value={1}>프론트엔드</MenuItem>
+            <MenuItem value={2}>백엔드</MenuItem>
+            <MenuItem value={0}>상관없음</MenuItem>
+          </Select>
+        </div>
+        <h3>언어</h3>
+        <div className="lang-box">
           <div className="rating-box">
-            <Typography component="legend">C/C++</Typography>
+            <Typography component="legend">C</Typography>
             <Rating name="c" precision={0.5} value={c} onChange={onChange} />
+            <Typography component="legend">C++</Typography>
+            <Rating name="cpp" precision={0.5} value={cpp} onChange={onChange} />
+            <Typography component="legend">C#</Typography>
+            <Rating name="cs" precision={0.5} value={cs} onChange={onChange} />
             <Typography component="legend">JAVA</Typography>
             <Rating name="java" precision={0.5} value={java} onChange={onChange} />
             <Typography component="legend">Python</Typography>
             <Rating name="python" precision={0.5} value={python} onChange={onChange} />
-            <Typography component="legend">HTML/CSS/JS</Typography>
-            <Rating name="js" precision={0.5} value={js} onChange={onChange} />
+            <Typography component="legend">JAVASCRIPT</Typography>
+            <Rating name="javascript" precision={0.5} value={javascript} onChange={onChange} />
+            <Typography component="legend">VISUAL BASIC</Typography>
+            <Rating name="vb" precision={0.5} value={vb} onChange={onChange} />
+            <Typography component="legend">SQL</Typography>
+            <Rating name="sqllang" precision={0.5} value={sqllang} onChange={onChange} />
           </div>
         </div>
-        <div className="text-box">
-          <TextField fullWidth label="1트랙" variant="outlined" value={track1} name="track1" onChange={onChange} />
-        </div>
-        <div className="text-box">
-          <TextField fullWidth label="2트랙" variant="outlined" value={track2} name="track2" onChange={onChange} />
-        </div>
-        <div className="text-box">
-          <TextField fullWidth label="OS" variant="outlined" value={os} name="os" onChange={onChange} />
-        </div>
-        <div className="text-box">
+        <div className="userform-text">
           <TextField
+            margin="normal"
             fullWidth
+            multiline
+            rows={10}
             label="내용"
             variant="outlined"
             value={detail}
@@ -77,7 +96,7 @@ function UserBuilding() {
           />
         </div>
         <Button variant="contained" onClick={onClick}>
-          제출
+          등록
         </Button>
       </form>
     </div>
