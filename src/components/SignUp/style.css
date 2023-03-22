@@ -1,0 +1,27 @@
+.signup-box {
+  width: 500px;
+  height: 500px;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  margin-left: -250px;
+  margin-top: -250px;
+  padding: 20px;
+}
+.signup-title {
+  font-size: 36px;
+  color: #343a40;
+  text-align: center;
+}
+.signup-text {
+  margin-left: 90px;
+  text-align: center;
+}
+.password-text {
+  text-align: center;
+}
+.login-button,
+.signup-button {
+  text-align: center;
+  padding: 5px;
+}
