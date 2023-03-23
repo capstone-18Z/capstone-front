@@ -1,0 +1,16 @@
+.header {
+    height: 60px;
+    align-items: center;
+    display: flex;
+    position: sticky;
+}
+.header_empty {
+    width: 70%;
+}
+.header_option {
+    display: flex;
+    flex-direction: column;
+    margin-left: 10px;
+    margin-right: 10px;
+    color:black;
+}

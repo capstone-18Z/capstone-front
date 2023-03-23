@@ -3,6 +3,8 @@ import { useState } from "react";
 import { TextField, Slider, Box, Button, Checkbox, FormGroup ,FormControlLabel, Select, MenuItem  } from "@mui/material";
 
 function TeamBuilding() {
+    //로그인 토큰 저장
+    const login_token = localStorage.getItem("login-token");
     //유저가 글쓰는 날짜 시간 저장 
     const today = new Date();
     const time = today.toLocaleTimeString(); 
@@ -54,15 +56,21 @@ function TeamBuilding() {
         console.log("막음");
     }
     const onSubmitHandler = (e) => {
-        fetch('https://port-0-capstoneback-6g2llf7te70n.sel3.cloudtype.app/teams/new',{
+        //fetch('http://1871166.iptime.org:8080/teams/new',{
+        fetch('https://port-0-capstone-back-6g2llf7te70n.sel3.cloudtype.app/teams/new',{
           method: 'POST',
           headers: {
+            'login-token': login_token,
             'Content-Type' : 'application/json',
           },
             body: JSON.stringify(
                 inputs
           ),
-        });
+        })
+        .then((response) => response.json())        
+        .then((obj) => 
+        console.log(obj));
+        
       };
       //변수명 서버랑 똑같이 해야 보내짐
       const marks = [
