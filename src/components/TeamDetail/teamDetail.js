@@ -10,7 +10,8 @@ function TeamDetail() {
     return (
         <div>
             Details about team {teamId}
-                    <button onClick={() =>{                     
+                    <button onClick={() =>{
+                        navigate(`/team/${teamId}/editTeam`)              
                     }}>        
                     수정하기</button>
                     <button onClick={() =>{
@@ -20,7 +21,7 @@ function TeamDetail() {
                                 'login-token': login_token,//헤더로 로그인 토큰 넣어야 삭제됨
                             }           
                         })
-                        .then(navigate(`/main`))
+                        .then(navigate(`/team`))
                     }}>        
                     삭제하기</button>
 
