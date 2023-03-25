@@ -56,7 +56,7 @@ function TeamBuilding() {
         console.log("막음");
     }
     const onSubmitHandler = (e) => {
-        //fetch('http://1871166.iptime.org:8080/teams/new',{
+        //fetch('https://port-0-capstone-back-6g2llf7te70n.sel3.cloudtype.app/teams/new',{
         fetch('https://port-0-capstone-back-6g2llf7te70n.sel3.cloudtype.app/teams/new',{
           method: 'POST',
           headers: {
@@ -240,4 +240,6 @@ function TeamBuilding() {
         </div>              
     );
 }
+
+
 export default TeamBuilding;

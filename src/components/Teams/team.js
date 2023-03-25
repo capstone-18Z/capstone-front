@@ -8,9 +8,9 @@ function Team() {
     const [teamList, setTeamList] = useState(null);
     
     useEffect(() => {
-        
-        //fetch('http://1871166.iptime.org:8080/teams',{            
-        fetch('https://port-0-capstone-back-6g2llf7te70n.sel3.cloudtype.app/teams',{            
+        fetch('https://port-0-capstone-back-6g2llf7te70n.sel3.cloudtype.app/teams',{
+        //fetch('https://port-0-capstone-back-6g2llf7te70n.sel3.cloudtype.app/teams',{            
+        //fetch('https://port-0-capstone-back-6g2llf7te70n.sel3.cloudtype.app/teams',{            
         })
         .then((response) => response.json())        
         .then((obj) => {setTeamList(obj.data.allTeamList)
