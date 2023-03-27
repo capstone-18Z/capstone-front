@@ -17,10 +17,12 @@ function App() {
           <Route path="/main" element={<><Header /><MainPage /></>}></Route>
           {/* 중첩라우팅 */}
           <Route path="/team" element={<><Header/><Team /></>}></Route>
-          <Route path="/post/*" element={<PostPage />}></Route>
-          <Route path="team/:teamId" element={<TeamDetail />} />
-          <Route path="team/:teamId/editTeam" element={<EditTeam />} />
+          <Route path="/post/*" element={<><Header/><PostPage /></>}></Route>
+          <Route path="/team/:teamId/" element={<><Header/><TeamDetail /></>}></Route>
+          <Route path="/team/:teamId/editTeam" element={<><Header/><EditTeam /></>}></Route>
+
           <Route path="recommendUserList" element={<RecommendUserList />}></Route>
+            
         </Routes>
       </BrowserRouter>
     </div>
