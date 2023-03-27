@@ -4,6 +4,7 @@ import { TextField, Slider, Box, Button, Checkbox, FormGroup ,FormControlLabel, 
 
 function TeamBuilding() {
     //로그인 토큰 저장
+    const refresh_token = localStorage.getItem("refresh-token");
     const login_token = localStorage.getItem("login-token");
     //유저가 글쓰는 날짜 시간 저장 
     const today = new Date();
@@ -60,6 +61,7 @@ function TeamBuilding() {
         fetch('https://port-0-capstone-back-6g2llf7te70n.sel3.cloudtype.app/teams/new',{
           method: 'POST',
           headers: {
+            'refresh-token': refresh_token,
             'login-token': login_token,
             'Content-Type' : 'application/json',
           },

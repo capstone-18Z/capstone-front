@@ -1,8 +1,9 @@
 import React from 'react';
 import {useNavigate} from "react-router-dom";
 import { useParams } from 'react-router-dom';
-
+import RecommendUserList from '../RecommendUserList/recommendUserList';
 function TeamDetail() {
+    const refresh_token = localStorage.getItem("refresh-token");
     const login_token = localStorage.getItem("login-token");
     const params = useParams();
     const teamId = params.teamId;
@@ -10,14 +11,15 @@ function TeamDetail() {
     return (
         <div>
             Details about team {teamId}
-                    <button onClick={() =>{
-                        navigate(`/team/${teamId}/editTeam`)              
+                    <button onClick={() =>{ 
+                        navigate(`/team/${teamId}/editTeam`)                    
                     }}>        
                     수정하기</button>
                     <button onClick={() =>{
                         fetch(`https://port-0-capstone-back-6g2llf7te70n.sel3.cloudtype.app/teams/${teamId}/delete`,{
                             method: 'POST',
                             headers: {
+                                'refresh-token': refresh_token,
                                 'login-token': login_token,//헤더로 로그인 토큰 넣어야 삭제됨
                             }           
                         })
@@ -25,10 +27,7 @@ function TeamDetail() {
                     }}>        
                     삭제하기</button>
 
-                    <button onClick={() =>{
-                        navigate(`../recommendUserList`)               
-                    }}>        
-                    추천 유저 목록 띄우기</button>
+                    <RecommendUserList teamId={teamId}/>
         </div>
     );
 }

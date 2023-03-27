@@ -20,7 +20,7 @@ function App() {
           <Route path="/post/*" element={<><Header/><PostPage /></>}></Route>
           <Route path="/team/:teamId/" element={<><Header/><TeamDetail /></>}></Route>
           <Route path="/team/:teamId/editTeam" element={<><Header/><EditTeam /></>}></Route>
-          
+
           <Route path="recommendUserList" element={<RecommendUserList />}></Route>
             
         </Routes>
