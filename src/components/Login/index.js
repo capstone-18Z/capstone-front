@@ -29,7 +29,8 @@ function Login() {
       .then((response) => {
         if (response.data) {
           console.log(response.data);
-          localStorage.setItem("login-token", response.data);
+          localStorage.setItem("login-token", response.data.data.token.accessToken);
+          localStorage.setItem("refresh-token", response.data.data.token.refreshToken);
           navigate("/main");
         }
       })

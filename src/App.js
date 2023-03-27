@@ -6,6 +6,7 @@ import Header from "./components/Header/header"
 import TeamDetail from "./components/TeamDetail/teamDetail";
 import RecommendUserList from "./components/RecommendUserList/recommendUserList";
 import Team from "./components/Teams/team";
+import EditTeam from "./components/EditTeam/editTeam";
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
           <Route path="/team" element={<><Header/><Team /></>}></Route>
           <Route path="/post/*" element={<PostPage />}></Route>
           <Route path="team/:teamId" element={<TeamDetail />} />
+          <Route path="team/:teamId/editTeam" element={<EditTeam />} />
           <Route path="recommendUserList" element={<RecommendUserList />}></Route>
         </Routes>
       </BrowserRouter>

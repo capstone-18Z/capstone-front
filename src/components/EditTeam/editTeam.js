@@ -1,11 +1,29 @@
-import "./index.css";
-import { useState } from "react";
+import { useParams } from 'react-router-dom';
+import React, { useState, useEffect } from "react";
 import { TextField, Slider, Box, Button, Checkbox, FormGroup ,FormControlLabel, Select, MenuItem  } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
-function TeamBuilding() {
+function EditTeam() {
+    const navigate = useNavigate();
+    const params = useParams();
+    const teamId = params.teamId;
     //로그인 토큰 저장
     const refresh_token = localStorage.getItem("refresh-token");
     const login_token = localStorage.getItem("login-token");
+
+    useEffect(() => {                 
+            fetch(`https://port-0-capstone-back-6g2llf7te70n.sel3.cloudtype.app/teams/${teamId}`,{     
+                headers: {
+                    'refresh-token': refresh_token,
+                    'login-token': login_token,
+                } 
+        })
+        .then((response) => response.json())        
+        .then((obj) => {setInputs(obj.data.team); console.log(obj)});
+    }, []);
+
+
+
     //유저가 글쓰는 날짜 시간 저장 
     const today = new Date();
     const time = today.toLocaleTimeString(); 
@@ -58,7 +76,7 @@ function TeamBuilding() {
     }
     const onSubmitHandler = (e) => {
         //fetch('http://1871166.iptime.org:8080/teams/new',{
-        fetch('https://port-0-capstone-back-6g2llf7te70n.sel3.cloudtype.app/teams/new',{
+        fetch(`https://port-0-capstone-back-6g2llf7te70n.sel3.cloudtype.app/teams/${teamId}/update`,{
           method: 'POST',
           headers: {
             'refresh-token': refresh_token,
@@ -236,10 +254,10 @@ function TeamBuilding() {
                 rows={5} cols={33}/></p>
                 <button onClick={() => {
                   onSubmitHandler();
-                  test();
+                  navigate(`/team/${teamId}`);;
                   }}>등록하기</button>
             </form>
         </div>              
     );
 }
-export default TeamBuilding;
+export default EditTeam;
