@@ -39,16 +39,34 @@ function SignUp() {
       });
   };
 
-  const goToLogin = (e) => {
-    navigate("/");
-  };
-
   const checkOverlap = (value) => {
     //e.preventDefault();
     if (value === email) {
-      axios.get(`https://port-0-capstone-back-6g2llf7te70n.sel3.cloudtype.app/${signUpInfo.email}/check_email/`);
+      axios
+        .get(
+          `https://port-0-capstone-back-6g2llf7te70n.sel3.cloudtype.app/member/check_email/${signUpInfo.email}/exists`
+        )
+        .then((response) => {
+          console.log(response.data);
+          if (response.data === true) {
+            alert("이미 등록되어 있는 이메일입니다");
+          } else {
+            alert("사용할 수 있는 이메일입니다");
+          }
+        });
     } else if (value === nickname) {
-      axios.get(`https://port-0-capstone-back-6g2llf7te70n.sel3.cloudtype.app/${signUpInfo.nickname}/check_nickname/`);
+      axios
+        .get(
+          `https://port-0-capstone-back-6g2llf7te70n.sel3.cloudtype.app/member/check_nickname/${signUpInfo.nickname}/exists`
+        )
+        .then((response) => {
+          console.log(response.data);
+          if (response.data === true) {
+            alert("이미 등록되어 있는 닉네임입니다");
+          } else {
+            alert("사용할 수 있는 닉네임입니다");
+          }
+        });
     }
   };
 
