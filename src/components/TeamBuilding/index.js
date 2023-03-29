@@ -1,4 +1,5 @@
-import "./index.css";
+import "./style.css";
+import React, { useEffect } from 'react';
 import { useState } from "react";
 import { TextField, Slider, Box, Button, Checkbox, FormGroup ,FormControlLabel, Select, MenuItem  } from "@mui/material";
 
@@ -11,31 +12,59 @@ function TeamBuilding() {
     const time = today.toLocaleTimeString(); 
     const date = today.toLocaleDateString();
     const now = date+time;
-  
+    
+    const [keywords, setKeywords] = useState([]);      
+    const handleChange = (event) => {        
+        const isChecked = event.currentTarget.checked;
+        const name = event.target;
+        if (isChecked) {
+            setKeywords([...keywords, name]);
+        }
+        else {
+            setKeywords(keywords.filter(e => e !== name));
+            console.log(keywords);
+        }     
+        
+    };
+    useEffect(()=>{
+        const nextInputs = {
+            ...inputs,
+            teamKeywords: [
+                keywords.map((data) => ({"value" : data}))
+            ]    
+                 
+        };   
+        setInputs(nextInputs);  
+        console.log(keywords); 
+    },[keywords])
+
     const [inputs, setInputs] = useState({
-        //프로젝트 제목, 설명, 과목 데이터 관리
+        //프로젝트 제목, 설명 데이터 관리
         title: "",
         detail: "",
-        project_subject: "",
         //현재 프론트, 백 팀원수 데이터 관리
         currentFrontMember: 0,
         currentBackMember:0,
         //모집 프론트, 백 팀원수 데이터 관리
         wantedFrontMember: 0,
-        wantedBackEndMember: 0,
-        //언어 점수 관리
-        c:0,
-        java:0,
-        cpp:0,
-        cs:0,
-        python:0,
-        javascript:0,
-        vb:0,
-        sqlLang:0,
+        wantedBackEndMember: 0,       
+        //언어
+        c: 0,
+        java: 0,
+        cpp: 0,
+        cs: 0,
+        python: 0,
+        javascript: 0,
+        vb: 0,
+        sqlLang: 0,
+        //팀 키워드
+        teamKeywords: [
+           
+        ],
         createDate: now,
         updateDate: now,
     });
-    const {currentFrontMember, currentBackMember,wantedFrontMember,wantedBackEndMember, title,detail, project_subject, c,java,cpp,cs,python,javascript,vb,sqlLang,createDate, updateDate} = inputs;	//비구조화 할당
+    const {currentFrontMember, currentBackMember,wantedFrontMember,wantedBackEndMember, title,detail,c,java,cpp,cs,python,javascript,vb,sqlLang,createDate, updateDate} = inputs;	//비구조화 할당
    
     const onChange = (e) => {
         const {name, value} = e.target;
@@ -48,17 +77,16 @@ function TeamBuilding() {
         setInputs(nextInputs);
     };
     const test = () => {
+        console.log(keywords);
         console.log(inputs);
-        console.log(now);
       };   
 
     const PostRequest = (e) => {
         e.preventDefault();
-        console.log("막음");
     }
     const onSubmitHandler = (e) => {
-        //fetch('https://port-0-capstone-back-6g2llf7te70n.sel3.cloudtype.app/teams/new',{
-        fetch('https://port-0-capstone-back-6g2llf7te70n.sel3.cloudtype.app/teams/new',{
+        //fetch('https://port-0-capstoneproject-test-6g2llf7te70n.sel3.cloudtype.app/teams/new',{
+        fetch('https://port-0-capstoneproject-test-6g2llf7te70n.sel3.cloudtype.app/teams/new',{
           method: 'POST',
           headers: {
             'refresh-token': refresh_token,
@@ -107,25 +135,18 @@ function TeamBuilding() {
                 />
                 </p>          
                 <p>
-                <TextField                 
+                <TextField
+                    minRows={10}
+                    multiline               
                     required
-                    label="프로젝트 한줄 설명"
+                    label="프로젝트 설명"
                     value={detail}
                     name="detail"
                     variant="standard"
-                    onChange={onChange}
+                    onChange={onChange}                                     
                 />
                 </p>
-                <p>
-                <TextField                 
-                    required
-                    label="프로젝트 과목"
-                    value={project_subject}
-                    name="project_subject"
-                    variant="standard"
-                    onChange={onChange}
-                />
-                </p>
+                <div className="lang-box">   
                 <p>언어</p>
                 <p>C언어 <Box sx={{ width: 300 }}>
                     <Slider aria-label="Custom marks" name ="c" value ={c} step={null} 
@@ -155,18 +176,16 @@ function TeamBuilding() {
                     <Slider aria-label="Custom marks" name ="vb" value ={vb} step={null} 
                     valueLabelDisplay="auto" marks={marks}onChange={onChange}/>
                 </Box></p>
-                <p>선호트랙</p>
+                </div>  
+            
                 <FormGroup>
-                    <FormControlLabel control={<Checkbox />} value label="웹공학트랙" />                
+                    <FormControlLabel control={<Checkbox value="test1" onChange={handleChange} name="test1" />} label="test1" />  
+                    <FormControlLabel control={<Checkbox value="test2" onChange={handleChange} name="test2" />} label="test2" />
+                    <FormControlLabel control={<Checkbox value="test3" onChange={handleChange} name="test3" />} label="test3" />  
+                    <FormControlLabel control={<Checkbox value="test4" onChange={handleChange} name="test4" />} label="test4" />                 
                 </FormGroup>
-                    <input type="checkbox" id="btn1" name="checkWrap" value="웹공학트랙" />
-                    <label htmlFor="btn1">웹공학트랙</label>
-                    <input type="checkbox" id="btn2" name="checkWrap" value="모바일트랙" />
-                    <label htmlFor="btn2">모바일트랙</label>
-                    <input type="checkbox" id="btn3" name="checkWrap" value="빅데이터트랙" />
-                    <label htmlFor="btn3">빅데이터트랙</label>
-                    <input type="checkbox" id="btn4" name="checkWrap" value="디지털콘텐츠트랙" />
-                    <label htmlFor="btn4">디지털콘텐츠트랙</label>
+               
+                    
                 <p>현재 팀원 수</p>
                 프론트
                 <Select
@@ -230,12 +249,9 @@ function TeamBuilding() {
                 SQL: <Box sx={{ width: 300 }}>
                     <Slider aria-label="Custom marks" name ="sqlLang" value ={sqlLang} step={null} 
                     valueLabelDisplay="auto" marks={marks}onChange={onChange}/>
-                </Box></p>
-                <p>모집 기간</p>
-                <p>내용 <textarea id="story" name="story"
-                rows={5} cols={33}/></p>
+                </Box></p>                
                 <button onClick={() => {
-                  onSubmitHandler();
+                  //onSubmitHandler();
                   test();
                   }}>등록하기</button>
             </form>
