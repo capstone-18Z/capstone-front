@@ -1,6 +1,6 @@
 import "./style.css";
 import { TextField, Button } from "@mui/material";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
@@ -21,6 +21,22 @@ function Login() {
     });
   };
 
+  const onSilentRefresh = () => {
+    axios
+      .post(`https://port-0-capstone-back-6g2llf7te70n.sel3.cloudtype.app/refresh`, {
+        refreshToken: localStorage.getItem("refresh-token"),
+      })
+      .then((response) => {
+        console.log(response.data.refreshToken);
+        localStorage.setItem("refresh-token", response.data.refreshToken);
+        axios.defaults.headers.common["login-token"] = response.data.accessToken;
+        setTimeout(onSilentRefresh, 1200000);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   const onClick = (e) => {
     console.log(userInfo);
     // 데이터 보내기
@@ -28,17 +44,21 @@ function Login() {
       .post("https://port-0-capstone-back-6g2llf7te70n.sel3.cloudtype.app/member/login", userInfo)
       .then((response) => {
         if (response.data) {
-          console.log(response.data);
-          const { accessToken } = response.data.data.token.accessToken;
-          localStorage.setItem("refreshToken", response.data.data.token.refreshToken);
+          console.log(response);
+          // accesstoken header에 자동설정 -> post할때 header 구문 추가 안해도됨.
+          axios.defaults.headers.common["login-token"] = response.data.data.token.accessToken;
+          //axios.defaults.headers.common["refresh-token"] = response.data.data.token.refreshToken; // 나중에 지워야할 구문
+          console.log(axios.defaults.headers.common);
+          // refreshtoken은 localstorage나 cookie에 저장해서 jwt 만료시간에 맞춰서 자동 갱신하게
+          localStorage.setItem("refresh-token", response.data.data.token.refreshToken);
+          setInterval(onSilentRefresh, 1200000);
           navigate("/main");
         }
       })
       .catch((err) => {
-        console.log(err);
+        console.log(err.response);
         alert("없습니다 회원가입부터 하세요");
       });
-    //navigate("/main");
   };
 
   const goToSignUp = (e) => {

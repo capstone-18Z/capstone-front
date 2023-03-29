@@ -11,7 +11,7 @@ function Header() {
   });
 
   const checkLoginToken = () => {
-    if (localStorage.getItem("refreshToken")) {
+    if (localStorage.getItem("refresh-token")) {
       setLoginCheck(true);
     } else {
       setLoginCheck(false);
@@ -19,7 +19,7 @@ function Header() {
   };
 
   const logout = () => {
-    localStorage.removeItem("refreshToken");
+    localStorage.removeItem("refresh-token");
   };
 
   return (
