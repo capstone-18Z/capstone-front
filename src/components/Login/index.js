@@ -21,7 +21,7 @@ function Login() {
         console.log(response.data.refreshToken);
         localStorage.setItem("refresh-token", response.data.refreshToken);
         axios.defaults.headers.common["login-token"] = response.data.accessToken;
-        setTimeout(onSilentRefresh, 12000);
+        setTimeout(onSilentRefresh, 1200000);
       })
       .catch((err) => {
         console.log(err);
