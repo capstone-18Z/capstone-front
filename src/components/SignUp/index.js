@@ -2,29 +2,19 @@ import "./style.css";
 import { TextField, Button } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import useInput from "../../hooks/useInput";
 import axios from "axios";
 
 function SignUp() {
   const navigate = useNavigate();
-  const [signUpInfo, setsignUpInfo] = useState({
+  const [signUpInfo, setSignUpInfo] = useInput({
     email: "",
     nickname: "",
     password: "",
   });
 
-  const { email, nickname, password } = signUpInfo; // 비구조화 할당을 통해 값 추출
-
-  const onChange = (e) => {
-    const { value, name } = e.target; // 우선 e.target 에서 name 과 value 를 추출
-    setsignUpInfo({
-      ...signUpInfo, // 기존의 input 객체를 복사한 뒤
-      [name]: value, // name 키를 가진 값을 value 로 설정
-    });
-  };
-
   const onClick = async (e) => {
     console.log(signUpInfo);
-    //데이터 보내기
     axios
       .post("https://port-0-capstone-back-6g2llf7te70n.sel3.cloudtype.app/member/register", signUpInfo)
       .then((response) => {
@@ -34,14 +24,14 @@ function SignUp() {
         }
       })
       .catch((err) => {
-        console.log(err);
+        console.log(err.response);
         alert("회원가입 오류");
       });
   };
 
   const checkOverlap = (value) => {
     //e.preventDefault();
-    if (value === email) {
+    if (value === "email") {
       axios
         .get(
           `https://port-0-capstone-back-6g2llf7te70n.sel3.cloudtype.app/member/check_email/${signUpInfo.email}/exists`
@@ -54,7 +44,7 @@ function SignUp() {
             alert("사용할 수 있는 이메일입니다");
           }
         });
-    } else if (value === nickname) {
+    } else if (value === "nickname") {
       axios
         .get(
           `https://port-0-capstone-back-6g2llf7te70n.sel3.cloudtype.app/member/check_nickname/${signUpInfo.nickname}/exists`
@@ -75,10 +65,10 @@ function SignUp() {
       <h1 className="signup-title">회원가입</h1>
       <form>
         <div className="signup-text">
-          <TextField margin="normal" label="이메일" variant="outlined" value={email} name="email" onChange={onChange} />
+          <TextField margin="normal" label="이메일" variant="outlined" value={signUpInfo.email} name="email" onChange={setSignUpInfo} />
           <Button
             onClick={(e) => {
-              checkOverlap(email);
+              checkOverlap("email");
             }}
             sx={{
               padding: "15px",
@@ -93,13 +83,13 @@ function SignUp() {
             margin="normal"
             label="닉네임"
             variant="outlined"
-            value={nickname}
+            value={signUpInfo.nickname}
             name="nickname"
-            onChange={onChange}
+            onChange={setSignUpInfo}
           />
           <Button
             onClick={(e) => {
-              checkOverlap(nickname);
+              checkOverlap("nickname");
             }}
             sx={{
               padding: "15px",
@@ -114,9 +104,9 @@ function SignUp() {
             label="비밀번호"
             margin="normal"
             variant="outlined"
-            value={password}
+            value={signUpInfo.password}
             name="password"
-            onChange={onChange}
+            onChange={setSignUpInfo}
           />
         </div>
         <div className="signup-button">
