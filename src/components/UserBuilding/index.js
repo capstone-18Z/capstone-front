@@ -12,14 +12,15 @@ function UserBuilding() {
     cs: "",
     cpp: "",
     vb: "",
-    //assembly: "",
+    assembly: "",
+    php: "",
     java: "",
     javascript: "",
     python: "",
     sqllang: "",
   });
 
-  const { title, field, detail, c, cs, cpp, vb, java, javascript, python, sqllang } = userform; // 비구조화 할당을 통해 값 추출
+  const { title, field, detail, c, cs, cpp, vb, assembly, php, java, javascript, python, sqllang } = userform; // 비구조화 할당을 통해 값 추출
 
   const onChange = (e) => {
     const { value, name } = e.target; // 우선 e.target 에서 name 과 value 를 추출
@@ -29,18 +30,27 @@ function UserBuilding() {
     });
   };
 
+  const onChange2 = (e) => {
+    const { value, name } = e.target; // 우선 e.target 에서 name 과 value 를 추출
+    setUserForm({
+      ...userform, // 기존의 input 객체를 복사한 뒤
+      [name]: Number(value), // name 키를 가진 값을 value 로 설정
+    });
+  };
+
   const onClick = (e) => {
+    console.log(axios.defaults.headers.common);
     console.log(userform);
     //데이터 보내기
     axios
-      .post("https://port-0-capstone-back-6g2llf7te70n.sel3.cloudtype.app/member/new", userform)
+      .post("https://port-0-capstoneproject-test-6g2llf7te70n.sel3.cloudtype.app/member/new", userform)
       .then((response) => {
         if (response.data) {
           alert("등록 완료");
         }
       })
       .catch((err) => {
-        console.log(err);
+        console.log(err.response);
         alert("등록 실패");
       });
   };
@@ -64,21 +74,25 @@ function UserBuilding() {
         <div className="lang-box">
           <div className="rating-box">
             <Typography component="legend">C</Typography>
-            <Rating name="c" precision={0.5} value={c} onChange={onChange} />
+            <Rating name="c" precision={1} value={c} onChange={onChange2} />
             <Typography component="legend">C++</Typography>
-            <Rating name="cpp" precision={0.5} value={cpp} onChange={onChange} />
+            <Rating name="cpp" precision={1} value={cpp} onChange={onChange2} />
             <Typography component="legend">C#</Typography>
-            <Rating name="cs" precision={0.5} value={cs} onChange={onChange} />
+            <Rating name="cs" precision={1} value={cs} onChange={onChange2} />
             <Typography component="legend">JAVA</Typography>
-            <Rating name="java" precision={0.5} value={java} onChange={onChange} />
+            <Rating name="java" precision={1} value={java} onChange={onChange2} />
             <Typography component="legend">Python</Typography>
-            <Rating name="python" precision={0.5} value={python} onChange={onChange} />
+            <Rating name="python" precision={1} value={python} onChange={onChange2} />
             <Typography component="legend">JAVASCRIPT</Typography>
-            <Rating name="javascript" precision={0.5} value={javascript} onChange={onChange} />
+            <Rating name="javascript" precision={1} value={javascript} onChange={onChange2} />
             <Typography component="legend">VISUAL BASIC</Typography>
-            <Rating name="vb" precision={0.5} value={vb} onChange={onChange} />
+            <Rating name="vb" precision={1} value={vb} onChange={onChange2} />
             <Typography component="legend">SQL</Typography>
-            <Rating name="sqllang" precision={0.5} value={sqllang} onChange={onChange} />
+            <Rating name="sqllang" precision={1} value={sqllang} onChange={onChange2} />
+            <Typography component="legend">assembly</Typography>
+            <Rating name="assembly" precision={1} value={assembly} onChange={onChange2} />
+            <Typography component="legend">php</Typography>
+            <Rating name="php" precision={1} value={php} onChange={onChange2} />
           </div>
         </div>
         <div className="userform-text">
