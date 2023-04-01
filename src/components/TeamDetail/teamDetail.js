@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from "react";
 import {useNavigate} from "react-router-dom";
 import { useParams } from 'react-router-dom';
+
 import RecommendUserList from '../RecommendUserList/recommendUserList';
+import "./teamDetail.css"
+
 function TeamDetail() {
     const refresh_token = localStorage.getItem("refresh-token");
     const login_token = localStorage.getItem("login-token");
@@ -35,7 +38,7 @@ function TeamDetail() {
     const {currentFrontMember, currentBackMember,wantedFrontMember,wantedBackEndMember, title,detail, project_subject, c,java,cpp,cs,python,javascript,vb,sqlLang,createDate, updateDate} = teamDetail;	//비구조화 할당
    
     useEffect(() => {                 
-        fetch(`https://port-0-capstoneproject-test-6g2llf7te70n.sel3.cloudtype.app/teams/${teamId}`,{     
+        fetch(`https://port-0-capstone-back-6g2llf7te70n.sel3.cloudtype.app/teams/${teamId}`,{     
             headers: {
                 'refresh-token': refresh_token,
                 'login-token': login_token,
@@ -49,11 +52,17 @@ function TeamDetail() {
         <div className="teamdetail">
             <div className="teamdetail_head">
                 <div className="teamdetail_head">
-                    <div className="title">{title}</div>
-                    <div className="summary">{detail}</div>
+                    <div className="title">제목: {title}</div>                    
                 </div>                
             </div>
             <div className="teamdetail_summary">
+                <div className="summary">     
+                내용:         
+                <div dangerouslySetInnerHTML={{ __html: detail }} />
+                </div>
+                
+            </div>
+            <div className="teamdetail_recommenduserlist">
                 <RecommendUserList teamId={teamId}/>
             </div>
             <div className="teamdetail_bottom">
@@ -62,7 +71,7 @@ function TeamDetail() {
                     }}>        
                     수정하기</button>
                     <button onClick={() =>{
-                        fetch(`https://port-0-capstoneproject-test-6g2llf7te70n.sel3.cloudtype.app/teams/${teamId}/delete`,{
+                        fetch(`https://port-0-capstone-back-6g2llf7te70n.sel3.cloudtype.app/teams/${teamId}/delete`,{
                             method: 'POST',
                             headers: {
                                 'refresh-token': refresh_token,

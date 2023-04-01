@@ -5,22 +5,17 @@ export const Card = ({teamId, title, detail, currentFrontMember, currentBackMemb
   return (
     <div className="card-wrapper" onClick={()   => {
       navigate(`/team/${teamId}`)
-    }}>
-      <div className="card-body-img">
-      </div>
-      <div className="card-body-text">
-        <div className="card-body-text-title"><h1>{title}</h1></div>
-        <div className="card-body-text-detail">설명: {detail}</div>
-        <p>현재 팀 아이디 {teamId}</p>
-          <div>현재 팀원 수                     
-                    <p>프론트엔드{currentFrontMember}</p>
-                    <p>백엔드{currentBackMember}</p>
-                   
-                    <div>현재 구하는 팀원 수</div>
-                    <p>프론트엔드{wantedFrontMember}</p>
-                    <p>백엔드{wantedBackEndMember}</p>                   
-          </div>
-      </div>
+    }}>      
+      <div class="card h-100">
+                    <img src="https://www.hansung.ac.kr/hansung/3871/subview.do" class="card-img-top" alt="..."/>
+                    <div class="card-body">
+                    <h5 class="card-title">{title}</h5>
+                    <p class="card-text">{detail}</p>
+                    <p class="card-text">현재 팀원 수: 프론트엔드{currentFrontMember} 백엔드{currentBackMember}</p>
+                    <p class="card-text">현재 구하는 팀원 수: 프론트엔드{wantedFrontMember} 백엔드{wantedBackEndMember}</p>
+                    <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                    </div>
+                </div>
     </div>
   );
 };

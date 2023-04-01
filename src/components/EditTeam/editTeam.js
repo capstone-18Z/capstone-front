@@ -75,7 +75,7 @@ function EditTeam() {
         console.log("막음");
     }
     const onSubmitHandler = (e) => {
-        //fetch('http://1871166.iptime.org:8080/teams/new',{
+        //fetch(https://port-0-capstone-back-6g2llf7te70n.sel3.cloudtype.app/teams/new',{
         fetch(`https://port-0-capstone-back-6g2llf7te70n.sel3.cloudtype.app/teams/${teamId}/update`,{
           method: 'POST',
           headers: {

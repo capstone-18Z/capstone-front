@@ -1,0 +1,10 @@
+.teamdetail {
+    max-width: 800px;
+    margin: 0px auto;
+    box-sizing: border-box;
+    text-align: center;
+}
+.teamdetail_summary {
+    text-align: left;
+    margin-left: 20px
+}
