@@ -5,6 +5,8 @@ import { useNavigate } from "react-router-dom";
 import useInput from "../../hooks/useInput";
 import axios from "axios";
 
+const BASE_URL = "https://port-0-capstone-back-6g2llf7te70n.sel3.cloudtype.app";
+
 function Login() {
   const navigate = useNavigate();
   const [userInfo, setUserInfo] = useInput({
@@ -14,13 +16,14 @@ function Login() {
 
   const onSilentRefresh = () => {
     axios
-      .post(`https://port-0-capstone-back-6g2llf7te70n.sel3.cloudtype.app/refresh`, {
+      .post(`${BASE_URL}/refresh`, {
         refreshToken: localStorage.getItem("refresh-token"),
       })
       .then((response) => {
         console.log(response.data.refreshToken);
         localStorage.setItem("refresh-token", response.data.refreshToken);
         axios.defaults.headers.common["login-token"] = response.data.accessToken;
+        axios.defaults.headers.common["refresh-token"] = response.data.refreshToken;
         setTimeout(onSilentRefresh, 1200000);
       })
       .catch((err) => {
@@ -32,13 +35,14 @@ function Login() {
     console.log(userInfo);
     // 데이터 보내기
     axios
-      .post("https://port-0-capstone-back-6g2llf7te70n.sel3.cloudtype.app/member/login", userInfo)
+      .post(`${BASE_URL}/member/login`, userInfo)
       .then((response) => {
         if (response.data) {
           console.log(response);
           // accesstoken header에 자동설정 -> post할때 header 구문 추가 안해도됨.
           axios.defaults.headers.common["login-token"] = response.data.data.token.accessToken;
-          //console.log(axios.defaults.headers.common);
+          axios.defaults.headers.common["refresh-token"] = response.data.data.token.refreshToken;
+          console.log(axios.defaults.headers.common);
           localStorage.setItem("refresh-token", response.data.data.token.refreshToken);
           setInterval(onSilentRefresh, 1200000); // 20분 후 refreshtoken 갱신
           navigate("/main");

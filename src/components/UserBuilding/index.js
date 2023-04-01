@@ -2,6 +2,9 @@ import "./style.css";
 import { TextField, Typography, Rating, Button, InputLabel, Select, MenuItem } from "@mui/material";
 import { useState } from "react";
 import axios from "axios";
+import { Link } from "react-router-dom";
+
+const BASE_URL = "https://port-0-capstone-back-6g2llf7te70n.sel3.cloudtype.app";
 
 function UserBuilding() {
   const [userform, setUserForm] = useState({
@@ -43,7 +46,7 @@ function UserBuilding() {
     console.log(userform);
     //데이터 보내기
     axios
-      .post("https://port-0-capstoneproject-test-6g2llf7te70n.sel3.cloudtype.app/member/new", userform)
+      .post(`${BASE_URL}/member/new`, userform)
       .then((response) => {
         if (response.data) {
           alert("등록 완료");
@@ -57,6 +60,7 @@ function UserBuilding() {
 
   return (
     <div className="userform-box">
+      <Link to="/post/usertest">키워드</Link>
       <h1 className="userform-title">사용자 정보 등록 폼</h1>
       <form>
         <div className="userform-text">
