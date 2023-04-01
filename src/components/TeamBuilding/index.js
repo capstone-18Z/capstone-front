@@ -1,7 +1,11 @@
 import "./style.css";
 import React, { useEffect } from 'react';
-import { useState } from "react";
-import { TextField, Slider, Box, Button, Checkbox, FormGroup ,FormControlLabel, Select, MenuItem  } from "@mui/material";
+import 'react-quill/dist/quill.snow.css';
+import { useState, useRef  } from "react";
+import { TextField, Slider, Box, Checkbox, FormGroup ,FormControlLabel, Select, MenuItem  } from "@mui/material";
+import { Editor as ToastEditor } from '@toast-ui/react-editor';
+import '@toast-ui/editor/dist/toastui-editor.css';
+import '@toast-ui/editor/dist/i18n/ko-kr'
 
 function TeamBuilding() {
     //로그인 토큰 저장
@@ -13,29 +17,25 @@ function TeamBuilding() {
     const date = today.toLocaleDateString();
     const now = date+time;
     
+    
     const [keywords, setKeywords] = useState([]);      
     const handleChange = (event) => {        
         const isChecked = event.currentTarget.checked;
-        const name = event.target;
+        const {name, value} = event.target;
         if (isChecked) {
-            setKeywords([...keywords, name]);
+            setKeywords([...keywords, value]);
         }
         else {
-            setKeywords(keywords.filter(e => e !== name));
-            console.log(keywords);
+            setKeywords(keywords.filter(e => e !== value));
         }     
         
     };
     useEffect(()=>{
         const nextInputs = {
             ...inputs,
-            teamKeywords: [
-                keywords.map((data) => ({"value" : data}))
-            ]    
-                 
+            teamKeywords: keywords.length === 0 ? [] : keywords.map((data) => ({"value" : data}))
         };   
-        setInputs(nextInputs);  
-        console.log(keywords); 
+        setInputs(nextInputs);           
     },[keywords])
 
     const [inputs, setInputs] = useState({
@@ -58,9 +58,7 @@ function TeamBuilding() {
         vb: 0,
         sqlLang: 0,
         //팀 키워드
-        teamKeywords: [
-           
-        ],
+        teamKeywords: [],
         createDate: now,
         updateDate: now,
     });
@@ -75,31 +73,25 @@ function TeamBuilding() {
         };
         //객체를 새로운 상태로 쓰겠다. 
         setInputs(nextInputs);
-    };
-    const test = () => {
-        console.log(keywords);
         console.log(inputs);
-      };   
+    };
+      
 
     const PostRequest = (e) => {
         e.preventDefault();
     }
     const onSubmitHandler = (e) => {
-        //fetch('https://port-0-capstoneproject-test-6g2llf7te70n.sel3.cloudtype.app/teams/new',{
-        fetch('https://port-0-capstoneproject-test-6g2llf7te70n.sel3.cloudtype.app/teams/new',{
+        fetch('https://port-0-capstone-back-6g2llf7te70n.sel3.cloudtype.app/teams/new',{
           method: 'POST',
           headers: {
             'refresh-token': refresh_token,
             'login-token': login_token,
             'Content-Type' : 'application/json',
-          },
-            body: JSON.stringify(
-                inputs
-          ),
+          },          
+            body: JSON.stringify(inputs),
         })
-        .then((response) => response.json())        
-        .then((obj) => 
-        console.log(obj));
+        .then((response) => response.json())
+        .then((obj) => console.log(obj));
         
       };
       //변수명 서버랑 똑같이 해야 보내짐
@@ -117,65 +109,71 @@ function TeamBuilding() {
           label: '아주잘함',
         },
       ];
+      const editorRef = useRef();
 
+      const DetailOnChange = () => {
+        const data = editorRef.current.getInstance().getHTML();       
+        const nextInputs = {
+            ...inputs,
+            detail : data
+        };   
+        setInputs(nextInputs);   
+      };
+    
     return (
         <div className="teambuildingform">
-            
+            <div className="team_form">            
             <h1>팀 빌딩 폼</h1>
             <form name="team-form" onSubmit={PostRequest}>
                 <h2>프로젝트</h2>
-                <p>
-                <TextField                 
+                
+                <TextField                            
                     required
                     label="프로젝트 제목"
-                    value={title}
+                    value={title}                    
                     name="title"
                     variant="standard"
                     onChange={onChange}
-                />
-                </p>          
-                <p>
-                <TextField
-                    minRows={10}
-                    multiline               
-                    required
-                    label="프로젝트 설명"
-                    value={detail}
-                    name="detail"
-                    variant="standard"
-                    onChange={onChange}                                     
-                />
-                </p>
-                <div className="lang-box">   
-                <p>언어</p>
-                <p>C언어 <Box sx={{ width: 300 }}>
-                    <Slider aria-label="Custom marks" name ="c" value ={c} step={null} 
-                    valueLabelDisplay="auto" marks={marks}onChange={onChange}/>
-                </Box></p>
-                <p>Java<Box sx={{ width: 300 }}>
-                    <Slider aria-label="Custom marks" name ="java" value ={java} step={null} 
-                    valueLabelDisplay="auto" marks={marks}onChange={onChange}/>
-                </Box></p>
-                <p>C++<Box sx={{ width: 300 }}>
-                    <Slider aria-label="Custom marks" name ="cpp" value ={cpp} step={null} 
-                    valueLabelDisplay="auto" marks={marks}onChange={onChange}/>
-                </Box></p>
-                <p>Python<Box sx={{ width: 300 }}>
-                    <Slider aria-label="Custom marks" name ="python" value ={python} step={null} 
-                    valueLabelDisplay="auto" marks={marks}onChange={onChange}/>
-                </Box></p>
-                <p>C#<Box sx={{ width: 300 }}>
-                    <Slider aria-label="Custom marks" name ="cs" value ={cs} step={null} 
-                    valueLabelDisplay="auto" marks={marks}onChange={onChange}/>
-                </Box></p>
-                <p>JavaScript<Box sx={{ width: 300 }}>
-                    <Slider aria-label="Custom marks" name ="javascript" value ={javascript} step={null} 
-                    valueLabelDisplay="auto" marks={marks}onChange={onChange}/>
-                </Box></p>
-                <p>Visual Basic<Box sx={{ width: 300 }}>
-                    <Slider aria-label="Custom marks" name ="vb" value ={vb} step={null} 
-                    valueLabelDisplay="auto" marks={marks}onChange={onChange}/>
-                </Box></p>
+                />                   
+                <ToastEditor
+                    previewStyle="vertical"
+                    hideModeSwitch={true}
+                    language="ko-KR"
+                    initialEditType="wysiwyg"     
+                    ref={editorRef}
+                    onChange={DetailOnChange}                       
+                />   
+                
+                <div className="team-lang-box">   
+                    언어
+                    <Box sx={{ width: 300 }}>C언어
+                        <Slider aria-label="Custom marks" name ="c" value ={c} step={null} 
+                        valueLabelDisplay="auto" marks={marks}onChange={onChange}/>
+                    </Box>
+                    <Box sx={{ width: 300 }}>Java
+                        <Slider aria-label="Custom marks" name ="java" value ={java} step={null} 
+                        valueLabelDisplay="a    uto" marks={marks}onChange={onChange}/>
+                    </Box>
+                    <Box sx={{ width: 300 }}>C++
+                        <Slider aria-label="Custom marks" name ="cpp" value ={cpp} step={null} 
+                        valueLabelDisplay="auto" marks={marks}onChange={onChange}/>
+                    </Box>
+                    <Box sx={{ width: 300 }}>Python
+                        <Slider aria-label="Custom marks" name ="python" value ={python} step={null} 
+                        valueLabelDisplay="auto" marks={marks}onChange={onChange}/>
+                    </Box>
+                    <Box sx={{ width: 300 }}>C#
+                        <Slider aria-label="Custom marks" name ="cs" value ={cs} step={null} 
+                        valueLabelDisplay="auto" marks={marks}onChange={onChange}/>
+                    </Box>
+                    <Box sx={{ width: 300 }}>JavaScript
+                        <Slider aria-label="Custom marks" name ="javascript" value ={javascript} step={null} 
+                        valueLabelDisplay="auto" marks={marks}onChange={onChange}/>
+                    </Box>
+                    <Box sx={{ width: 300 }}>Visual Basic
+                        <Slider aria-label="Custom marks" name ="vb" value ={vb} step={null} 
+                        valueLabelDisplay="auto" marks={marks}onChange={onChange}/>
+                    </Box>
                 </div>  
             
                 <FormGroup>
@@ -245,16 +243,16 @@ function TeamBuilding() {
                 <MenuItem value={4}>4</MenuItem>
                 <MenuItem value={5}>5</MenuItem>
                 </Select> 
-                <p>사용 DB
-                SQL: <Box sx={{ width: 300 }}>
+                <p>사용 DB</p>
+                <Box sx={{ width: 300 }}>SQL
                     <Slider aria-label="Custom marks" name ="sqlLang" value ={sqlLang} step={null} 
                     valueLabelDisplay="auto" marks={marks}onChange={onChange}/>
-                </Box></p>                
+                </Box>
                 <button onClick={() => {
-                  //onSubmitHandler();
-                  test();
+                  onSubmitHandler();       
                   }}>등록하기</button>
             </form>
+            </div>
         </div>              
     );
 }

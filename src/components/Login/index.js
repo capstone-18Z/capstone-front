@@ -22,6 +22,7 @@ function Login() {
       .then((response) => {
         console.log(response.data.refreshToken);
         localStorage.setItem("refresh-token", response.data.refreshToken);
+        localStorage.setItem("login-token", response.data.accessToken);
         axios.defaults.headers.common["login-token"] = response.data.accessToken;
         axios.defaults.headers.common["refresh-token"] = response.data.refreshToken;
         setTimeout(onSilentRefresh, 1200000);
@@ -44,6 +45,7 @@ function Login() {
           axios.defaults.headers.common["refresh-token"] = response.data.data.token.refreshToken;
           console.log(axios.defaults.headers.common);
           localStorage.setItem("refresh-token", response.data.data.token.refreshToken);
+          localStorage.setItem("login-token", response.data.data.token.accessToken);
           setInterval(onSilentRefresh, 1200000); // 20분 후 refreshtoken 갱신
           navigate("/main");
         }

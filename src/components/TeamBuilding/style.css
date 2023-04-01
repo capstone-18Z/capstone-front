@@ -1,13 +1,15 @@
 .teambuildingform {
-    width: 500px;
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    margin-left: -250px;
-    margin-top: -400px;
-    padding: 20px;
-    text-align: center;
+  width: 100%;
+    background-color: aliceblue;
+    text-align : center;
   }
-.lang-box {
-  margin-left: 250px;
+.team_form {  
+  width: 800px;
+  background-color: white;
+  margin: auto;
+}
+.slider-container {
+  width: 300px;
+  text-align: center;
+  margin-left: 32%;
 }

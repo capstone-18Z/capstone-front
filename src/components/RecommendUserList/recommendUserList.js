@@ -7,10 +7,8 @@ function RecommendUserList({teamId}) {
      //로그인 토큰 저장
      const refresh_token = localStorage.getItem("refresh-token");
      const login_token = localStorage.getItem("login-token");
-    useEffect(() => {        
-        //fetch('http://1871166.iptime.org:8080/teams',{            
-        //fetch('https://port-0-capstoneproject-test-6g2llf7te70n.sel3.cloudtype.app/teams',{            
-            fetch(`https://port-0-capstoneproject-test-6g2llf7te70n.sel3.cloudtype.app/teams/${teamId}`,{     
+    useEffect(() => {           
+            fetch(`https://port-0-capstone-back-6g2llf7te70n.sel3.cloudtype.app/teams/${teamId}`,{     
                 headers: {
                     'refresh-token': refresh_token,
                     'login-token': login_token,
