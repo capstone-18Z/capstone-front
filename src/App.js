@@ -10,26 +10,31 @@ import RecommendUserList from "./components/RecommendUserList/recommendUserList"
 import Team from "./components/Teams/team";
 import EditTeam from "./components/EditTeam/editTeam";
 
-function App() {
-  const onSilentRefresh = () => {
-    axios
-      .post(`https://port-0-capstone-back-6g2llf7te70n.sel3.cloudtype.app/refresh`, {
-        refreshToken: localStorage.getItem("refresh-token"),
-      })
-      .then((response) => {
-        console.log(response.data.refreshToken);
-        localStorage.setItem("refresh-token", response.data.refreshToken);
-        axios.defaults.headers.common["login-token"] = response.data.accessToken;
-        setTimeout(onSilentRefresh, 1200000);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
+const BASE_URL = "https://port-0-capstone-back-6g2llf7te70n.sel3.cloudtype.app";
 
+function App() {
+  const refresh = localStorage.getItem("refresh-token");
   useEffect(() => {
-    onSilentRefresh();
-  }, [localStorage.getItem("refresh-token")]);
+    const onSilentRefresh = () => {
+      axios
+        .post(`${BASE_URL}/refresh`, {
+          refreshToken: localStorage.getItem("refresh-token"),
+        })
+        .then((response) => {
+          console.log(response.data.refreshToken);
+          localStorage.setItem("refresh-token", response.data.refreshToken);
+          axios.defaults.headers.common["login-token"] = response.data.accessToken;
+          axios.defaults.headers.common["refresh-token"] = response.data.refreshToken;
+          setTimeout(onSilentRefresh, 1200000);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    };
+    if (refresh !== null) {
+      onSilentRefresh();
+    }
+  }, [refresh]);
   
   return (
     <div className="App">
