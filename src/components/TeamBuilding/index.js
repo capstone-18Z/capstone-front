@@ -1,6 +1,5 @@
 import "./style.css";
 import React, { useEffect } from 'react';
-import 'react-quill/dist/quill.snow.css';
 import { useState, useRef  } from "react";
 import { TextField, Slider, Box, Checkbox, FormGroup ,FormControlLabel, Select, MenuItem  } from "@mui/material";
 import { Editor as ToastEditor } from '@toast-ui/react-editor';
