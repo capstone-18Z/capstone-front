@@ -1,0 +1,10 @@
+.usercard-box {
+  display: flex;
+  justify-content: center;
+}
+.usercard-content {
+  width: 200px;
+  height: 200px;
+  box-shadow: 0px 0px 30px #eee;
+  padding: 32px;
+}

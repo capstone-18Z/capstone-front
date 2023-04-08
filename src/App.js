@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route,useParams } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import {useEffect} from "react";
 import axios from "axios";
 import LoginPage from "./pages/LoginPage";

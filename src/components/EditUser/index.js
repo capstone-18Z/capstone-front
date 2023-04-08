@@ -1,14 +1,19 @@
 import "./style.css";
 import { TextField, Typography, Rating, Button, Select, MenuItem } from "@mui/material";
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import axios from "axios";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 
 const BASE_URL = "https://port-0-capstone-back-6g2llf7te70n.sel3.cloudtype.app";
 
-function UserBuilding() {
+function EditUser() {
   const navigate = useNavigate();
+  // 이미지 변수
   const formData = new FormData();
+  const [showImg, setShowImg] = useState(null);
+  const [imgFile, setImgFile] = useState(null);
+  const imgRef = useRef();
+  // 폼
   const [userform, setUserForm] = useState({
     title: "",
     field: "",
@@ -24,11 +29,44 @@ function UserBuilding() {
     python: "",
     sqllang: "",
   });
-  const [showImg, setShowImg] = useState(null);
-  const [imgFile, setImgFile] = useState(null);
-  const imgRef = useRef();
-
   const { title, field, detail, c, cs, cpp, vb, assembly, php, java, javascript, python, sqllang } = userform; // 비구조화 할당을 통해 값 추출
+  // url 파라미터 받아오기 postid
+  const postId = useParams().postId;
+  console.log(postId);
+  // get 읽어오기
+  const [payload, setPayload] = useState("");
+
+  const fetchData = async () => {
+    try {
+      const response = await axios.get(`${BASE_URL}/member/post/${postId}`);
+      console.log(response.data);
+      setPayload(response.data);
+    } catch (error) {}
+  };
+
+  useEffect(() => {
+    fetchData();
+  });
+
+  useEffect(() => {
+    if (payload) {
+      setUserForm({
+        title: payload.data.title,
+        field: payload.data.field,
+        detail: payload.data.detail,
+        c: payload.data.c,
+        cs: payload.data.cs,
+        cpp: payload.data.cpp,
+        vb: payload.data.vb,
+        assembly: payload.data.assembly,
+        php: payload.data.php,
+        java: payload.data.java,
+        javascript: payload.data.javascript,
+        python: payload.data.python,
+        sqllang: payload.data.sqllang,
+      });
+    }
+  }, [payload]);
 
   const onChange = (e) => {
     const { value, name } = e.target; // 우선 e.target 에서 name 과 value 를 추출
@@ -53,20 +91,20 @@ function UserBuilding() {
     formData.append("files", imgFile);
     //데이터 보내기
     axios
-      .post(`${BASE_URL}/member/post/new`, formData, {
+      .post(`${BASE_URL}/member/post/update/${postId}`, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
       })
       .then((response) => {
         if (response.data) {
-          alert("등록 완료");
+          alert("수정 완료");
           navigate("/main");
         }
       })
       .catch((err) => {
-        console.log(err.response);
-        alert("등록 실패");
+        console.log(err.response.data.message);
+        alert(err.response.data.message);
       });
   };
 
@@ -94,7 +132,7 @@ function UserBuilding() {
       <form>
         <div className="profile-img">
           <div>
-            <img src={showImg} alt=""></img>
+            <img src={showImg} alt=""/>
           </div>
           <input type="file" accept="image/*" onChange={handleImageUrlChange} ref={imgRef} />
         </div>
@@ -155,4 +193,4 @@ function UserBuilding() {
     </div>
   );
 }
-export default UserBuilding;
+export default EditUser;

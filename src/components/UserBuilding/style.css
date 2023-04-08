@@ -8,12 +8,19 @@
   padding: 20px;
   text-align: center;
 }
-.userform-title {
-  font-size: 36px;
+.userform-title,
+.lang-title,
+.job-title {
   color: #343a40;
   text-align: center;
+}
+.userform-image {
+  margin-bottom: 20px;
 }
 .hide {
   width: -auto;
   height: -auto;
+}
+.profile-img {
+  margin: 10px;
 }
