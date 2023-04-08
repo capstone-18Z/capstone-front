@@ -1,6 +1,7 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import "./header.css";
 
 function Header() {
@@ -22,6 +23,8 @@ function Header() {
     localStorage.removeItem("refresh-token");
   };
 
+  const navigate = useNavigate();  
+
   return (
     <div className="header">
       <Link to="/main">한성메이팅</Link>
@@ -40,6 +43,15 @@ function Header() {
           </div>
         ) : (
           <div className="header_option">로그인/회원가입</div>
+        )}
+      </Link>
+      <Link to="/mypage">
+      {loginCheck ? (
+          <div className="header_option">
+          마이페이지
+          </div>
+        ) : (
+          <div></div>
         )}
       </Link>
     </div>

@@ -9,25 +9,37 @@ function Team() {
     const login_token = localStorage.getItem("login-token");
     
     const [teamList, setTeamList] = useState(null);
+
     
-    useEffect(() => {
-        
-        //fetch(https://port-0-capstone-back-6g2llf7te70n.sel3.cloudtype.app/teams',{            
-        fetch('https://port-0-capstone-back-6g2llf7te70n.sel3.cloudtype.app/teams',{
+    
+      
+    useEffect(() => {                   
+        fetch('http://1871166.iptime.org:8080/teams',{
             headers: {
                 'refresh-token': refresh_token,
                 'login-token': login_token,//헤더로 로그인 토큰 넣어야 삭제됨
-            }              
+            },      
         })
         .then((response) => response.json())        
         .then((obj) => {setTeamList(obj.data.allTeamList)
-        console.log(obj)});
+        console.log(obj)})
     }, []);
     
     //삭제할때 teams/{team.id}/delete 이렇게 post로 보내면 삭제됨
     //``역따음표 사이에 값넣기
     
-            
+    const cardStyle = {
+        width: '25%',
+        minWidth: 200,
+        height: 200,
+      };
+      
+      const mediaQueryStyle = {
+        '@media (max-width: 768px)': {
+          width: '25%',
+          minWidth: 200,
+        },
+      };
 
     return (
         <div>
@@ -36,20 +48,14 @@ function Team() {
                     </Link>
             <p>팀원 모집중</p>
             
-            
-            {teamList && teamList.map(data =>(
-                
-                <div class="row row-cols-1 row-cols-md-3 g-4">
-                <div class="col">
+            <div className="card-container">          
+                {teamList && teamList.map(data => (
+                <div key={data.teamId} className="card" sx={{ ...cardStyle, ...mediaQueryStyle }}>
                     
-                    <Card teamId={data.teamId} title={data.title} detail={data.detail}
-                    currentFrontMember={data.currentFrontMember} currentBackMember={data.currentBackMember} 
-                    wantedFrontMember={data.wantedFrontMember} wantedBackEndMember={data.wantedBackEndMember}
-                    />                                 
+                    <Card team={data} />
                 </div>
-                </div>
-                
-            ))}
+                ))}
+            </div>
             
         </div>
     );

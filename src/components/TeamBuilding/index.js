@@ -1,10 +1,12 @@
 import "./style.css";
-import React, { useEffect } from 'react';
-import { useState, useRef  } from "react";
-import { TextField, Slider, Box, Checkbox, FormGroup ,FormControlLabel, Select, MenuItem  } from "@mui/material";
+import React, { useEffect ,useState, useRef } from 'react';
+import {useNavigate} from "react-router-dom";
+import { TextField, Slider, Box, Checkbox, Grid ,FormControlLabel, Select, MenuItem  } from "@mui/material";
 import { Editor as ToastEditor } from '@toast-ui/react-editor';
 import '@toast-ui/editor/dist/toastui-editor.css';
 import '@toast-ui/editor/dist/i18n/ko-kr'
+import MyDropzone from "../Dropzone/dropzone";
+import axios from 'axios';
 
 function TeamBuilding() {
     //로그인 토큰 저장
@@ -15,6 +17,7 @@ function TeamBuilding() {
     const time = today.toLocaleTimeString(); 
     const date = today.toLocaleDateString();
     const now = date+time;
+    const navigate = useNavigate();
     
     
     const [keywords, setKeywords] = useState([]);      
@@ -79,8 +82,33 @@ function TeamBuilding() {
     const PostRequest = (e) => {
         e.preventDefault();
     }
+    const testSubmitHandler=async (e) => {
+        const test = new FormData();
+
+        test.append("team", JSON.stringify(inputs));
+
+        uploadedFiles.forEach((image) => {
+            test.append("images", image);
+        });
+
+        try {
+          const response = await axios.post("http://1871166.iptime.org:8080/teams/teams/new", test, {
+            headers: {
+              "Content-Type": "multipart/form-data",
+              'refresh-token': refresh_token,
+                'login-token': login_token
+            },
+          });
+          
+          console.log(response.data);
+          alert(response.data.message);
+          navigate(`/team`)
+        } catch (error) {
+          console.error(error);
+        }
+      };
     const onSubmitHandler = (e) => {
-        fetch('https://port-0-capstone-back-6g2llf7te70n.sel3.cloudtype.app/teams/new',{
+        fetch('http://1871166.iptime.org:8080/teams/new',{
           method: 'POST',
           headers: {
             'refresh-token': refresh_token,
@@ -91,7 +119,6 @@ function TeamBuilding() {
         })
         .then((response) => response.json())
         .then((obj) => console.log(obj));
-        
       };
       //변수명 서버랑 똑같이 해야 보내짐
       const marks = [
@@ -118,11 +145,14 @@ function TeamBuilding() {
         };   
         setInputs(nextInputs);   
       };
+
+    const [uploadedFiles, setUploadedFiles] = useState([]);
     
     return (
         <div className="teambuildingform">
             <div className="team_form">            
             <h1>팀 빌딩 폼</h1>
+            
             <form name="team-form" onSubmit={PostRequest}>
                 <h2>프로젝트</h2>
                 
@@ -134,6 +164,7 @@ function TeamBuilding() {
                     variant="standard"
                     onChange={onChange}
                 />                   
+                
                 <ToastEditor
                     previewStyle="vertical"
                     hideModeSwitch={true}
@@ -143,112 +174,119 @@ function TeamBuilding() {
                     onChange={DetailOnChange}                       
                 />   
                 
-                <div className="team-lang-box">   
-                    언어
-                    <Box sx={{ width: 300 }}>C언어
-                        <Slider aria-label="Custom marks" name ="c" value ={c} step={null} 
-                        valueLabelDisplay="auto" marks={marks}onChange={onChange}/>
-                    </Box>
-                    <Box sx={{ width: 300 }}>Java
-                        <Slider aria-label="Custom marks" name ="java" value ={java} step={null} 
-                        valueLabelDisplay="a    uto" marks={marks}onChange={onChange}/>
-                    </Box>
-                    <Box sx={{ width: 300 }}>C++
-                        <Slider aria-label="Custom marks" name ="cpp" value ={cpp} step={null} 
-                        valueLabelDisplay="auto" marks={marks}onChange={onChange}/>
-                    </Box>
-                    <Box sx={{ width: 300 }}>Python
-                        <Slider aria-label="Custom marks" name ="python" value ={python} step={null} 
-                        valueLabelDisplay="auto" marks={marks}onChange={onChange}/>
-                    </Box>
-                    <Box sx={{ width: 300 }}>C#
-                        <Slider aria-label="Custom marks" name ="cs" value ={cs} step={null} 
-                        valueLabelDisplay="auto" marks={marks}onChange={onChange}/>
-                    </Box>
-                    <Box sx={{ width: 300 }}>JavaScript
-                        <Slider aria-label="Custom marks" name ="javascript" value ={javascript} step={null} 
-                        valueLabelDisplay="auto" marks={marks}onChange={onChange}/>
-                    </Box>
-                    <Box sx={{ width: 300 }}>Visual Basic
-                        <Slider aria-label="Custom marks" name ="vb" value ={vb} step={null} 
-                        valueLabelDisplay="auto" marks={marks}onChange={onChange}/>
+                <MyDropzone uploadedFiles={uploadedFiles} setUploadedFiles={setUploadedFiles}/>
+                
+                <div className="team-lang-box" style={{ display: 'flex', justifyContent: 'center' }}>                       
+                    <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                        원하는 팀원의 언어 사용능력을 체크해주세요
+                        <Box sx={{ width: 300 , height: 100 }}>C언어
+                            <Slider aria-label="Custom marks" name ="c" value ={c} step={null} 
+                            valueLabelDisplay="auto" marks={marks}onChange={onChange}/>
+                        </Box>
+                        <Box sx={{ width: 300 , height: 100 }}>Java
+                            <Slider aria-label="Custom marks" name ="java" value ={java} step={null} 
+                            valueLabelDisplay="a    uto" marks={marks}onChange={onChange}/>
+                        </Box>
+                        <Box sx={{ width: 300 , height: 100}}>C++
+                            <Slider aria-label="Custom marks" name ="cpp" value ={cpp} step={null} 
+                            valueLabelDisplay="auto" marks={marks}onChange={onChange}/>
+                        </Box>
+                        <Box sx={{ width: 300 , height: 100}}>Python
+                            <Slider aria-label="Custom marks" name ="python" value ={python} step={null} 
+                            valueLabelDisplay="auto" marks={marks}onChange={onChange}/>
+                        </Box>
+                        <Box sx={{ width: 300 , height: 100}}>C#
+                            <Slider aria-label="Custom marks" name ="cs" value ={cs} step={null} 
+                            valueLabelDisplay="auto" marks={marks}onChange={onChange}/>
+                        </Box>
+                        <Box sx={{ width: 300 }}>JavaScript
+                            <Slider aria-label="Custom marks" name ="javascript" value ={javascript} step={null} 
+                            valueLabelDisplay="auto" marks={marks}onChange={onChange}/>
+                        </Box>
+                        <Box sx={{ width: 300 , height: 100}}>Visual Basic
+                            <Slider aria-label="Custom marks" name ="vb" value ={vb} step={null} 
+                            valueLabelDisplay="auto" marks={marks}onChange={onChange}/>
+                        </Box>
                     </Box>
                 </div>  
-            
-                <FormGroup>
-                    <FormControlLabel control={<Checkbox value="test1" onChange={handleChange} name="test1" />} label="test1" />  
-                    <FormControlLabel control={<Checkbox value="test2" onChange={handleChange} name="test2" />} label="test2" />
-                    <FormControlLabel control={<Checkbox value="test3" onChange={handleChange} name="test3" />} label="test3" />  
-                    <FormControlLabel control={<Checkbox value="test4" onChange={handleChange} name="test4" />} label="test4" />                 
-                </FormGroup>
+                모집할 팀원들의 키워드를 선택하세요
+                <Grid container direction="row" alignItems="center">
+                    <FormControlLabel control={<Checkbox value="프론트엔드 개발자" onChange={handleChange} name="프론트엔드 개발자" />} label="프론트엔드 개발자" />  
+                    <FormControlLabel control={<Checkbox value="백엔드 개발자" onChange={handleChange} name="백엔드 개발자" />} label="백엔드 개발자" />
+                    <FormControlLabel control={<Checkbox value="JAVA 마스터" onChange={handleChange} name="JAVA 마스터" />} label="JAVA 마스터" />  
+                    <FormControlLabel control={<Checkbox value="C언어 마스터" onChange={handleChange} name="C언어 마스터" />} label="C언어 마스터" />                 
+                </Grid>
                
-                    
-                <p>현재 팀원 수</p>
-                프론트
-                <Select
-                name="currentFrontMember"
-                value={currentFrontMember}
-                label="프론트"
-                onChange={onChange}
-                >
-                <MenuItem value={0}>0</MenuItem>
-                <MenuItem value={1}>1</MenuItem>
-                <MenuItem value={2}>2</MenuItem>
-                <MenuItem value={3}>3</MenuItem>
-                <MenuItem value={4}>4</MenuItem>
-                <MenuItem value={5}>5</MenuItem>
-                </Select>  
-                백
-                <Select
-                name="currentBackMember"
-                value={currentBackMember}
-                label="백"
-                onChange={onChange}
-                >
-                <MenuItem value={0}>0</MenuItem>
-                <MenuItem value={1}>1</MenuItem>
-                <MenuItem value={2}>2</MenuItem>
-                <MenuItem value={3}>3</MenuItem>
-                <MenuItem value={4}>4</MenuItem>
-                <MenuItem value={5}>5</MenuItem>
-                </Select>       
-                    
-                <p>모집하는 팀원 수</p>
-                프론트 : 
-                <Select
-                name="wantedFrontMember"
-                value={wantedFrontMember}
-                label="백"
-                onChange={onChange}
-                >
-                <MenuItem value={0}>0</MenuItem>
-                <MenuItem value={1}>1</MenuItem>
-                <MenuItem value={2}>2</MenuItem>
-                <MenuItem value={3}>3</MenuItem>
-                <MenuItem value={4}>4</MenuItem>
-                <MenuItem value={5}>5</MenuItem>
-                </Select>   
-                백 : 
-                <Select
-                name="wantedBackEndMember"
-                value={wantedBackEndMember}
-                label="백"
-                onChange={onChange}
-                >
-                <MenuItem value={0}>0</MenuItem>
-                <MenuItem value={1}>1</MenuItem>
-                <MenuItem value={2}>2</MenuItem>
-                <MenuItem value={3}>3</MenuItem>
-                <MenuItem value={4}>4</MenuItem>
-                <MenuItem value={5}>5</MenuItem>
-                </Select> 
+                <div className="team-count-box" style={{ display: 'flex', justifyContent: 'center' }}>
+                    <p>현재 팀원 수</p>
+                   
+                    <p>프론트 :</p>
+                    <Select
+                    name="currentFrontMember"
+                    value={currentFrontMember}
+                    label="프론트"
+                    onChange={onChange}
+                    >
+                    <MenuItem value={0}>0</MenuItem>
+                    <MenuItem value={1}>1</MenuItem>
+                    <MenuItem value={2}>2</MenuItem>
+                    <MenuItem value={3}>3</MenuItem>
+                    <MenuItem value={4}>4</MenuItem>
+                    <MenuItem value={5}>5</MenuItem>
+                    </Select>  
+                    <p>백 :</p>
+                    <Select
+                    name="currentBackMember"
+                    value={currentBackMember}
+                    label="백"
+                    onChange={onChange}
+                    >
+                    <MenuItem value={0}>0</MenuItem>
+                    <MenuItem value={1}>1</MenuItem>
+                    <MenuItem value={2}>2</MenuItem>
+                    <MenuItem value={3}>3</MenuItem>
+                    <MenuItem value={4}>4</MenuItem>
+                    <MenuItem value={5}>5</MenuItem>
+                    </Select>       
+                        
+                    <p>모집하는 팀원 수</p>
+                    <p>프론트 : </p>
+                    <Select
+                    name="wantedFrontMember"
+                    value={wantedFrontMember}
+                    label="백"
+                    onChange={onChange}
+                    >
+                    <MenuItem value={0}>0</MenuItem>
+                    <MenuItem value={1}>1</MenuItem>
+                    <MenuItem value={2}>2</MenuItem>
+                    <MenuItem value={3}>3</MenuItem>
+                    <MenuItem value={4}>4</MenuItem>
+                    <MenuItem value={5}>5</MenuItem>
+                    </Select>   
+                    <p>백 : </p>
+                    <Select
+                    name="wantedBackEndMember"
+                    value={wantedBackEndMember}
+                    label="백"
+                    onChange={onChange}
+                    >
+                    <MenuItem value={0}>0</MenuItem>
+                    <MenuItem value={1}>1</MenuItem>
+                    <MenuItem value={2}>2</MenuItem>
+                    <MenuItem value={3}>3</MenuItem>
+                    <MenuItem value={4}>4</MenuItem>
+                    <MenuItem value={5}>5</MenuItem>
+                    </Select>
+                </div>                     
                 <p>사용 DB</p>
                 <Box sx={{ width: 300 }}>SQL
                     <Slider aria-label="Custom marks" name ="sqlLang" value ={sqlLang} step={null} 
                     valueLabelDisplay="auto" marks={marks}onChange={onChange}/>
                 </Box>
                 <button onClick={() => {
-                  onSubmitHandler();       
+                    testSubmitHandler();
+                  //onSubmitHandler();       
                   }}>등록하기</button>
             </form>
             </div>

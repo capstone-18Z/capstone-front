@@ -1,15 +1,9 @@
 .teambuildingform {
   width: 100%;
     background-color: aliceblue;
-    text-align : center;
   }
 .team_form {  
   width: 800px;
   background-color: white;
   margin: auto;
-}
-.slider-container {
-  width: 300px;
-  text-align: center;
-  margin-left: 32%;
 }
