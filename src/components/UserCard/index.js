@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 function UserCard({ nickname, title, detail, postId }) {
   const navigate = useNavigate();
   return (
-    <span
+    <div
       className="usercard-box"
       onClick={(e) => {
         navigate(`/post/user/${postId}`);
@@ -15,7 +15,7 @@ function UserCard({ nickname, title, detail, postId }) {
         <div className="usercard-nickname">{nickname}</div>
         <div className="usercard-detail">{detail}</div>
       </div>
-    </span>
+    </div>
   );
 }
 

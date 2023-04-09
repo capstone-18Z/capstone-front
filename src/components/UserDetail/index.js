@@ -39,15 +39,15 @@ function UserDetail() {
     }
   };
   return (
-    <div>
+    <div className="userdetail-box">
       <div>
-        <h3>제목: {userDetailData.data.title}</h3>
+        <h2 className="userdetail-title">{userDetailData.data.title}</h2>
       </div>
       <div>
-        <p>닉네임: {userDetailData.data.nickname}</p>
+        <h4 className="userdetail-nickname">{userDetailData.data.nickname}</h4>
       </div>
       <div>
-        <p>언어</p>
+        <h4 className="userdetail-lang">언어</h4>
         <p>C: {userDetailData.data.c}</p>
         <p>C++: {userDetailData.data.cpp}</p>
         <p>C#: {userDetailData.data.cs}</p>
@@ -59,19 +59,27 @@ function UserDetail() {
         <p>Assembly: {userDetailData.data.assembly}</p>
         <p>Php: {userDetailData.data.php}</p>
       </div>
-      <div>
-        <p>키워드: {userDetailData && userDetailData.data.memberKeywords.map((data) => data.memberKeywords)}</p>
+      <div className="userdetail-keyword">
+        <h4>키워드</h4>
+        <p>{userDetailData.data.memberKeywords.map((data) => <p key={data}>{data}</p>)}</p>
       </div>
-      <div>
-        <p>내용: {userDetailData.data.detail}</p>
+      <div className="userdetail-detail">
+        <h4>내용</h4>
+        <img src={userDetailData.filenames} style={{width:"500px"}}></img>
+        <p>{userDetailData && userDetailData.filenames.map((data) => data.filenames)}</p>
+        <p> {userDetailData.data.detail}</p>
       </div>
-      <div>
-        <Button variant="contained" onClick={updateButton}>
-          수정
-        </Button>
-        <Button variant="contained" onClick={deleteButton}>
-          삭제
-        </Button>
+      <div className="userdetail-button">
+        <div className="update-button">
+          <Button variant="contained" onClick={updateButton}>
+            수정
+          </Button>
+        </div>
+        <div className="delete-button">
+          <Button variant="contained" onClick={deleteButton}>
+            삭제
+          </Button>
+        </div>
       </div>
     </div>
   );
