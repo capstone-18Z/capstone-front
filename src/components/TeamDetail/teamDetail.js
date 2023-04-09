@@ -58,7 +58,7 @@ function TeamDetail() {
     };
 
     const Putinputs = () => {
-        fetch(`http://1871166.iptime.org:8080/user-to-team/${teamId}/add`,{
+        fetch(`https://port-0-capstone-back-6g2llf7te70n.sel3.cloudtype.app/user-to-team/${teamId}/add`,{
             method: 'POST',
             headers: {
                 'refresh-token': refresh_token,
@@ -76,7 +76,7 @@ function TeamDetail() {
     }
 
     useEffect(() => {                 
-        fetch(`http://1871166.iptime.org:8080/teams/${teamId}`,{     
+        fetch(`https://port-0-capstone-back-6g2llf7te70n.sel3.cloudtype.app/teams/${teamId}`,{     
             headers: {
                 'refresh-token': refresh_token,
                 'login-token': login_token,
@@ -114,7 +114,7 @@ function TeamDetail() {
                 수정하기</button>
 
                 <button onClick={() =>{
-                    fetch(`http://1871166.iptime.org:8080/teams/${teamId}/delete`,{
+                    fetch(`https://port-0-capstone-back-6g2llf7te70n.sel3.cloudtype.app/teams/${teamId}/delete`,{
                         method: 'POST',
                         headers: {
                             'refresh-token': refresh_token,
