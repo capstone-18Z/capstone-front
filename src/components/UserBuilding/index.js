@@ -2,7 +2,7 @@ import "./style.css";
 import { TextField, Typography, Rating, Button, Select, MenuItem } from "@mui/material";
 import { useState, useRef } from "react";
 import axios from "axios";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const BASE_URL = "https://port-0-capstone-back-6g2llf7te70n.sel3.cloudtype.app";
 
@@ -23,7 +23,9 @@ function UserBuilding() {
     javascript: "",
     python: "",
     sqllang: "",
+    memberKeywords: [],
   });
+  const [keywords, setKeywords] = useState([]);
   const [showImg, setShowImg] = useState(null);
   const [imgFile, setImgFile] = useState(null);
   const imgRef = useRef();
@@ -44,6 +46,20 @@ function UserBuilding() {
       ...userform, // 기존의 input 객체를 복사한 뒤
       [name]: Number(value), // name 키를 가진 값을 value 로 설정
     });
+  };
+
+  const onChange3 = (e) => {
+    const { value } = e.target;
+    const newKeywords = [...keywords, value];
+    setKeywords(newKeywords);
+    if (keywords.includes(value)) {
+      setKeywords(keywords.filter((v) => v !== value));
+    } else {
+      setUserForm({
+        ...userform,
+        memberKeywords: newKeywords.map((data) => ({ "value": data })),
+      });
+    }
   };
 
   const onClick = (e) => {
@@ -89,12 +105,11 @@ function UserBuilding() {
 
   return (
     <div className="userform-box">
-      <Link to="/post/usertest">키워드</Link>
       <h1 className="userform-title">사용자 정보 등록 폼</h1>
       <form>
         <div className="profile-img">
           <div>
-            <img src={showImg} alt=""></img>
+            <img src={showImg} alt="" style={{width:"500px"}}></img>
           </div>
           <input type="file" accept="image/*" onChange={handleImageUrlChange} ref={imgRef} />
         </div>
@@ -102,15 +117,15 @@ function UserBuilding() {
           <TextField fullWidth label="제목" variant="outlined" value={title} name="title" onChange={onChange} />
         </div>
         <div>
-          <h3>희망 참여 분야</h3>
+          <h3 className="job-title">희망 참여 분야</h3>
           <Select fullWidth labelId="demo-simple-select-label" name="field" value={field} label="" onChange={onChange}>
             <MenuItem value={1}>프론트엔드</MenuItem>
             <MenuItem value={2}>백엔드</MenuItem>
             <MenuItem value={0}>상관없음</MenuItem>
           </Select>
         </div>
-        <h3>언어</h3>
         <div className="lang-box">
+          <h3 className="lang-title">언어</h3>
           <div className="rating-box">
             <Typography component="legend">C</Typography>
             <Rating name="c" precision={1} value={c} onChange={onChange2} />
@@ -133,6 +148,24 @@ function UserBuilding() {
             <Typography component="legend">php</Typography>
             <Rating name="php" precision={1} value={php} onChange={onChange2} />
           </div>
+        </div>
+        <div className="keyword-box">
+          <TextField
+            margin="normal"
+            fullWidth
+            id="standard-basic"
+            variant="standard"
+            value={keywords.map((data) => data)}
+          />
+          <Button variant="outlined" name="memberKeywords" value="프론트엔드 개발자" onClick={onChange3}>
+            프론트엔드 개발자
+          </Button>
+          <Button variant="outlined" name="memberKeywords" value="백엔드 개발자" onClick={onChange3}>
+            백엔드 개발자
+          </Button>
+          <Button variant="outlined" name="memberKeywords" value="풀스택 개발자" onClick={onChange3}>
+            풀스택 개발자
+          </Button>
         </div>
         <div className="userform-text">
           <TextField

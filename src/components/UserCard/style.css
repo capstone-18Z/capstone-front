@@ -1,6 +1,8 @@
 .usercard-box {
+  width: 300px;
+  height: 300px;
+  margin: 15px;
   display: flex;
-  justify-content: center;
 }
 .usercard-content {
   width: 200px;

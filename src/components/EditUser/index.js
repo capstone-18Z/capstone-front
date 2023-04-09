@@ -1,8 +1,7 @@
-import "./style.css";
 import { TextField, Typography, Rating, Button, Select, MenuItem } from "@mui/material";
 import { useState, useRef, useEffect } from "react";
 import axios from "axios";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 const BASE_URL = "https://port-0-capstone-back-6g2llf7te70n.sel3.cloudtype.app";
 
@@ -36,17 +35,16 @@ function EditUser() {
   // get 읽어오기
   const [payload, setPayload] = useState("");
 
-  const fetchData = async () => {
-    try {
-      const response = await axios.get(`${BASE_URL}/member/post/${postId}`);
-      console.log(response.data);
-      setPayload(response.data);
-    } catch (error) {}
-  };
-
   useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(`${BASE_URL}/member/post/${postId}`);
+        console.log(response.data);
+        setPayload(response.data);
+      } catch (error) {}
+    };
     fetchData();
-  });
+  }, []);
 
   useEffect(() => {
     if (payload) {
@@ -65,6 +63,9 @@ function EditUser() {
         python: payload.data.python,
         sqllang: payload.data.sqllang,
       });
+      setShowImg(payload.filenames);
+      // const url = payload.filenames;
+      // convertURLtoFile(url);
     }
   }, [payload]);
 
@@ -111,6 +112,7 @@ function EditUser() {
   const handleImageUrlChange = (e) => {
     e.preventDefault();
     const file = e.target.files[0]; //선택된 파일 가져오기
+    console.log(file);
     setImgFile(file);
     //이미지 사이즈 제한
     if (file.size > 10 * 1024 * 1024) {
@@ -125,14 +127,21 @@ function EditUser() {
     };
   };
 
+  // const convertURLtoFile = async (url) => {
+  //   const data = await url.blob();
+  //   const filename = url.match(/\/([^/]+)\?alt=media$/)[1];
+  //   const extension = filename.split(".").pop();
+  //   const metadata = { type: `image/${extension}` };
+  //   return new File([data], filename, metadata);
+  // };
+
   return (
     <div className="userform-box">
-      <Link to="/post/usertest">키워드</Link>
       <h1 className="userform-title">사용자 정보 등록 폼</h1>
       <form>
         <div className="profile-img">
           <div>
-            <img src={showImg} alt=""/>
+            <img src={showImg} alt="" style={{ width: "500px" }} />
           </div>
           <input type="file" accept="image/*" onChange={handleImageUrlChange} ref={imgRef} />
         </div>
