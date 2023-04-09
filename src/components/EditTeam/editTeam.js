@@ -13,7 +13,7 @@ function EditTeam() {
  
 
     useEffect(() => {                       
-        fetch(`http://1871166.iptime.org:8080/teams/${teamId}`,{     
+        fetch(`https://port-0-capstone-back-6g2llf7te70n.sel3.cloudtype.app/teams/${teamId}`,{     
                 headers: {
                     'refresh-token': refresh_token,
                     'login-token': login_token,
@@ -97,8 +97,9 @@ const onChange = (e) => {
 const PostRequest = (e) => {
     e.preventDefault();
 }
+
 const onSubmitHandler = (e) => {
-    fetch(`http://1871166.iptime.org:8080/teams/${teamId}/update`,{
+    fetch(`https://port-0-capstone-back-6g2llf7te70n.sel3.cloudtype.app/teams/${teamId}/update`,{
       method: 'POST',
       headers: {
         'refresh-token': refresh_token,

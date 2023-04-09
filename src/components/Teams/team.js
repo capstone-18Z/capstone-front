@@ -14,7 +14,7 @@ function Team() {
     
       
     useEffect(() => {                   
-        fetch('http://1871166.iptime.org:8080/teams',{
+        fetch('https://port-0-capstone-back-6g2llf7te70n.sel3.cloudtype.app/teams',{
             headers: {
                 'refresh-token': refresh_token,
                 'login-token': login_token,//헤더로 로그인 토큰 넣어야 삭제됨
@@ -50,8 +50,7 @@ function Team() {
             
             <div className="card-container">          
                 {teamList && teamList.map(data => (
-                <div key={data.teamId} className="card" sx={{ ...cardStyle, ...mediaQueryStyle }}>
-                    
+                <div key={data.teamId} className="card_ryu" sx={{ ...cardStyle, ...mediaQueryStyle }}>                    
                     <Card team={data} />
                 </div>
                 ))}

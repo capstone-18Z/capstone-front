@@ -1,6 +1,7 @@
 import {useNavigate} from "react-router-dom";
 import { useState } from "react";
-const BASE_URL ='http://1871166.iptime.org:8080';
+import "./card.css"
+const BASE_URL ='https://port-0-capstone-back-6g2llf7te70n.sel3.cloudtype.app';
 
 export const Card = (team) => {
   const navigate = useNavigate();
@@ -11,10 +12,10 @@ export const Card = (team) => {
     <div className="card-wrapper" onClick={()   => {
       navigate(`/team/${data.team.teamId}`)
     }}>
-      <div className="card h-100">
+      
                     <div className="card-image">
                     {data.team.imagePaths.map(filename => (
-                      <img src={`${BASE_URL}/upload/${filename}`} alt={filename} key={filename} style={{ width: "100%", height: "auto" }} />
+                      <img src={`${filename}`} alt={filename} key={filename} style={{ width: "100%", height: "auto" }} />
                     ))}
                     </div>
                     <div className="card-body">
@@ -24,7 +25,7 @@ export const Card = (team) => {
                     <p className="card-text">현재 구하는 팀원 수: 프론트엔드{data.team.wantedFrontMember} 백엔드{data.team.wantedBackEndMember}</p>
                     <p className="card-text"><small className="text-muted">Last updated 3 mins ago</small></p>
                     </div>
-                </div>
+                
     </div>
   );
 };

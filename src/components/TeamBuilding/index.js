@@ -92,7 +92,7 @@ function TeamBuilding() {
         });
 
         try {
-          const response = await axios.post("http://1871166.iptime.org:8080/teams/teams/new", test, {
+          const response = await axios.post("https://port-0-capstone-back-6g2llf7te70n.sel3.cloudtype.app/teams/new", test, {
             headers: {
               "Content-Type": "multipart/form-data",
               'refresh-token': refresh_token,
@@ -108,7 +108,7 @@ function TeamBuilding() {
         }
       };
     const onSubmitHandler = (e) => {
-        fetch('http://1871166.iptime.org:8080/teams/new',{
+        fetch('https://port-0-capstone-back-6g2llf7te70n.sel3.cloudtype.app/teams/new',{
           method: 'POST',
           headers: {
             'refresh-token': refresh_token,

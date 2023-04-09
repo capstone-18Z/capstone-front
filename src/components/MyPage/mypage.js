@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import MyPageList from "../MyPageList/mypagelist";
 
-const BASE_URL = "http://1871166.iptime.org:8080";
 
+const BASE_URL = "https://port-0-capstone-back-6g2llf7te70n.sel3.cloudtype.app";
 
 
 function MyPage() {
@@ -18,24 +18,25 @@ function MyPage() {
             } 
     })
     .then((response) => response.json())        
-    .then((obj) => {setMyPageData(obj.data.myAllTeams); console.log(obj.data.myAllTeams)});
+    .then((obj) => {setMyPageData(obj.data.myAllTeams); console.log(obj.data)});
     }, []);
     
-    return (
-        <div>
-            밑에 리스트가 뜹니다.
-            {mypagedata && mypagedata.map(team =>(                     
-                    <div key={team.teamId} className="card" sx={{ width: 200, height: 200 }}>
-                        
-                    {team.requestList && team.requestList.map(request => (
-                        
-                        <MyPageList request={request}/>
-                        
-                        
+   
+/*
+
+*/
+    return (     
+        <div>          
+        현재 팀별 모집 상황
+            {mypagedata && mypagedata.map(team =>(  
+                    <div key={team.teamId} className="requestlist">
+                    <li className='tap'
+                    onClick={() => (console.log(team))}>팀 제목: {team.title}  </li>                       
+                    {team.requestList && team.requestList.map(request => (                        
+                        <MyPageList key={request.requestId} request={request}/>
                     ))}
-                    </div>
-                                       
-                ))}
+                    </div>                                       
+                ))}    
         </div>
     );
 }
