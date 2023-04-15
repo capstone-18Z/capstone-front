@@ -1,5 +1,6 @@
-import { TextField, Button, Select, MenuItem, Box } from "@mui/material";
+import { TextField, Button, Select, MenuItem, Box, FormControl, InputLabel } from "@mui/material";
 import { useState, useEffect, useRef } from "react";
+import "./style.css";
 import useInput from "../../hooks/useInput";
 import Languages from "../TechniqueStack/language";
 import Framework from "../TechniqueStack/framework";
@@ -85,7 +86,7 @@ function EditProfile() {
       teamPurposes,
       languageValues,
       frameworkValues,
-      databaseValues
+      databaseValues,
     };
     console.log(getAllFormData);
     formData.append("metadata", JSON.stringify(getAllFormData));
@@ -150,67 +151,68 @@ function EditProfile() {
   return (
     <div className="profile-box">
       <form>
-        <div>
-          <div className="nickname-box">
-            <p>닉네임</p>
-            <TextField
-              name="nickname"
-              value={inputs.nickname}
-              label="Standard"
-              variant="standard"
-              onChange={setInputs}
-            />
-          </div>
-          <div className="email-box">
-            <p>이메일</p>
-            <TextField name="email" value={inputs.email} label="Standard" variant="standard" onChange={setInputs} />
-          </div>
-          <div className="grade-box">
-            <p>학년</p>
-            <Select
-              fullWidth
-              labelId="demo-simple-select-standard-label"
-              name="grade"
-              label=""
-              value={inputs.grade || ""}
-              onChange={setInputs}
-            >
-              <MenuItem value={1}>1학년</MenuItem>
-              <MenuItem value={2}>2학년</MenuItem>
-              <MenuItem value={3}>3학년</MenuItem>
-              <MenuItem value={4}>4학년</MenuItem>
-            </Select>
-          </div>
-          <div className="githublink-box">
-            <p>깃허브 링크</p>
-            <TextField label="Standard" variant="standard" name="gitlink" value={inputs.gitlink} onChange={setInputs} />
+        <div className="inline-box">
+          <div>
+            <div className="nickname-box">
+              <p className="p-title">닉네임</p>
+              <TextField size="small" margin="dense" name="nickname" value={inputs.nickname} onChange={setInputs} />
+            </div>
+            <div className="email-box">
+              <p className="p-title">이메일</p>
+              <TextField size="small" margin="dense" name="email" value={inputs.email} onChange={setInputs} />
+            </div>
+            <div className="grade-box">
+              <p className="p-title">학년</p>
+              <FormControl size="small" margin="dense">
+                <InputLabel></InputLabel>
+                <Select sx={{ width: "100px" }} name="grade" value={inputs.grade || ""} onChange={setInputs}>
+                  <MenuItem value={1}>1학년</MenuItem>
+                  <MenuItem value={2}>2학년</MenuItem>
+                  <MenuItem value={3}>3학년</MenuItem>
+                  <MenuItem value={4}>4학년</MenuItem>
+                </Select>
+              </FormControl>
+            </div>
+            <div className="githublink-box">
+              <p className="p-title">깃허브 링크</p>
+              <TextField size="small" margin="dense" name="gitlink" value={inputs.gitlink} onChange={setInputs} />
+            </div>
           </div>
           <div className="profile-img">
             <div>
-              <img src={showImg} alt="" style={{ width: "500px" }}></img>
+              <div>
+                <img src={showImg} alt="" style={{ width: "200px", height: "200px" }}></img>
+              </div>
+              <input type="file" accept="image/*" onChange={handleImageUrlChange} ref={imgRef} />
             </div>
-            <input type="file" accept="image/*" onChange={handleImageUrlChange} ref={imgRef} />
           </div>
         </div>
         <div className="keyword-box">
-          <TextField margin="normal" fullWidth variant="standard" value={category.map((data) => data)} />
-          <Button variant="outlined" value="캡스톤 디자인" onClick={onChange3}>
-            캡스톤 디자인
-          </Button>
-          <Button variant="outlined" value="과목 팀프로젝트" onClick={onChange3}>
-            과목 팀프로젝트
-          </Button>
-          <Button variant="outlined" value="공모전 및 대회" onClick={onChange3}>
-            공모전 및 대회
-          </Button>
-          <Button variant="outlined" value="개인 팀프로젝트" onClick={onChange3}>
-            개인 팀프로젝트
-          </Button>
-          {fieldToggle && (
-            <div className="field-toggle-box">
+          <p className="p-title">원하는 팀</p>
+          <div className="button-box">
+            <TextField fullWidth size="small" margin="dense" value={category.map((data) => data)} />
+            <Button variant="outlined" sx={{margin:"10px"}}  value="캡스톤 디자인" onClick={onChange3}>
+              캡스톤 디자인
+            </Button>
+            <Button variant="outlined" sx={{margin:"10px"}} value="과목 팀프로젝트" onClick={onChange3}>
+              과목 팀프로젝트
+            </Button>
+            <Button variant="outlined" sx={{margin:"10px"}} value="공모전 및 대회" onClick={onChange3}>
+              공모전 및 대회
+            </Button>
+            <Button variant="outlined" sx={{margin:"10px"}} value="개인 팀프로젝트" onClick={onChange3}>
+              개인 팀프로젝트
+            </Button>
+          </div>
+        </div>
+        {fieldToggle && (
+          <div className="field-toggle-box">
+            <p className="p-title"></p>
+            <InputLabel></InputLabel>
+            <FormControl size="small" margin="dense">
               <Select
-                fullWidth
-                labelId="demo-simple-select-standard-label"
+                sx={{ width: "200px" }}
+                
                 name="field"
                 value={field}
                 onChange={(e) => {
@@ -222,33 +224,36 @@ function EditProfile() {
                 <MenuItem value={2}>백엔드</MenuItem>
                 <MenuItem value={0}>상관없음</MenuItem>
               </Select>
+            </FormControl>
+          </div>
+        )}
+        {subjectToggle && (
+          <div className="subject-toggle-box">
+            <div className="inline-box">
+              <p className="p-title">과목</p>
+              <TextField
+                size="small"
+                margin="dense"
+                value={subject}
+                onChange={(e) => {
+                  setSubject(e.target.value);
+                }}
+              />
             </div>
-          )}
-          {subjectToggle && (
-            <div className="subject-toggle-box">
-              <div>
-                <p>과목</p>
-                <TextField
-                  value={subject}
-                  variant="standard"
-                  onChange={(e) => {
-                    setSubject(e.target.value);
-                  }}
-                />
-              </div>
-              <div>
-                <p>분반</p>
-                <TextField
-                  value={subClass}
-                  variant="standard"
-                  onChange={(e) => {
-                    setSubClass(e.target.value);
-                  }}
-                />
-              </div>
+            <div className="inline-box">
+              <p className="p-title">분반</p>
+              <TextField
+                size="small"
+                margin="dense"
+                sx={{ width: "50px" }}
+                value={subClass}
+                onChange={(e) => {
+                  setSubClass(e.target.value);
+                }}
+              />
             </div>
-          )}
-        </div>
+          </div>
+        )}
         <div className="team-lang-box" style={{ justifyContent: "center" }}>
           <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
             <h3>LANGUAGE</h3>
