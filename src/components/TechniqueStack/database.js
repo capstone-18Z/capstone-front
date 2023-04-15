@@ -52,15 +52,15 @@ function Database({ databaseValues, onDatabaseValueChange }) {
         }
     
         return (
-          <div style={{ display: "flex", alignItems: "center" }}>
-            <div style={{ width: "100px", textAlign: "center" }}>  
+          <div key={database} style={{ display: "flex", alignItems: "center" }}>
+            <div style={{ width: "150px", textAlign: "center" }}>  
                 {database === 'mysqlL' ? 'MYSQL' : null }
                 {database === 'mariadbL' ? 'MARIA DB' : null }
                 {database === 'mongodbL' ? 'MONGO DB' : null }
                 {database === 'schemaL' ? 'DB 설계' : null }
             </div>          
-            <Slider aria-label="Custom marks" name ="sqlLang" value ={databaseValues[database]} step={null} 
-                    valueLabelDisplay="auto" marks={marks} onChange={(event) => handleSliderChange(event, database)} sx={{ width: "200px", marginLeft: "10px" }}/>
+            <Slider aria-label="Custom marks"  value ={databaseValues[database]} step={null} 
+                    valueLabelDisplay="auto" marks={marks} onChange={(event) => handleSliderChange(event, database)} sx={{ width: "350px", marginLeft: "50px" }}/>
           </div>
         );
       };
@@ -68,16 +68,15 @@ function Database({ databaseValues, onDatabaseValueChange }) {
     
       return (
         <div>
-          {data.map(data => ( //map함수로 여러개의 button을 생성
-            <Button key={data} variant="outlined" onClick={() => toggleDatabase(data)}>
-              {data.toUpperCase().replace('MYSQLL', 'MYSQL').replace('MARIADBL','MARIA DB').replace('MONGODBL','MONGO DB').replace('SCHEMAL','데이터베이스 설계')}
-            </Button>
-          ))}
-          <div>          
-
-          </div>
-            <div style={{ width: "800px"}}className='database_slidebars'>
-            {data.map((database) => (renderDatabaseSlider(database)))}
+            <div style={{ width: "500px", display: "flex", justifyContent: "center", flexWrap: "wrap", margin: "0 auto" }}>
+                {data.map(data => (
+                    <Button key={data} variant="outlined" onClick={() => toggleDatabase(data)} style={{ margin: '8px' }}>
+                    {data.toUpperCase().replace('MYSQLL', 'MYSQL').replace('MARIADBL','MARIA DB').replace('MONGODBL','MONGO DB').replace('SCHEMAL','SCHEMA')}
+                    </Button>
+                ))}
+            </div>
+            <div className='database_slidebars'>
+                {data.map((database) => (renderDatabaseSlider(database)))}
             </div>
         </div>
       );

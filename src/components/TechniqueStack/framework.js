@@ -3,12 +3,12 @@ import { Button,Slider  } from "@mui/material";
 function Framework({ frameworkValues, onFrameworkValueChange }) {
     const [selectedFrameworks, setSelectedFrameworks] = useState({
         react: false,
-        androidstudio: false,
+        androidStudio: false,
         nodejs: false,
         xcode:false,
         spring:false,
         unity:false,
-        unrealengine:false,
+        unrealEngine:false,
         tdmax: false,        
       });
     
@@ -55,32 +55,31 @@ function Framework({ frameworkValues, onFrameworkValueChange }) {
         }
     
         return (
-          <div style={{ display: "flex", alignItems: "center" }}>
-            <div style={{ width: "100px", textAlign: "center" }}>     
+          <div key={framework} style={{ display: "flex", alignItems: "center" }}>
+            <div style={{ width: "150px", textAlign: "center" }}>     
                 {framework === 'tdmax' ? '3DMAX' : null }         
                 {framework !== 'tdmax' ? framework.toUpperCase() : null}
             </div>          
-            <Slider aria-label="Custom marks" name ="sqlLang" value ={frameworkValues[framework]} step={null} 
-                    valueLabelDisplay="auto" marks={marks} onChange={(event) => handleSliderChange(event, framework)} sx={{ width: "200px", marginLeft: "10px" }}/>
+            <Slider aria-label="Custom marks"  value ={frameworkValues[framework]} step={null} 
+                    valueLabelDisplay="auto" marks={marks} onChange={(event) => handleSliderChange(event, framework)} sx={{ width: "350px", marginLeft: "50px" }}/>
           </div>
         );
       };
-      const data = ['react','androidstudio', 'nodejs','xcode', 'spring', 'unity', 'unrealengine', 'tdmax' ]; // lang 변수가 버튼의 이름이자 서버에 넘길 값들
+      const data = ['react','androidStudio', 'nodejs','xcode', 'spring', 'unity', 'unrealEngine', 'tdmax' ]; // lang 변수가 버튼의 이름이자 서버에 넘길 값들
     
       return (
         <div>
-          {data.map(data => ( //map함수로 여러개의 button을 생성
-            <Button key={data} variant="outlined" onClick={() => toggleFramework(data)}>
-              {data.toUpperCase().replace('_3DMAX', '3DMAX')}
+        <div style={{ width: "500px", display: "flex", justifyContent: "center", flexWrap: "wrap", margin: "0 auto" }}>
+          {data.map(data => (
+            <Button key={data} variant="outlined" onClick={() => toggleFramework(data)} style={{ margin: '8px' }}>
+              {data.toUpperCase().replace('TDMAX', '3DMAX')}
             </Button>
           ))}
-          <div>          
-
-          </div>
-          <div className='framework_slidebars'>
-          {data.map((framework) => (renderFrameworkSlider(framework)))}
-          </div>
         </div>
+        <div className='framework_slidebars' style={{ marginLeft: "50px" }}>
+          {data.map((framework) => (renderFrameworkSlider(framework)))}
+        </div>
+      </div>
       );
     };
 

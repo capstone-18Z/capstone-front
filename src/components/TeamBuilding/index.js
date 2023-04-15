@@ -44,9 +44,13 @@ function TeamBuilding() {
     },[keywords])
 
     const [inputs, setInputs] = useState({
-        //프로젝트 제목, 설명 데이터 관리
+        //프로젝트 제목, 목적 데이터 관리
         title: "",
-        detail: "",
+        purpose : "",
+        purposeDetail1: "",
+        purposeDetail2: "",
+        purposeDetail3: "",
+        wantTeamMemberCount: 0,
         //현재 프론트, 백 팀원수 데이터 관리
         currentFrontMember: 0,
         currentBackMember:0,
@@ -59,7 +63,7 @@ function TeamBuilding() {
         createDate: now,
         updateDate: now,
     });
-    const {currentFrontMember, currentBackMember,wantedFrontMember,wantedBackEndMember, title,createDate, updateDate} = inputs;	//비구조화 할당
+    const {wantTeamMemberCount, title,purpose,purposeDetail1,purposeDetail2,purposeDetail3 ,createDate, updateDate} = inputs;	//비구조화 할당
    
     const onChange = (e) => {
         const {name, value} = e.target;
@@ -82,7 +86,9 @@ function TeamBuilding() {
         const test = new FormData();
         const newinputs= {
           ...inputs,
-          languageValues,
+          teamLanguage,
+          teamFramework,
+          teamDatabase,
         }
 
         test.append("team", JSON.stringify(newinputs));
@@ -92,7 +98,7 @@ function TeamBuilding() {
         });       
         
         try {
-          const response = await axios.post("https://port-0-capstone-back-6g2llf7te70n.sel3.cloudtype.app/teams/new", test, {
+          const response = await axios.post("http://1871166.iptime.org:8080/teams/test/add", test, {
             headers: {
               "Content-Type": "multipart/form-data",
               'refresh-token': refresh_token,
@@ -109,7 +115,7 @@ function TeamBuilding() {
       };
       /*
     const onSubmitHandler = (e) => {
-        fetch('https://port-0-capstone-back-6g2llf7te70n.sel3.cloudtype.app/teams/new',{
+        fetch('http://1871166.iptime.org:8080/teams/new',{
           method: 'POST',
           headers: {
             'refresh-token': refresh_token,
@@ -137,42 +143,39 @@ function TeamBuilding() {
 
     const [uploadedFiles, setUploadedFiles] = useState([]);
 
-    const [languageValues, setLanguageValues] = useState({
-        c: 0, cpp: 0, cs: 0, java:0, javascript:0, sql:0, swift:0,
+    const [teamLanguage, setTeamLanguage] = useState({
+        c: 0, cpp: 0, cs: 0, java:0, javascript:0, sql_Lang:0, swift:0,
         kotlin:0, typescript:0, python:0, html:0, r:0,
       });
 
-    const handleLanguageValueChange = (newLanguageValues) => {
-        setLanguageValues(newLanguageValues);       
+    const handleTeamLanguageChange = (teamLanguage) => {
+        setTeamLanguage(teamLanguage);       
     };
 
-    const [frameworkValues, setFrameworkValues] = useState({
-        react: 0, androidstudio: 0, nodejs: 0, xcode:0,
-        spring:0, unity:0, unrealengine:0, tdmax: 0,    
+    const [teamFramework, setTeamFramework] = useState({
+        react: 0, androidStudio: 0, nodejs: 0, xcode:0,
+        spring:0, unity:0, unrealEngine:0, tdmax: 0,    
       });
 
-    const handleFrameworkValueChange = (frameworkValues) => {
-        setFrameworkValues(frameworkValues);       
+    const handleTeamFrameworkValueChange = (teamFramework) => {
+        setTeamFramework(teamFramework);       
     };
-
-    const [databaseValues, setDatabaseValues] = useState({
+   
+    const [teamDatabase, setTeamDatabase] = useState({
         mysqlL: 0, mariadbL: 0, mongodbL: 0, schemaL:0,   
       });
 
-    const handleDatabaseValueChange = (databaseValues) => {
-        setDatabaseValues(databaseValues);       
+    const handleTeamDatabaseChange = (teamDatabase) => {
+        setTeamDatabase(teamDatabase);       
     };
 
     const valuetest= () => {
-        console.log(languageValues)
     }
     
     return (
         <div className="teambuildingform">
             <div className="team_form">            
-            <h1>팀 빌딩 폼</h1>
-
-            
+            <h1>팀 빌딩 폼</h1>            
             
             <form name="team-form" onSubmit={PostRequest}>
                 <h2>프로젝트</h2>
@@ -197,22 +200,50 @@ function TeamBuilding() {
                 
                 <MyDropzone uploadedFiles={uploadedFiles} setUploadedFiles={setUploadedFiles}/>
                 
-                <div className="team-lang-box" style={{  justifyContent: 'center' }}>                       
-                    <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                        <h3>LANGUAGE</h3>    
-                        <Languages languageValues={languageValues}  onLanguageValueChange={handleLanguageValueChange}/>                    
-                    </Box>
-                    <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                        <h3>FRAMEWORK & PLATFORM</h3>    
-                        <Framework frameworkValues={frameworkValues}  onFrameworkValueChange={handleFrameworkValueChange}/>                    
-                    </Box>
-                    <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                        <h3>DATABASE</h3>    
-                        <Database databaseValues={databaseValues} onDatabaseValueChange={handleDatabaseValueChange}/>         
-                    </Box>
-                </div>  
+                <div style={{ display: 'flex' }}>
+                    <h3>팀 빌딩 목적</h3>
+                    <Select name="purpose" value={purpose} label="모집 인원 수" onChange={onChange}>
+                        <MenuItem value={"개인 팀프로젝트"}>개인 팀프로젝트</MenuItem>
+                        <MenuItem value={"공모전 및 대회"}>공모전 및 대회</MenuItem>
+                        <MenuItem value={"캡스톤 디자인"}>캡스톤 디자인</MenuItem>
+                        <MenuItem value={"과목 팀프로젝트"}>과목 팀프로젝트</MenuItem>
+                    </Select> 
+                </div>
 
-                모집할 팀원들의 키워드를 선택하세요
+                
+                {purpose === "과목 팀프로젝트" ? (
+                <div style={{ display: 'flex' }}>
+                    <h3>과목</h3>
+                    <Select name="purposeDetail1" value={purposeDetail1} label="과목 선택" onChange={onChange}>
+                        <MenuItem value={"webpramework1"}>웹프레임워크1</MenuItem>
+                        <MenuItem value={"network"}>네트워크프로그래밍</MenuItem>
+                        <MenuItem value={"android"}>안드로이드프로그래밍</MenuItem>
+                        <MenuItem value={"highAndroid"}>고급모바일프로그래밍</MenuItem>                        
+                    </Select>
+                    <h3>분반</h3>
+                    <Select name="purposeDetail2" value={purposeDetail2} label="분반 선택" onChange={onChange}>
+                        <MenuItem value={"a"}>A</MenuItem>
+                        <MenuItem value={"b"}>B</MenuItem>
+                        <MenuItem value={"c"}>C</MenuItem>
+                        <MenuItem value={"d"}>D</MenuItem>   
+                        <MenuItem value={"e"}>E</MenuItem>
+                        <MenuItem value={"7"}>7</MenuItem>      
+                        <MenuItem value={"8"}>8</MenuItem>    
+                        <MenuItem value={"N"}>N</MenuItem>   
+                        <MenuItem value={"O"}>O</MenuItem>   
+                    </Select>
+                </div>
+                ) : (
+                    <div style={{ display: 'flex' }}>
+                    <h3>역할 선택</h3>
+                    <Select name="purposeDetail1" value={purposeDetail1} label="역할 선택" onChange={onChange}>
+                        <MenuItem value={"front"}>프론트엔드</MenuItem>
+                        <MenuItem value={"back"}>백엔드</MenuItem>
+                        <MenuItem value={"free"}>상관없음</MenuItem> 
+                    </Select>
+                    </div>
+                )}
+                모집할 분야를 선택하세요
                 <Grid container direction="row" alignItems="center">
                     <FormControlLabel control={<Checkbox value="프론트엔드 개발자" onChange={handleChange} name="프론트엔드 개발자" />} label="프론트엔드 개발자" />  
                     <FormControlLabel control={<Checkbox value="백엔드 개발자" onChange={handleChange} name="백엔드 개발자" />} label="백엔드 개발자" />
@@ -220,69 +251,40 @@ function TeamBuilding() {
                     <FormControlLabel control={<Checkbox value="C언어 마스터" onChange={handleChange} name="C언어 마스터" />} label="C언어 마스터" />                 
                 </Grid>
                
-                <div className="team-count-box" style={{ display: 'flex', justifyContent: 'center' }}>
-                    <p>현재 팀원 수</p>
-                   
-                    <p>프론트 :</p>
+                <div style={{ display: 'flex' }}>
+                    <h3>모집 인원</h3>
                     <Select
-                    name="currentFrontMember"
-                    value={currentFrontMember}
-                    label="프론트"
-                    onChange={onChange}
-                    >
-                    <MenuItem value={0}>0</MenuItem>
-                    <MenuItem value={1}>1</MenuItem>
-                    <MenuItem value={2}>2</MenuItem>
-                    <MenuItem value={3}>3</MenuItem>
-                    <MenuItem value={4}>4</MenuItem>
-                    <MenuItem value={5}>5</MenuItem>
-                    </Select>  
-                    <p>백 :</p>
-                    <Select
-                    name="currentBackMember"
-                    value={currentBackMember}
-                    label="백"
-                    onChange={onChange}
-                    >
-                    <MenuItem value={0}>0</MenuItem>
-                    <MenuItem value={1}>1</MenuItem>
-                    <MenuItem value={2}>2</MenuItem>
-                    <MenuItem value={3}>3</MenuItem>
-                    <MenuItem value={4}>4</MenuItem>
-                    <MenuItem value={5}>5</MenuItem>
-                    </Select>       
-                        
-                    <p>모집하는 팀원 수</p>
-                    <p>프론트 : </p>
-                    <Select
-                    name="wantedFrontMember"
-                    value={wantedFrontMember}
-                    label="백"
-                    onChange={onChange}
-                    >
-                    <MenuItem value={0}>0</MenuItem>
-                    <MenuItem value={1}>1</MenuItem>
-                    <MenuItem value={2}>2</MenuItem>
-                    <MenuItem value={3}>3</MenuItem>
-                    <MenuItem value={4}>4</MenuItem>
-                    <MenuItem value={5}>5</MenuItem>
-                    </Select>   
-                    <p>백 : </p>
-                    <Select
-                    name="wantedBackEndMember"
-                    value={wantedBackEndMember}
-                    label="백"
-                    onChange={onChange}
-                    >
-                    <MenuItem value={0}>0</MenuItem>
-                    <MenuItem value={1}>1</MenuItem>
-                    <MenuItem value={2}>2</MenuItem>
-                    <MenuItem value={3}>3</MenuItem>
-                    <MenuItem value={4}>4</MenuItem>
-                    <MenuItem value={5}>5</MenuItem>
-                    </Select>
+                        name="wantTeamMemberCount"
+                        value={wantTeamMemberCount}
+                        label="모집 인원 수"
+                        onChange={onChange}
+                        >
+                        <MenuItem value={0}>0</MenuItem>
+                        <MenuItem value={1}>1</MenuItem>
+                        <MenuItem value={2}>2</MenuItem>
+                        <MenuItem value={3}>3</MenuItem>
+                        <MenuItem value={4}>4</MenuItem>
+                        <MenuItem value={5}>5</MenuItem>
+                    </Select> 
                 </div>
+
+                <div className="team-lang-box" style={{  justifyContent: 'center' }}>                       
+                    <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                        <h3>LANGUAGE</h3>    
+                        <Languages languageValues={teamLanguage}  onLanguageValueChange={handleTeamLanguageChange}/>                    
+                    </Box>
+                    <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                        <h3>FRAMEWORK & PLATFORM</h3>    
+                        <Framework frameworkValues={teamFramework}  onFrameworkValueChange={handleTeamFrameworkValueChange}/>                    
+                    </Box>
+                    <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                        <h3>DATABASE</h3>    
+                        <Database databaseValues={teamDatabase} onDatabaseValueChange={handleTeamDatabaseChange}/>         
+                    </Box>
+                </div>  
+
                 
+               
                 <button onClick={() => {
                     testSubmitHandler();   
                   }}>등록하기</button>

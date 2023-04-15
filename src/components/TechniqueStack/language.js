@@ -7,7 +7,7 @@ function Languages({ languageValues, onLanguageValueChange }) {
         cs: false,
         java:false,
         javascript:false,
-        sql:false,
+        sql_Lang:false,
         swift:false,
         kotlin:false,
         typescript:false,
@@ -59,28 +59,27 @@ function Languages({ languageValues, onLanguageValueChange }) {
         }
     
         return (
-          <div style={{ display: "flex", alignItems: "center" }}>
-            <div style={{ width: "100px", textAlign: "center" }}>
+          <div key={language} style={{ display: "flex", alignItems: "center" }}>
+            <div style={{ width: "150px", textAlign: "center" }}>
               {language === 'cpp' ? 'C++' : null }
               {language === 'cs' ? 'C#' : null }
               {language !== 'cpp' && language !== 'cs' ? language.toUpperCase() : null}
             </div>          
-            <Slider aria-label="Custom marks" name ="sqlLang" value ={languageValues[language]} step={null} 
-                    valueLabelDisplay="auto" marks={marks} onChange={(event) => handleSliderChange(event, language)} sx={{ width: "200px", marginLeft: "10px" }}/>
+            <Slider  aria-label="Custom marks"  value ={languageValues[language]} step={null} 
+                    valueLabelDisplay="auto" marks={marks} onChange={(event) => handleSliderChange(event, language)} sx={{ width: "350px", marginLeft: "50px" }}/>
           </div>
         );
       };
-      const lang = ['c', 'cpp', 'cs', 'java', 'javascript','sql','swift','kotlin','typescript','python','html','r']; // lang 변수가 버튼의 이름이자 서버에 넘길 값들
+      const lang = ['c', 'cpp', 'cs', 'java', 'javascript','sql_Lang','swift','kotlin','typescript','python','html','r']; // lang 변수가 버튼의 이름이자 서버에 넘길 값들
     
       return (
         <div>
+          <div style={{ width: "500px", display: "flex", justifyContent: "center", flexWrap: "wrap", margin: "0 auto" }}>
           {lang.map(lang => ( //map함수로 여러개의 button을 생성
-            <Button key={lang} variant="outlined" onClick={() => toggleLanguage(lang)}>
+            <Button key={lang} variant="outlined" onClick={() => toggleLanguage(lang)} style={{ margin: '8px' }}>
               {lang.toUpperCase().replace('CS', 'C#').replace('CPP','C++')}
             </Button>
           ))}
-          <div>          
-
           </div>
           <div className='language_slidebars'>
           {lang.map((language) => (renderLanguageSlider(language)))}
