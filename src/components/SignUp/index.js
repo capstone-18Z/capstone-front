@@ -103,6 +103,7 @@ function SignUp() {
             label="비밀번호"
             margin="normal"
             variant="outlined"
+            type="password"
             value={signUpInfo.password}
             name="password"
             onChange={setSignUpInfo}

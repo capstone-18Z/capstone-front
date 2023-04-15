@@ -72,6 +72,7 @@ function Login() {
           <TextField
             margin="normal"
             label="비밀번호"
+            type="password"
             variant="outlined"
             value={userInfo.password}
             name="password"

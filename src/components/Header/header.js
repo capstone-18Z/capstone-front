@@ -2,9 +2,11 @@ import React from "react";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import { Button } from "@mui/material";
 import "./header.css";
 
 function Header() {
+  const navigate = useNavigate();
   const [loginCheck, setLoginCheck] = useState(false);
 
   useEffect(() => {
@@ -21,35 +23,73 @@ function Header() {
 
   const logout = () => {
     localStorage.removeItem("refresh-token");
+    navigate("/");
   };
 
-  const navigate = useNavigate();
-
   return (
-    <div className="header">
-      <Link to="/main">한성메이팅</Link>
-      <div className="header_empty"></div>
-      <Link to="/post/user">
-        <div className="header_option">팀원 찾기</div>
-      </Link>
-
-      <Link to="/team">
-        <div className="header_option">팀원 모집</div>
-      </Link>
-      <Link to="/">
-        {loginCheck ? (
-          <div className="header_option" onClick={logout}>
-            로그아웃
-          </div>
-        ) : (
-          <div className="header_option">로그인/회원가입</div>
-        )}
-      </Link>
-      <Link to="/mypage">{loginCheck ? <div className="header_option">마이페이지</div> : <div></div>}</Link>
-      <Link to="/profile/edit">
-        <div className="header_option">프로필</div>
-      </Link>
-    </div>
+      <header>
+        <h2 onClick={e => {
+          navigate("/");
+        }}>한성메이팅</h2>
+        <nav>
+          <ul>
+            <li>
+              <div>자유게시판</div>
+            </li>
+            <li>
+              <div
+                onClick={(e) => {
+                  navigate("/team");
+                }}
+              >
+                팀원 모집
+              </div>
+            </li>
+            <li>
+              {loginCheck ? (
+                <div
+                  onClick={(e) => {
+                    navigate("/mypage");
+                  }}
+                >
+                  마이페이지
+                </div>
+              ) : (
+                <div></div>
+              )}
+            </li>
+            <li>
+              {loginCheck ? (
+                <div
+                  onClick={(e) => {
+                    navigate("/profile/edit");
+                  }}
+                >
+                  프로필
+                </div>
+              ) : (
+                <div></div>
+              )}
+            </li>
+            <li>
+              {loginCheck ? (
+                <Button variant="contained" onClick={logout}>
+                  로그아웃
+                </Button>
+              ) : (
+                <Button
+                  variant="contained"
+                  onClick={(e) => {
+                    navigate("/");
+                  }}
+                >
+                  로그인/회원가입
+                </Button>
+              )}
+            </li>
+          </ul>
+        </nav>
+      </header>
   );
 }
 
