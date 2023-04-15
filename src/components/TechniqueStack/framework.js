@@ -9,7 +9,7 @@ function Framework({ frameworkValues, onFrameworkValueChange }) {
         spring:false,
         unity:false,
         unrealengine:false,
-        _3dmax: false,        
+        tdmax: false,        
       });
     
       const toggleFramework = (framework) => {
@@ -57,15 +57,15 @@ function Framework({ frameworkValues, onFrameworkValueChange }) {
         return (
           <div style={{ display: "flex", alignItems: "center" }}>
             <div style={{ width: "100px", textAlign: "center" }}>     
-                {framework === '_3dmax' ? '3DMAX' : null }         
-                {framework !== '_3dmax' ? framework.toUpperCase() : null}
+                {framework === 'tdmax' ? '3DMAX' : null }         
+                {framework !== 'tdmax' ? framework.toUpperCase() : null}
             </div>          
             <Slider aria-label="Custom marks" name ="sqlLang" value ={frameworkValues[framework]} step={null} 
                     valueLabelDisplay="auto" marks={marks} onChange={(event) => handleSliderChange(event, framework)} sx={{ width: "200px", marginLeft: "10px" }}/>
           </div>
         );
       };
-      const data = ['react','androidstudio', 'nodejs','xcode', 'spring', 'unity', 'unrealengine', '_3dmax' ]; // lang 변수가 버튼의 이름이자 서버에 넘길 값들
+      const data = ['react','androidstudio', 'nodejs','xcode', 'spring', 'unity', 'unrealengine', 'tdmax' ]; // lang 변수가 버튼의 이름이자 서버에 넘길 값들
     
       return (
         <div>

@@ -9,6 +9,7 @@ import MyDropzone from "../Dropzone/dropzone";
 import axios from 'axios';
 import Languages from "../TechniqueStack/language";
 import Framework from "../TechniqueStack/framework";
+import Database from "../TechniqueStack/database";
 
 function TeamBuilding() {
     //로그인 토큰 저장
@@ -147,11 +148,19 @@ function TeamBuilding() {
 
     const [frameworkValues, setFrameworkValues] = useState({
         react: 0, androidstudio: 0, nodejs: 0, xcode:0,
-        spring:0, unity:0, unrealengine:0, _3dmax: 0,    
+        spring:0, unity:0, unrealengine:0, tdmax: 0,    
       });
 
     const handleFrameworkValueChange = (frameworkValues) => {
         setFrameworkValues(frameworkValues);       
+    };
+
+    const [databaseValues, setDatabaseValues] = useState({
+        mysqlL: 0, mariadbL: 0, mongodbL: 0, schemaL:0,   
+      });
+
+    const handleDatabaseValueChange = (databaseValues) => {
+        setDatabaseValues(databaseValues);       
     };
 
     const valuetest= () => {
@@ -196,6 +205,10 @@ function TeamBuilding() {
                     <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                         <h3>FRAMEWORK & PLATFORM</h3>    
                         <Framework frameworkValues={frameworkValues}  onFrameworkValueChange={handleFrameworkValueChange}/>                    
+                    </Box>
+                    <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                        <h3>DATABASE</h3>    
+                        <Database databaseValues={databaseValues} onDatabaseValueChange={handleDatabaseValueChange}/>         
                     </Box>
                 </div>  
 
