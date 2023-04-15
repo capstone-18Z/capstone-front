@@ -10,15 +10,15 @@ import RecommendUserList from "./components/RecommendUserList/recommendUserList"
 import Team from "./components/Teams/team";
 import EditTeam from "./components/EditTeam/editTeam";
 import MyPage from "./components/MyPage/mypage";
+import ProfilePage from "./pages/ProfilePage";
 
-const BASE_URL = "https://port-0-capstone-back-6g2llf7te70n.sel3.cloudtype.app";
 
 function App() {
   const refresh = localStorage.getItem("refresh-token");
   useEffect(() => {
     const onSilentRefresh = () => {
       axios
-        .post(`${BASE_URL}/refresh`, {
+        .post(`${process.env.REACT_APP_API_URL}/refresh`, {
           refreshToken: localStorage.getItem("refresh-token"),
         })
         .then((response) => {
@@ -44,6 +44,7 @@ function App() {
           <Route path="/*" element={<LoginPage />}></Route>
           <Route path="/main" element={<><Header /><MainPage /></>}></Route>
           <Route path="/mypage" element={<><Header/><MyPage /></>}></Route>
+          <Route path="/profile/*" element={<><Header/><ProfilePage/></>}></Route>
           {/* 중첩라우팅 */}
           <Route path="/team" element={<><Header/><Team /></>}></Route>
           <Route path="/post/*" element={<><Header/><PostPage /></>}></Route>

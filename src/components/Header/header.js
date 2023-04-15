@@ -23,7 +23,7 @@ function Header() {
     localStorage.removeItem("refresh-token");
   };
 
-  const navigate = useNavigate();  
+  const navigate = useNavigate();
 
   return (
     <div className="header">
@@ -45,14 +45,9 @@ function Header() {
           <div className="header_option">로그인/회원가입</div>
         )}
       </Link>
-      <Link to="/mypage">
-      {loginCheck ? (
-          <div className="header_option">
-          마이페이지
-          </div>
-        ) : (
-          <div></div>
-        )}
+      <Link to="/mypage">{loginCheck ? <div className="header_option">마이페이지</div> : <div></div>}</Link>
+      <Link to="/profile/edit">
+        <div className="header_option">프로필</div>
       </Link>
     </div>
   );

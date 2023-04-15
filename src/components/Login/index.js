@@ -5,8 +5,6 @@ import { useNavigate } from "react-router-dom";
 import useInput from "../../hooks/useInput";
 import axios from "axios";
 
-const BASE_URL = "https://port-0-capstone-back-6g2llf7te70n.sel3.cloudtype.app";
-
 function Login() {
   const navigate = useNavigate();
   const [userInfo, setUserInfo] = useInput({
@@ -16,7 +14,7 @@ function Login() {
 
   const onSilentRefresh = () => {
     axios
-      .post(`${BASE_URL}/refresh`, {
+      .post(`${process.env.REACT_APP_API_URL}/refresh`, {
         refreshToken: localStorage.getItem("refresh-token"),
       })
       .then((response) => {
@@ -36,7 +34,7 @@ function Login() {
     console.log(userInfo);
     // 데이터 보내기
     axios
-      .post(`${BASE_URL}/member/login`, userInfo)
+      .post(`${process.env.REACT_APP_API_URL}/member/login`, userInfo)
       .then((response) => {
         if (response.data) {
           console.log(response);
