@@ -1,12 +1,14 @@
 import "./style.css";
 import React, { useEffect ,useState, useRef } from 'react';
 import {useNavigate} from "react-router-dom";
-import { TextField, Slider, Box, Checkbox, Grid ,FormControlLabel, Select, MenuItem  } from "@mui/material";
+import { TextField, Box, Checkbox, Grid ,FormControlLabel, Select, MenuItem  } from "@mui/material";
 import { Editor as ToastEditor } from '@toast-ui/react-editor';
 import '@toast-ui/editor/dist/toastui-editor.css';
 import '@toast-ui/editor/dist/i18n/ko-kr'
 import MyDropzone from "../Dropzone/dropzone";
 import axios from 'axios';
+import Languages from "../TechniqueStack/language";
+import Framework from "../TechniqueStack/framework";
 
 function TeamBuilding() {
     //로그인 토큰 저장
@@ -50,21 +52,13 @@ function TeamBuilding() {
         //모집 프론트, 백 팀원수 데이터 관리
         wantedFrontMember: 0,
         wantedBackEndMember: 0,       
-        //언어
-        c: 0,
-        java: 0,
-        cpp: 0,
-        cs: 0,
-        python: 0,
-        javascript: 0,
-        vb: 0,
-        sqlLang: 0,
+       
         //팀 키워드
         teamKeywords: [],
         createDate: now,
         updateDate: now,
     });
-    const {currentFrontMember, currentBackMember,wantedFrontMember,wantedBackEndMember, title,detail,c,java,cpp,cs,python,javascript,vb,sqlLang,createDate, updateDate} = inputs;	//비구조화 할당
+    const {currentFrontMember, currentBackMember,wantedFrontMember,wantedBackEndMember, title,createDate, updateDate} = inputs;	//비구조화 할당
    
     const onChange = (e) => {
         const {name, value} = e.target;
@@ -83,14 +77,19 @@ function TeamBuilding() {
         e.preventDefault();
     }
     const testSubmitHandler=async (e) => {
+        
         const test = new FormData();
+        const newinputs= {
+          ...inputs,
+          languageValues,
+        }
 
-        test.append("team", JSON.stringify(inputs));
-
+        test.append("team", JSON.stringify(newinputs));
+        
         uploadedFiles.forEach((image) => {
-            test.append("images", image);
-        });
-
+           test.append("images", image);
+        });       
+        
         try {
           const response = await axios.post("https://port-0-capstone-back-6g2llf7te70n.sel3.cloudtype.app/teams/new", test, {
             headers: {
@@ -99,7 +98,7 @@ function TeamBuilding() {
                 'login-token': login_token
             },
           });
-          
+          console.log(newinputs);
           console.log(response.data);
           alert(response.data.message);
           navigate(`/team`)
@@ -107,6 +106,7 @@ function TeamBuilding() {
           console.error(error);
         }
       };
+      /*
     const onSubmitHandler = (e) => {
         fetch('https://port-0-capstone-back-6g2llf7te70n.sel3.cloudtype.app/teams/new',{
           method: 'POST',
@@ -121,20 +121,8 @@ function TeamBuilding() {
         .then((obj) => console.log(obj));
       };
       //변수명 서버랑 똑같이 해야 보내짐
-      const marks = [
-        {
-          value: 0,
-          label: '아예 못함',
-        },
-        {
-            value: 50,
-            label: '보통',
-          },
-        {
-          value: 100,
-          label: '아주잘함',
-        },
-      ];
+      */
+      
       const editorRef = useRef();
 
       const DetailOnChange = () => {
@@ -147,11 +135,35 @@ function TeamBuilding() {
       };
 
     const [uploadedFiles, setUploadedFiles] = useState([]);
+
+    const [languageValues, setLanguageValues] = useState({
+        c: 0, cpp: 0, cs: 0, java:0, javascript:0, sql:0, swift:0,
+        kotlin:0, typescript:0, python:0, html:0, r:0,
+      });
+
+    const handleLanguageValueChange = (newLanguageValues) => {
+        setLanguageValues(newLanguageValues);       
+    };
+
+    const [frameworkValues, setFrameworkValues] = useState({
+        react: 0, androidstudio: 0, nodejs: 0, xcode:0,
+        spring:0, unity:0, unrealengine:0, _3dmax: 0,    
+      });
+
+    const handleFrameworkValueChange = (frameworkValues) => {
+        setFrameworkValues(frameworkValues);       
+    };
+
+    const valuetest= () => {
+        console.log(languageValues)
+    }
     
     return (
         <div className="teambuildingform">
             <div className="team_form">            
             <h1>팀 빌딩 폼</h1>
+
+            
             
             <form name="team-form" onSubmit={PostRequest}>
                 <h2>프로젝트</h2>
@@ -176,39 +188,17 @@ function TeamBuilding() {
                 
                 <MyDropzone uploadedFiles={uploadedFiles} setUploadedFiles={setUploadedFiles}/>
                 
-                <div className="team-lang-box" style={{ display: 'flex', justifyContent: 'center' }}>                       
+                <div className="team-lang-box" style={{  justifyContent: 'center' }}>                       
                     <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                        원하는 팀원의 언어 사용능력을 체크해주세요
-                        <Box sx={{ width: 300 , height: 100 }}>C언어
-                            <Slider aria-label="Custom marks" name ="c" value ={c} step={null} 
-                            valueLabelDisplay="auto" marks={marks}onChange={onChange}/>
-                        </Box>
-                        <Box sx={{ width: 300 , height: 100 }}>Java
-                            <Slider aria-label="Custom marks" name ="java" value ={java} step={null} 
-                            valueLabelDisplay="a    uto" marks={marks}onChange={onChange}/>
-                        </Box>
-                        <Box sx={{ width: 300 , height: 100}}>C++
-                            <Slider aria-label="Custom marks" name ="cpp" value ={cpp} step={null} 
-                            valueLabelDisplay="auto" marks={marks}onChange={onChange}/>
-                        </Box>
-                        <Box sx={{ width: 300 , height: 100}}>Python
-                            <Slider aria-label="Custom marks" name ="python" value ={python} step={null} 
-                            valueLabelDisplay="auto" marks={marks}onChange={onChange}/>
-                        </Box>
-                        <Box sx={{ width: 300 , height: 100}}>C#
-                            <Slider aria-label="Custom marks" name ="cs" value ={cs} step={null} 
-                            valueLabelDisplay="auto" marks={marks}onChange={onChange}/>
-                        </Box>
-                        <Box sx={{ width: 300 }}>JavaScript
-                            <Slider aria-label="Custom marks" name ="javascript" value ={javascript} step={null} 
-                            valueLabelDisplay="auto" marks={marks}onChange={onChange}/>
-                        </Box>
-                        <Box sx={{ width: 300 , height: 100}}>Visual Basic
-                            <Slider aria-label="Custom marks" name ="vb" value ={vb} step={null} 
-                            valueLabelDisplay="auto" marks={marks}onChange={onChange}/>
-                        </Box>
+                        <h3>LANGUAGE</h3>    
+                        <Languages languageValues={languageValues}  onLanguageValueChange={handleLanguageValueChange}/>                    
+                    </Box>
+                    <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                        <h3>FRAMEWORK & PLATFORM</h3>    
+                        <Framework frameworkValues={frameworkValues}  onFrameworkValueChange={handleFrameworkValueChange}/>                    
                     </Box>
                 </div>  
+
                 모집할 팀원들의 키워드를 선택하세요
                 <Grid container direction="row" alignItems="center">
                     <FormControlLabel control={<Checkbox value="프론트엔드 개발자" onChange={handleChange} name="프론트엔드 개발자" />} label="프론트엔드 개발자" />  
@@ -278,15 +268,10 @@ function TeamBuilding() {
                     <MenuItem value={4}>4</MenuItem>
                     <MenuItem value={5}>5</MenuItem>
                     </Select>
-                </div>                     
-                <p>사용 DB</p>
-                <Box sx={{ width: 300 }}>SQL
-                    <Slider aria-label="Custom marks" name ="sqlLang" value ={sqlLang} step={null} 
-                    valueLabelDisplay="auto" marks={marks}onChange={onChange}/>
-                </Box>
+                </div>
+                
                 <button onClick={() => {
-                    testSubmitHandler();
-                  //onSubmitHandler();       
+                    testSubmitHandler();   
                   }}>등록하기</button>
             </form>
             </div>
