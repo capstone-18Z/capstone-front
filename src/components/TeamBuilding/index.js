@@ -1,7 +1,7 @@
 import "./style.css";
 import React, { useEffect ,useState, useRef } from 'react';
 import {useNavigate} from "react-router-dom";
-import { TextField, Box, Checkbox, Grid ,FormControlLabel, Select, MenuItem  } from "@mui/material";
+import { TextField, Button, Box, Checkbox, Grid ,FormControlLabel, Select, MenuItem  } from "@mui/material";
 import { Editor as ToastEditor } from '@toast-ui/react-editor';
 import '@toast-ui/editor/dist/toastui-editor.css';
 import '@toast-ui/editor/dist/i18n/ko-kr'
@@ -17,9 +17,7 @@ function TeamBuilding() {
     const login_token = localStorage.getItem("login-token");
     //유저가 글쓰는 날짜 시간 저장 
     const today = new Date();
-    const time = today.toLocaleTimeString(); 
-    const date = today.toLocaleDateString();
-    const now = date+time;
+    
     const navigate = useNavigate();
     
     
@@ -46,10 +44,9 @@ function TeamBuilding() {
     const [inputs, setInputs] = useState({
         //프로젝트 제목, 목적 데이터 관리
         title: "",
-        purpose : "",
-        purposeDetail1: "",
-        purposeDetail2: "",
-        purposeDetail3: "",
+        category : "",
+        field: "",
+        sub: "",
         wantTeamMemberCount: 0,
         //현재 프론트, 백 팀원수 데이터 관리
         currentFrontMember: 0,
@@ -60,11 +57,10 @@ function TeamBuilding() {
        
         //팀 키워드
         teamKeywords: [],
-        createDate: now,
-        updateDate: now,
+        createDate: today,
+        updateDate: today,
     });
-    const {wantTeamMemberCount, title,purpose,purposeDetail1,purposeDetail2,purposeDetail3 ,createDate, updateDate} = inputs;	//비구조화 할당
-   
+    const {wantTeamMemberCount, title,category,field,sub ,createDate, updateDate} = inputs;	//비구조화 할당
     const onChange = (e) => {
         const {name, value} = e.target;
         const nextInputs = {
@@ -98,7 +94,7 @@ function TeamBuilding() {
         });       
         
         try {
-          const response = await axios.post("http://1871166.iptime.org:8080/teams/test/add", test, {
+            const response = await axios.post("https://port-0-capstone-back-6g2llf7te70n.sel3.cloudtype.app/teams/new", test, {
             headers: {
               "Content-Type": "multipart/form-data",
               'refresh-token': refresh_token,
@@ -202,7 +198,7 @@ function TeamBuilding() {
                 
                 <div style={{ display: 'flex' }}>
                     <h3>팀 빌딩 목적</h3>
-                    <Select name="purpose" value={purpose} label="모집 인원 수" onChange={onChange}>
+                    <Select name="category" value={category} label="모집 인원 수" onChange={onChange}>
                         <MenuItem value={"개인 팀프로젝트"}>개인 팀프로젝트</MenuItem>
                         <MenuItem value={"공모전 및 대회"}>공모전 및 대회</MenuItem>
                         <MenuItem value={"캡스톤 디자인"}>캡스톤 디자인</MenuItem>
@@ -211,17 +207,17 @@ function TeamBuilding() {
                 </div>
 
                 
-                {purpose === "과목 팀프로젝트" ? (
+                {category === "과목 팀프로젝트" ? (
                 <div style={{ display: 'flex' }}>
                     <h3>과목</h3>
-                    <Select name="purposeDetail1" value={purposeDetail1} label="과목 선택" onChange={onChange}>
+                    <Select name="field" value={field} label="과목 선택" onChange={onChange}>
                         <MenuItem value={"webpramework1"}>웹프레임워크1</MenuItem>
                         <MenuItem value={"network"}>네트워크프로그래밍</MenuItem>
                         <MenuItem value={"android"}>안드로이드프로그래밍</MenuItem>
                         <MenuItem value={"highAndroid"}>고급모바일프로그래밍</MenuItem>                        
                     </Select>
                     <h3>분반</h3>
-                    <Select name="purposeDetail2" value={purposeDetail2} label="분반 선택" onChange={onChange}>
+                    <Select name="sub" value={sub} label="분반 선택" onChange={onChange}>
                         <MenuItem value={"a"}>A</MenuItem>
                         <MenuItem value={"b"}>B</MenuItem>
                         <MenuItem value={"c"}>C</MenuItem>
@@ -236,20 +232,22 @@ function TeamBuilding() {
                 ) : (
                     <div style={{ display: 'flex' }}>
                     <h3>역할 선택</h3>
-                    <Select name="purposeDetail1" value={purposeDetail1} label="역할 선택" onChange={onChange}>
+                    <Select name="field" value={field} label="역할 선택" onChange={onChange}>
                         <MenuItem value={"front"}>프론트엔드</MenuItem>
                         <MenuItem value={"back"}>백엔드</MenuItem>
                         <MenuItem value={"free"}>상관없음</MenuItem> 
                     </Select>
                     </div>
                 )}
-                모집할 분야를 선택하세요
-                <Grid container direction="row" alignItems="center">
-                    <FormControlLabel control={<Checkbox value="프론트엔드 개발자" onChange={handleChange} name="프론트엔드 개발자" />} label="프론트엔드 개발자" />  
-                    <FormControlLabel control={<Checkbox value="백엔드 개발자" onChange={handleChange} name="백엔드 개발자" />} label="백엔드 개발자" />
-                    <FormControlLabel control={<Checkbox value="JAVA 마스터" onChange={handleChange} name="JAVA 마스터" />} label="JAVA 마스터" />  
-                    <FormControlLabel control={<Checkbox value="C언어 마스터" onChange={handleChange} name="C언어 마스터" />} label="C언어 마스터" />                 
-                </Grid>
+                <div style={{ display: 'flex' }}>
+                    <h3>모집 분야</h3>
+                    <Grid container direction="row" alignItems="center">
+                        <FormControlLabel control={<Checkbox value="프론트엔드 개발자" onChange={handleChange} name="프론트엔드 개발자" />} label="프론트엔드 개발자" />  
+                        <FormControlLabel control={<Checkbox value="백엔드 개발자" onChange={handleChange} name="백엔드 개발자" />} label="백엔드 개발자" />
+                        <FormControlLabel control={<Checkbox value="JAVA 마스터" onChange={handleChange} name="JAVA 마스터" />} label="JAVA 마스터" />  
+                        <FormControlLabel control={<Checkbox value="C언어 마스터" onChange={handleChange} name="C언어 마스터" />} label="C언어 마스터" />                 
+                    </Grid>
+                </div>
                
                 <div style={{ display: 'flex' }}>
                     <h3>모집 인원</h3>
@@ -284,10 +282,12 @@ function TeamBuilding() {
                 </div>  
 
                 
-               
-                <button onClick={() => {
+                <div style={{ display: "flex", justifyContent: "flex-end" }}>
+                <Button variant="contained" onClick={() => {
+                    //valuetest();
                     testSubmitHandler();   
-                  }}>등록하기</button>
+                }}>등록하기</Button>
+                </div>
             </form>
             </div>
         </div>              

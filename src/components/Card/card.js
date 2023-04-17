@@ -8,22 +8,28 @@ export const Card = (team) => {
   const [data,setData]=useState(team);
   console.log("data",data.team);
   console.log(team);
+
+    /*
+  const currentDate = new Date();
+  const timeDiff =  currentDate.getTime() - team.updateDate.getTime();
+  const hoursDiff = Math.floor(timeDiff / (1000 * 60 * 60));
+  const minutesDiff = Math.floor((timeDiff / (1000 * 60)) % 60);
+  글을 작성한지 얼마나 지났는지 확인하기 위해 사용
+  */
+
   return (
     <div className="card-wrapper" onClick={()   => {
-      navigate(`/team/${data.team.teamId}`)
-    }}>
-      
+       navigate(`/team/${data.teamId}`)
+    }}> 
                     <div className="card-image">
                     {data.team.imagePaths.map(filename => (
                       <img src={`${filename}`} alt={filename} key={filename} style={{ width: "100%", height: "auto" }} />
                     ))}
                     </div>
                     <div className="card-body">
-                    <h5 className="card-title">{data.team.title}</h5>
-                    <p className="card-text">{data.team.detail}</p>
-                    <p className="card-text">현재 팀원 수: 프론트엔드{data.team.currentFrontMember} 백엔드{data.team.currentBackMember}</p>
-                    <p className="card-text">현재 구하는 팀원 수: 프론트엔드{data.team.wantedFrontMember} 백엔드{data.team.wantedBackEndMember}</p>
-                    <p className="card-text"><small className="text-muted">Last updated 3 mins ago</small></p>
+                    <h5 className="card-title">팀 빌딩 목적:{data.category}</h5>                    
+                    <p className="card-text">역할 :{data.field} {data.wantTeamMemberCount}명 모집 {data.sub}반</p>
+                    <p className="card-text"><small className="text-muted">Last updated 시간 분 전</small></p>
                     </div>
                 
     </div>

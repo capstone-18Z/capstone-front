@@ -1,16 +1,27 @@
-.card-container {
-  grid-template-columns: repeat(auto-fit, minmax(200px, 0.25fr));
+.team_list {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.card-container { 
+  grid-template-columns: repeat(auto-fit, minmax(400px, 0.25fr));
   display: grid;
-  grid-gap: 20px;
+  padding: 20px;
+  grid-gap: 40px;
   }
 .card_ryu {
-    flex-wrap: wrap; 
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    height: 100%;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    padding: 10px;
-    box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.3);
-  }
+  width: 400px;
+  flex-wrap: wrap; 
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 10px;
+  box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.3);
+}
+.Pagination {
+  margin-top: 20px;
+}
