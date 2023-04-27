@@ -14,7 +14,7 @@ function Team() {
     const [searchParams, setSearchParams] = useSearchParams();
 
     const page_number = searchParams.get("page");
-    
+    const [page_maxcount, setPage_maxcount] = useState(0);
       
     useEffect(() => {                   
         fetch(`http://localhost:8080/teams?page=${page_number}`,{
@@ -25,7 +25,7 @@ function Team() {
         })
         .then((response) => response.json())        
         .then((obj) => {setTeamList(obj.data)
-        console.log(obj); console.log(page_number)})
+        console.log(obj); setPage_maxcount(obj.metadata.totalPage);})
     }, []);
     
     //삭제할때 teams/{team.id}/delete 이렇게 post로 보내면 삭제됨
@@ -59,7 +59,7 @@ function Team() {
                     </div>
                     ))}
             </div>
-            <Pagination page={Number(searchParams.get("page"))} count={10} size="large" 
+            <Pagination page={Number(searchParams.get("page"))} count={page_maxcount} size="large" 
              onChange={(e, value) => {
                 window.location.href = `/list/team?page=${value}`;
               }}

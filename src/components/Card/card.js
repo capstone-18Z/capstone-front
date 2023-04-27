@@ -26,8 +26,8 @@ export const Card = (team) => {
                     </div>
                     <div className="card-body">
                     <h5 className="card-title">제목:{data.team.title}</h5>  
-                    <h5 className="card-title">팀 빌딩 목적:{data.team.teamKeyword.category}</h5>                    
-                    <p className="card-text">역할 :{data.team.teamKeyword.field} {data.team.wantTeamMemberCount}명 모집 {data.team.sub}반</p>
+                    <h5 className="card-title">팀 빌딩 목적:{data.team.teamKeyword == null ? "없다" : data.team.teamKeyword.category}</h5>                    
+                    <p className="card-text">역할 :{data.team.teamKeyword == null ? "없다" : data.team.teamKeyword.field} {data.team.wantTeamMemberCount}명 모집 {data.team.teamKeyword.sub.toUpperCase()}반</p>
                     <p className="card-text"><small className="text-muted">Last updated시간 전</small></p>
                     </div>
                 
