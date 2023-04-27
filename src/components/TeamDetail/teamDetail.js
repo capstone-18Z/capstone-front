@@ -20,11 +20,9 @@ function TeamDetail() {
         detail: "",
         project_subject: "",
         //현재 프론트, 백 팀원수 데이터 관리
-        currentFrontMember: 0,
-        currentBackMember:0,
+        currentTeamMemberCount: 0,
         //모집 프론트, 백 팀원수 데이터 관리
-        wantedFrontMember: 0,
-        wantedBackEndMember: 0,
+        wantTeamMemberCount: 0,
         //언어 점수 관리
         c:0,
         java:0,
@@ -37,7 +35,7 @@ function TeamDetail() {
         createDate: 0,
         updateDate: 0,
     });
-    const {currentFrontMember, currentBackMember,wantedFrontMember,wantedBackEndMember, title,detail, project_subject, c,java,cpp,cs,python,javascript,vb,sqlLang,createDate, updateDate} = teamDetail;	//비구조화 할당
+    const {currentTeamMemberCount, wantTeamMemberCount, title,detail, project_subject, c,java,cpp,cs,python,javascript,vb,sqlLang,createDate, updateDate} = teamDetail;	//비구조화 할당
    
     const [inputs, setInputs] = useState({
         input_detail: "",
@@ -58,7 +56,7 @@ function TeamDetail() {
     };
 
     const Putinputs = () => {
-        fetch(`https://port-0-capstone-back-6g2llf7te70n.sel3.cloudtype.app/user-to-team/${teamId}/add`,{
+        fetch(`http://localhost:8080/user-to-team/${teamId}/add`,{
             method: 'POST',
             headers: {
                 'refresh-token': refresh_token,
@@ -76,14 +74,14 @@ function TeamDetail() {
     }
 
     useEffect(() => {                 
-        fetch(`https://port-0-capstone-back-6g2llf7te70n.sel3.cloudtype.app/teams/${teamId}`,{     
+        fetch(`http://localhost:8080/teams/${teamId}`,{     
             headers: {
                 'refresh-token': refresh_token,
                 'login-token': login_token,
             } 
     })
     .then((response) => response.json())        
-    .then((obj) => {setTeamDetail(obj.data.team); setUpdatable(obj.updatable); console.log(obj)});
+    .then((obj) => {setTeamDetail(obj.data); setUpdatable(obj.updatable); console.log(obj)});
     }, []);
 
     return (
@@ -99,8 +97,8 @@ function TeamDetail() {
                 <div dangerouslySetInnerHTML={{ __html: detail }} />
                 </div>
                 <div className="team_member">
-                현재 프론트: {currentFrontMember} 백:{currentBackMember}
-                모집 프론트: {wantedFrontMember} 백:{wantedBackEndMember}
+                현재 인원: {currentTeamMemberCount} 
+                모집 인원: {wantTeamMemberCount}
                 </div>
             </div>
             <div className="teamdetail_recommenduserlist">
@@ -114,7 +112,7 @@ function TeamDetail() {
                 수정하기</button>
 
                 <button onClick={() =>{
-                    fetch(`https://port-0-capstone-back-6g2llf7te70n.sel3.cloudtype.app/teams/${teamId}/delete`,{
+                    fetch(`http://localhost:8080/teams/${teamId}/delete`,{
                         method: 'POST',
                         headers: {
                             'refresh-token': refresh_token,

@@ -1,6 +1,6 @@
 import React from 'react';
 import "./mypagelist.css";
-const BASE_URL = "https://port-0-capstone-back-6g2llf7te70n.sel3.cloudtype.app";
+const BASE_URL = "http://localhost:8080";
 
 function MyPageList(request) {
     const refresh_token = localStorage.getItem("refresh-token");

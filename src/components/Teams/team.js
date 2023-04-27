@@ -17,7 +17,7 @@ function Team() {
     
       
     useEffect(() => {                   
-        fetch(`https://port-0-capstone-back-6g2llf7te70n.sel3.cloudtype.app/teams?page=${page_number}`,{
+        fetch(`http://localhost:8080/teams?page=${page_number}`,{
             headers: {
                 'refresh-token': refresh_token,
                 'login-token': login_token,//헤더로 로그인 토큰 넣어야 삭제됨

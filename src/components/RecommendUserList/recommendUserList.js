@@ -8,7 +8,7 @@ function RecommendUserList({teamId}) {
      const refresh_token = localStorage.getItem("refresh-token");
      const login_token = localStorage.getItem("login-token");
     useEffect(() => {           
-            fetch(`https://port-0-capstone-back-6g2llf7te70n.sel3.cloudtype.app/teams/${teamId}`,{     
+            fetch(`http://localhost:8080/teams/${teamId}`,{     
                 headers: {
                     'refresh-token': refresh_token,
                     'login-token': login_token,

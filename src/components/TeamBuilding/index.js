@@ -98,7 +98,7 @@ function TeamBuilding() {
         });       
         
         try {
-            const response = await axios.post("https://port-0-capstone-back-6g2llf7te70n.sel3.cloudtype.app/teams/new", test, {
+            const response = await axios.post("http://localhost:8080/teams/new", test, {
             headers: {
               "Content-Type": "multipart/form-data",
               'refresh-token': refresh_token,
@@ -115,7 +115,7 @@ function TeamBuilding() {
       };
       /*
     const onSubmitHandler = (e) => {
-        fetch('https://port-0-capstone-back-6g2llf7te70n.sel3.cloudtype.app/teams/new',{
+        fetch('http://localhost:8080/teams/new',{
           method: 'POST',
           headers: {
             'refresh-token': refresh_token,

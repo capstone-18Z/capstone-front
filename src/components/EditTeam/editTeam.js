@@ -13,7 +13,7 @@ function EditTeam() {
  
 
     useEffect(() => {                       
-        fetch(`https://port-0-capstone-back-6g2llf7te70n.sel3.cloudtype.app/teams/${teamId}`,{     
+        fetch(`http://localhost:8080/teams/${teamId}`,{     
                 headers: {
                     'refresh-token': refresh_token,
                     'login-token': login_token,
@@ -99,7 +99,7 @@ const PostRequest = (e) => {
 }
 
 const onSubmitHandler = (e) => {
-    fetch(`https://port-0-capstone-back-6g2llf7te70n.sel3.cloudtype.app/teams/${teamId}/update`,{
+    fetch(`http://localhost:8080/teams/${teamId}/update`,{
       method: 'POST',
       headers: {
         'refresh-token': refresh_token,

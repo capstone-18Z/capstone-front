@@ -5,7 +5,7 @@ import {ListItem,List,ListItemButton,ListItemText} from '@mui/material';
 import Teams from "./teams";
 import Profile from "./profile";
 import Sidebar from "./sidebar";
-const BASE_URL = "https://port-0-capstone-back-6g2llf7te70n.sel3.cloudtype.app";
+const BASE_URL = "http://localhost:8080";
 
 const Center = styled.div`
   height: 92vh;

@@ -46,8 +46,9 @@ function App() {
           <Route path="/main" element={<><Header /><MainPage /></>}></Route>
           <Route path="/mypage/*" element={<><Header/><MyPage /></>}></Route>
           <Route path="/profile/*" element={<><Header/><ProfilePage/></>}></Route>
+          {}
           <Route path="/list/*" element={<><Header/><ListPage/></>}></Route>
-          <Route path="/post/*" element={<><Header/><PostPage /></>}></Route>
+          <Route path="/post/*" element={<><Header/><PostPage /></>}></Route>          
         </Routes>
       </BrowserRouter>
     </div>

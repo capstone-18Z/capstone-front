@@ -43,7 +43,7 @@ function Header() {
           <li>
             <div
               onClick={(e) => {
-                navigate("/team?page=1");
+                navigate("/list/team?page=1");
               }}
             >
               팀원 모집
