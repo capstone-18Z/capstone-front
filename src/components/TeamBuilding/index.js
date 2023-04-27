@@ -56,9 +56,8 @@ function TeamBuilding() {
         wantedBackEndMember: 0,       
        
         //팀 키워드
-        teamKeywords: [],
+        teamKeywords: {},
         createDate: today,
-        updateDate: today,
     });
     const {wantTeamMemberCount, title,category,field,sub ,createDate, updateDate} = inputs;	//비구조화 할당
     const onChange = (e) => {
@@ -85,6 +84,11 @@ function TeamBuilding() {
           teamLanguage,
           teamFramework,
           teamDatabase,
+          teamKeyword : {
+            category : category,
+            field: field,
+            sub: sub,
+          }
         }
 
         test.append("team", JSON.stringify(newinputs));
@@ -104,14 +108,14 @@ function TeamBuilding() {
           console.log(newinputs);
           console.log(response.data);
           alert(response.data.message);
-          navigate(`/team`)
+          navigate(`/list/team?page=1`)
         } catch (error) {
           console.error(error);
         }
       };
       /*
     const onSubmitHandler = (e) => {
-        fetch('http://1871166.iptime.org:8080/teams/new',{
+        fetch('https://port-0-capstone-back-6g2llf7te70n.sel3.cloudtype.app/teams/new',{
           method: 'POST',
           headers: {
             'refresh-token': refresh_token,

@@ -24,7 +24,7 @@ function Team() {
             },      
         })
         .then((response) => response.json())        
-        .then((obj) => {setTeamList(obj.data.allTeamList)
+        .then((obj) => {setTeamList(obj.data)
         console.log(obj); console.log(page_number)})
     }, []);
     
@@ -61,7 +61,7 @@ function Team() {
             </div>
             <Pagination page={Number(searchParams.get("page"))} count={10} size="large" 
              onChange={(e, value) => {
-                window.location.href = `/team?page=${value}`;
+                window.location.href = `/list/team?page=${value}`;
               }}
             />
             

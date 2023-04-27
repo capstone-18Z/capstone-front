@@ -1,9 +1,17 @@
 import React, { useState, useEffect } from "react";
-import MyPageList from "../MyPageList/mypagelist";
-
-
+import { Routes,Route } from "react-router-dom";
+import styled from "styled-components";
+import {ListItem,List,ListItemButton,ListItemText} from '@mui/material';
+import Teams from "./teams";
+import Profile from "./profile";
+import Sidebar from "./sidebar";
 const BASE_URL = "https://port-0-capstone-back-6g2llf7te70n.sel3.cloudtype.app";
 
+const Center = styled.div`
+  height: 92vh;
+  display: flex;
+  flex-direction: row;
+`
 
 function MyPage() {
     const refresh_token = localStorage.getItem("refresh-token");
@@ -18,25 +26,26 @@ function MyPage() {
             } 
     })
     .then((response) => response.json())        
-    .then((obj) => {setMyPageData(obj.data.myAllTeams); console.log(obj.data)});
+    .then((obj) => {setMyPageData(obj.data.myAllTeams); console.log(obj)});
     }, []);
     
    
 /*
-
+ 현재 팀별 모집 상황
+        
+        </div>
 */
     return (     
-        <div>          
-        현재 팀별 모집 상황
-            {mypagedata && mypagedata.map(team =>(  
-                    <div key={team.teamId} className="requestlist">
-                    <li className='tap'
-                    onClick={() => (console.log(team))}>팀 제목: {team.title}  </li>                       
-                    {team.requestList && team.requestList.map(request => (                        
-                        <MyPageList key={request.requestId} request={request}/>
-                    ))}
-                    </div>                                       
-                ))}    
+        <div> 
+         <Center>   
+            <Sidebar/>
+            <div>
+                <Routes>
+                    <Route path="/profile" element={<Profile/>}></Route>
+                    <Route path="/team" element={<Teams/>}></Route>
+                </Routes>
+            </div>
+            </Center>      
         </div>
     );
 }

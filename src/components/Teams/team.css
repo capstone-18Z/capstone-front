@@ -1,9 +1,4 @@
-.team_list {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
+  
 .card-container { 
   grid-template-columns: repeat(auto-fit, minmax(400px, 0.25fr));
   display: grid;

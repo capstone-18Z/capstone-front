@@ -44,14 +44,10 @@ function App() {
         <Routes>
           <Route path="/*" element={<><Header /><LoginPage /></>}></Route>
           <Route path="/main" element={<><Header /><MainPage /></>}></Route>
-          <Route path="/mypage" element={<><Header/><MyPage /></>}></Route>
+          <Route path="/mypage/*" element={<><Header/><MyPage /></>}></Route>
           <Route path="/profile/*" element={<><Header/><ProfilePage/></>}></Route>
           <Route path="/list/*" element={<><Header/><ListPage/></>}></Route>
-          <Route path="/team" element={<><Header/><Team /></>}></Route>
           <Route path="/post/*" element={<><Header/><PostPage /></>}></Route>
-          <Route path="/team/:teamId/" element={<><Header/><TeamDetail /></>}></Route>
-          <Route path="/team/:teamId/editTeam" element={<><Header/><EditTeam /></>}></Route>
-          <Route path="recommendUserList" element={<RecommendUserList />}></Route>
         </Routes>
       </BrowserRouter>
     </div>
