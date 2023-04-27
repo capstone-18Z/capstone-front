@@ -72,13 +72,11 @@ function EditProfile() {
     const { value } = e.target;
     const newCategory = category.includes(value) ? category.filter((v) => v !== value) : [...category, value];
     setCategory(newCategory);
-    setFieldToggle(
-      newCategory.includes("캡스톤 디자인") ||
-        newCategory.includes("공모전 및 대회") ||
-        newCategory.includes("개인 팀프로젝트")
-    );
-    setSubjectToggle(newCategory.includes("과목 팀프로젝트"));
-    setField(0);
+    if (value === "과목 팀프로젝트") {
+      setSubjectToggle((e) => !e);
+    } else {
+      setFieldToggle(newCategory.includes("캡스톤 디자인") || newCategory.includes("공모전 및 대회") || newCategory.includes("개인 팀프로젝트"));
+    }
   };
 
   const onChange2 = (e) => {
@@ -211,9 +209,8 @@ function EditProfile() {
         </div>
         <div className="keyword-box">
           <div className="button-box">
-            <InputLabel shrink>원하는 팀을 골라주세요</InputLabel>
-            <TextField fullWidth size="small" value={category.map((data) => data)} />
-            <Button variant="outlined" sx={{ margin: "10px" }} value="캡스톤 디자인" onClick={onChange3}>
+            <TextField fullWidth size="small" margin="dense" value={category.map((data) => data)} />
+            <Button variant="outlined" sx={{margin:"10px"}}  value="캡스톤 디자인" onClick={onChange3}>
               캡스톤 디자인
             </Button>
             <Button variant="outlined" sx={{ margin: "10px" }} value="과목 팀프로젝트" onClick={onChange3}>
@@ -232,6 +229,8 @@ function EditProfile() {
             <InputLabel shrink>프론트엔드와 백엔드를 나눠야할 경우 골라주세요</InputLabel>
             <FormControl size="small">
               <Select
+                sx={{ width: "200px" }}
+                
                 name="field"
                 value={field}
                 onChange={(e) => {
