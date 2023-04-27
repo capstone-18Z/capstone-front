@@ -11,7 +11,7 @@ const Side = styled.div`
   justify-content: center;
   width: 15%;
 `
-const Profile = styled.img`
+const ProfileImg = styled.img`
   width: 150px;
   height: 150px;
   border-radius: 100%;
@@ -34,16 +34,12 @@ function Sidebar() {
       <Menu>
         {menus.map((menu, index) => {
           return (
-            <NavLink
-              exact
+            <NavLink             
               style={{color: "gray", textDecoration: "none"}}
               to={menu.path}
-              key={index}
-              activeStyle={{color: "black"}}
+              key={index}              
             >
-              <SidebarItem
-                menu={menu}
-              />
+              <SidebarItem menu={menu} />
             </NavLink>
           );
         })}
