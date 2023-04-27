@@ -1,35 +1,40 @@
 import { TextField, Button, Select, MenuItem, Box, FormControl, InputLabel } from "@mui/material";
 import { useState, useEffect, useRef } from "react";
+import { useNavigate } from "react-router-dom";
 import "./style.css";
 import useInput from "../../hooks/useInput";
 import Languages from "../TechniqueStack/language";
 import Framework from "../TechniqueStack/framework";
 import Database from "../TechniqueStack/database";
+import axios from "axios";
 
-function EditProfile() {
+function EditProfile(fetchData) {
+  const navigate = useNavigate();
+  const [memberData, setMemberData] = useState(fetchData.fetchData);
   const [inputs, setInputs] = useInput({
-    nickname: "",
-    email: "",
-    grade: "",
-    gitlink: "",
+    nickname: memberData.data.member.nickname || "",
+    email: memberData.data.member.email || "",
+    //grade: "",
+    github: memberData.data.member.github || "",
   });
-  const [teamPurposes, setTeamPurposes] = useState([]);
-  const [category, setCategory] = useState([]);
-  const [field, setField] = useState("");
+  const [memberKeywords, setMemberKeywords] = useState([]);
+  const [category, setCategory] = useState(memberData.data.member.memberKeywords.map(keyword => keyword.category));
+  console.log(memberData.data.member)
+  const [field, setField] = useState(memberData.data.member.memberKeywords.filter(keyword => keyword.category !== "과목 팀프로젝트").map(keyword => keyword.field));
   const [fieldToggle, setFieldToggle] = useState(false); // 추가
-  const [subject, setSubject] = useState("");
-  const [subClass, setSubClass] = useState("");
+  const [subject, setSubject] = useState(memberData.data.member.memberKeywords.filter(keyword => keyword.category === "과목 팀프로젝트").map(keyword => keyword.field));
+  const [sub, setSub] = useState(memberData.data.member.memberKeywords.filter(keyword => keyword.category === "과목 팀프로젝트").map(keyword => keyword.sub));
   const [subjectToggle, setSubjectToggle] = useState(false);
   const [showImg, setShowImg] = useState(null);
   const [imgFile, setImgFile] = useState(null);
   const imgRef = useRef();
-  const [languageValues, setLanguageValues] = useState({
+  const [memberLang, setMemberLang] = useState({
     c: 0,
     cpp: 0,
     cs: 0,
     java: 0,
     javascript: 0,
-    sql: 0,
+    sql_Lang: 0,
     swift: 0,
     kotlin: 0,
     typescript: 0,
@@ -39,25 +44,25 @@ function EditProfile() {
   });
 
   const handleLanguageValueChange = (newLanguageValues) => {
-    setLanguageValues(newLanguageValues);
+    setMemberLang(newLanguageValues);
   };
 
-  const [frameworkValues, setFrameworkValues] = useState({
+  const [memberFramework, setMemberFramework] = useState({
     react: 0,
-    androidstudio: 0,
-    nodejs: 0,
+    android: 0,
+    node: 0,
     xcode: 0,
     spring: 0,
     unity: 0,
-    unrealengine: 0,
+    unreal: 0,
     tdmax: 0,
   });
 
   const handleFrameworkValueChange = (frameworkValues) => {
-    setFrameworkValues(frameworkValues);
+    setMemberFramework(frameworkValues);
   };
 
-  const [databaseValues, setDatabaseValues] = useState({
+  const [memberDB, setMemberDB] = useState({
     mysqlL: 0,
     mariadbL: 0,
     mongodbL: 0,
@@ -65,7 +70,7 @@ function EditProfile() {
   });
 
   const handleDatabaseValueChange = (databaseValues) => {
-    setDatabaseValues(databaseValues);
+    setMemberDB(databaseValues);
   };
 
   const onChange3 = (e) => {
@@ -83,31 +88,31 @@ function EditProfile() {
     const formData = new FormData();
     const getAllFormData = {
       ...inputs,
-      teamPurposes,
-      languageValues,
-      frameworkValues,
-      databaseValues,
+      memberKeywords,
+      memberLang,
+      memberFramework,
+      memberDB,
     };
     console.log(getAllFormData);
     formData.append("metadata", JSON.stringify(getAllFormData));
     formData.append("files", imgFile);
     //데이터 보내기
-    // axios
-    //   .post(`${BASE_URL}/member/post/new`, formData, {
-    //     headers: {
-    //       "Content-Type": "multipart/form-data",
-    //     },
-    //   })
-    //   .then((response) => {
-    //     if (response.data) {
-    //       alert("등록 완료");
-    //       navigate("/main");
-    //     }
-    //   })
-    //   .catch((err) => {
-    //     console.log(err.response);
-    //     alert("등록 실패");
-    //   });
+    axios
+      .post(`${process.env.REACT_APP_API_URL}/member/userForm/update`, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      })
+      .then((response) => {
+        if (response.data) {
+          alert("등록 완료");
+          navigate("/profile");
+        }
+      })
+      .catch((err) => {
+        console.log(err.response);
+        alert("등록 실패");
+      });
     /* key 확인하기 */
     for (let key of formData.keys()) {
       console.log(key);
@@ -139,14 +144,14 @@ function EditProfile() {
   useEffect(() => {
     const newPurpose = category.map((data) => {
       if (data === "과목 팀프로젝트") {
-        return { category: data, subject: subject, subClass: subClass };
+        return { category: data, field: subject, sub: sub };
       } else {
         return { category: data, field: field };
       }
     });
 
-    setTeamPurposes(newPurpose);
-  }, [category, subject, subClass, field]);
+    setMemberKeywords(newPurpose);
+  }, [category, subject, sub, field]);
 
   return (
     <div className="profile-box">
@@ -192,8 +197,8 @@ function EditProfile() {
                 size="small"
                 sx={{ marginBottom: "10px" }}
                 placeholder="깃허브 링크를 입력해주세요"
-                name="gitlink"
-                value={inputs.gitlink}
+                name="github"
+                value={inputs.github}
                 onChange={setInputs}
               />
             </div>
@@ -262,9 +267,9 @@ function EditProfile() {
               size="small"
               placeholder="분반을 입력해주세요"
               sx={{ marginBottom: "10px" }}
-              value={subClass}
+              value={sub}
               onChange={(e) => {
-                setSubClass(e.target.value);
+                setSub(e.target.value);
               }}
             />
           </div>
@@ -272,15 +277,15 @@ function EditProfile() {
         <div className="team-lang-box" style={{ justifyContent: "center" }}>
           <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
             <h3>LANGUAGE</h3>
-            <Languages languageValues={languageValues} onLanguageValueChange={handleLanguageValueChange} />
+            <Languages languageValues={memberLang} onLanguageValueChange={handleLanguageValueChange} />
           </Box>
           <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
             <h3>FRAMEWORK & PLATFORM</h3>
-            <Framework frameworkValues={frameworkValues} onFrameworkValueChange={handleFrameworkValueChange} />
+            <Framework frameworkValues={memberFramework} onFrameworkValueChange={handleFrameworkValueChange} />
           </Box>
           <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
             <h3>DATABASE</h3>
-            <Database databaseValues={databaseValues} onDatabaseValueChange={handleDatabaseValueChange} />
+            <Database databaseValues={memberDB} onDatabaseValueChange={handleDatabaseValueChange} />
           </Box>
         </div>
         <Button variant="outlined" onClick={onChange2}>
