@@ -72,11 +72,13 @@ function EditProfile() {
     const { value } = e.target;
     const newCategory = category.includes(value) ? category.filter((v) => v !== value) : [...category, value];
     setCategory(newCategory);
-    if (value === "과목 팀프로젝트") {
-      setSubjectToggle((e) => !e);
-    } else {
-      setFieldToggle((e) => !e);
-    }
+    setFieldToggle(
+      newCategory.includes("캡스톤 디자인") ||
+        newCategory.includes("공모전 및 대회") ||
+        newCategory.includes("개인 팀프로젝트")
+    );
+    setSubjectToggle(newCategory.includes("과목 팀프로젝트"));
+    setField(0);
   };
 
   const onChange2 = (e) => {
@@ -154,17 +156,30 @@ function EditProfile() {
         <div className="inline-box">
           <div>
             <div className="nickname-box">
-              <p className="p-title">닉네임</p>
-              <TextField size="small" margin="dense" name="nickname" value={inputs.nickname} onChange={setInputs} />
+              <InputLabel shrink>닉네임</InputLabel>
+              <TextField
+                size="small"
+                sx={{ marginBottom: "10px" }}
+                placeholder="닉네임을 입력해주세요"
+                name="nickname"
+                value={inputs.nickname}
+                onChange={setInputs}
+              />
             </div>
             <div className="email-box">
-              <p className="p-title">이메일</p>
-              <TextField size="small" margin="dense" name="email" value={inputs.email} onChange={setInputs} />
+              <InputLabel shrink>이메일</InputLabel>
+              <TextField
+                size="small"
+                sx={{ marginBottom: "10px" }}
+                placeholder="이메일을 입력해주세요"
+                name="email"
+                value={inputs.email}
+                onChange={setInputs}
+              />
             </div>
             <div className="grade-box">
-              <p className="p-title">학년</p>
-              <FormControl size="small" margin="dense">
-                <InputLabel></InputLabel>
+              <InputLabel shrink>학년</InputLabel>
+              <FormControl size="small" sx={{ marginBottom: "10px" }}>
                 <Select sx={{ width: "100px" }} name="grade" value={inputs.grade || ""} onChange={setInputs}>
                   <MenuItem value={1}>1학년</MenuItem>
                   <MenuItem value={2}>2학년</MenuItem>
@@ -174,8 +189,15 @@ function EditProfile() {
               </FormControl>
             </div>
             <div className="githublink-box">
-              <p className="p-title">깃허브 링크</p>
-              <TextField size="small" margin="dense" name="gitlink" value={inputs.gitlink} onChange={setInputs} />
+              <InputLabel shrink>깃허브 링크</InputLabel>
+              <TextField
+                size="small"
+                sx={{ marginBottom: "10px" }}
+                placeholder="깃허브 링크를 입력해주세요"
+                name="gitlink"
+                value={inputs.gitlink}
+                onChange={setInputs}
+              />
             </div>
           </div>
           <div className="profile-img">
@@ -188,31 +210,28 @@ function EditProfile() {
           </div>
         </div>
         <div className="keyword-box">
-          <p className="p-title">원하는 팀</p>
           <div className="button-box">
-            <TextField fullWidth size="small" margin="dense" value={category.map((data) => data)} />
-            <Button variant="outlined" sx={{margin:"10px"}}  value="캡스톤 디자인" onClick={onChange3}>
+            <InputLabel shrink>원하는 팀을 골라주세요</InputLabel>
+            <TextField fullWidth size="small" value={category.map((data) => data)} />
+            <Button variant="outlined" sx={{ margin: "10px" }} value="캡스톤 디자인" onClick={onChange3}>
               캡스톤 디자인
             </Button>
-            <Button variant="outlined" sx={{margin:"10px"}} value="과목 팀프로젝트" onClick={onChange3}>
+            <Button variant="outlined" sx={{ margin: "10px" }} value="과목 팀프로젝트" onClick={onChange3}>
               과목 팀프로젝트
             </Button>
-            <Button variant="outlined" sx={{margin:"10px"}} value="공모전 및 대회" onClick={onChange3}>
+            <Button variant="outlined" sx={{ margin: "10px" }} value="공모전 및 대회" onClick={onChange3}>
               공모전 및 대회
             </Button>
-            <Button variant="outlined" sx={{margin:"10px"}} value="개인 팀프로젝트" onClick={onChange3}>
+            <Button variant="outlined" sx={{ margin: "10px" }} value="개인 팀프로젝트" onClick={onChange3}>
               개인 팀프로젝트
             </Button>
           </div>
         </div>
         {fieldToggle && (
           <div className="field-toggle-box">
-            <p className="p-title"></p>
-            <InputLabel></InputLabel>
-            <FormControl size="small" margin="dense">
+            <InputLabel shrink>프론트엔드와 백엔드를 나눠야할 경우 골라주세요</InputLabel>
+            <FormControl size="small">
               <Select
-                sx={{ width: "200px" }}
-                
                 name="field"
                 value={field}
                 onChange={(e) => {
@@ -229,29 +248,26 @@ function EditProfile() {
         )}
         {subjectToggle && (
           <div className="subject-toggle-box">
-            <div className="inline-box">
-              <p className="p-title">과목</p>
-              <TextField
-                size="small"
-                margin="dense"
-                value={subject}
-                onChange={(e) => {
-                  setSubject(e.target.value);
-                }}
-              />
-            </div>
-            <div className="inline-box">
-              <p className="p-title">분반</p>
-              <TextField
-                size="small"
-                margin="dense"
-                sx={{ width: "50px" }}
-                value={subClass}
-                onChange={(e) => {
-                  setSubClass(e.target.value);
-                }}
-              />
-            </div>
+            <InputLabel shrink>과목 (수업계획서에 등록된 정확한 과목명을 입력해주세요)</InputLabel>
+            <TextField
+              size="small"
+              placeholder="과목을 입력해주세요"
+              sx={{ marginBottom: "10px" }}
+              value={subject}
+              onChange={(e) => {
+                setSubject(e.target.value);
+              }}
+            />
+            <InputLabel shrink>분반 (수업계획서에 등록된 정확한 분반을 입력해주세요)</InputLabel>
+            <TextField
+              size="small"
+              placeholder="분반을 입력해주세요"
+              sx={{ marginBottom: "10px" }}
+              value={subClass}
+              onChange={(e) => {
+                setSubClass(e.target.value);
+              }}
+            />
           </div>
         )}
         <div className="team-lang-box" style={{ justifyContent: "center" }}>
