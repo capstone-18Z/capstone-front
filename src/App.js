@@ -5,10 +5,6 @@ import LoginPage from "./pages/LoginPage";
 import MainPage from "./pages/MainPage";
 import PostPage from "./pages/PostPage";
 import Header from "./components/Header/header"
-import TeamDetail from "./components/TeamDetail/teamDetail";
-import RecommendUserList from "./components/RecommendUserList/recommendUserList";
-import Team from "./components/Teams/team";
-import EditTeam from "./components/EditTeam/editTeam";
 import MyPage from "./components/MyPage/mypage";
 import ProfilePage from "./pages/ProfilePage";
 import ListPage from "./pages/ListPage";

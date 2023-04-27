@@ -66,7 +66,7 @@ function Header() {
             {loginCheck ? (
               <div
                 onClick={(e) => {
-                  navigate("/profile/edit");
+                  navigate("/profile");
                 }}
               >
                 프로필

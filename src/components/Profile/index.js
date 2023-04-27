@@ -1,6 +1,10 @@
 import "./style.css";
+import { Chip, Avatar, Button } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
-function Profile() {
+function Profile(fetchData) {
+  
+  const navigate = useNavigate();
   return (
     <div className="profile-box">
       <div className="profile-top-box">
@@ -11,25 +15,33 @@ function Profile() {
           <h5 className="grade-box">학년</h5>
         </div>
         <div className="profile-img-box">
-          <img alt="" style={{ width: "200px", height: "200px" }}></img>
+          <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" sx={{ width: 200, height: 200 }} />
         </div>
       </div>
       <div className="profile-bottom-box">
         <div className="wantteam-box">
           <p>원하는 팀</p>
-          <p>캡스톤디자인/백엔드</p>
+          <Chip label="캡스톤디자인/백엔드" color="primary" variant="outlined" />
         </div>
         <div>
           <p>잘 다뤄요!</p>
-          <p>JAVA, SPRING</p>
+          <Chip label="JAVA" color="primary" variant="outlined" />
+          <Chip label="SPRING" color="primary" variant="outlined" />
         </div>
         <div>
           <p>써본적은 있지만 잘 다루진 못해요</p>
-          <p>REACT</p>
+          <Chip label="REACT" color="primary" variant="outlined" />
         </div>
       </div>
       <div>
-        <button>프로필 수정</button>
+        <Button
+          variant="contained"
+          onClick={(e) => {
+            navigate("/profile/edit");
+          }}
+        >
+          프로필 수정
+        </Button>
       </div>
     </div>
   );

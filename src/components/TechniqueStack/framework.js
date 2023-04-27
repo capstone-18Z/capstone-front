@@ -3,12 +3,12 @@ import { Button,Slider  } from "@mui/material";
 function Framework({ frameworkValues, onFrameworkValueChange }) {
     const [selectedFrameworks, setSelectedFrameworks] = useState({
         react: false,
-        androidStudio: false,
-        nodejs: false,
+        android: false,
+        node: false,
         xcode:false,
         spring:false,
         unity:false,
-        unrealEngine:false,
+        unreal:false,
         tdmax: false,        
       });
     
@@ -65,7 +65,7 @@ function Framework({ frameworkValues, onFrameworkValueChange }) {
           </div>
         );
       };
-      const data = ['react','androidStudio', 'nodejs','xcode', 'spring', 'unity', 'unrealEngine', 'tdmax' ]; // lang 변수가 버튼의 이름이자 서버에 넘길 값들
+      const data = ['react','android', 'node','xcode', 'spring', 'unity', 'unreal', 'tdmax' ]; // lang 변수가 버튼의 이름이자 서버에 넘길 값들
     
       return (
         <div>
