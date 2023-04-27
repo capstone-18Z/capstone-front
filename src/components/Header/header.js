@@ -27,69 +27,74 @@ function Header() {
   };
 
   return (
-      <header>
-        <h2 onClick={e => {
-          navigate("/");
-        }}>한성메이팅</h2>
-        <nav>
-          <ul>
-            <li>
-              <div>자유게시판</div>
-            </li>
-            <li>
+    <header>
+      <h2
+        onClick={(e) => {
+          navigate("/main");
+        }}
+      >
+        한성메이팅
+      </h2>
+      <nav>
+        <ul>
+          <li>
+            <div>자유게시판</div>
+          </li>
+          <li>
+            <div
+              onClick={(e) => {
+                navigate("/team?page=1");
+              }}
+            >
+              팀원 모집
+            </div>
+          </li>
+          <li>
+            {loginCheck ? (
               <div
                 onClick={(e) => {
-                  navigate("/team?page=1");
+                  navigate("/mypage");
                 }}
               >
-                팀원 모집
+                마이페이지
               </div>
-            </li>
-            <li>
-              {loginCheck ? (
-                <div
-                  onClick={(e) => {
-                    navigate("/mypage");
-                  }}
-                >
-                  마이페이지
-                </div>
-              ) : (
-                <div></div>
-              )}
-            </li>
-            <li>
-              {loginCheck ? (
-                <div
-                  onClick={(e) => {
-                    navigate("/profile/edit");
-                  }}
-                >
-                  프로필
-                </div>
-              ) : (
-                <div></div>
-              )}
-            </li>
-            <li>
-              {loginCheck ? (
-                <Button variant="contained" onClick={logout}>
-                  로그아웃
-                </Button>
-              ) : (
-                <Button
-                  variant="contained"
-                  onClick={(e) => {
-                    navigate("/");
-                  }}
-                >
-                  로그인/회원가입
-                </Button>
-              )}
-            </li>
-          </ul>
-        </nav>
-      </header>
+            ) : (
+              <div></div>
+            )}
+          </li>
+          <li>
+            {loginCheck ? (
+              <div
+                onClick={(e) => {
+                  navigate("/profile/edit");
+                }}
+              >
+                프로필
+                {/* {localStorage.getItem("nickname")} */}
+              </div>
+            ) : (
+              <div></div>
+            )}
+          </li>
+          <li>
+            {loginCheck ? (
+              <Button variant="contained" onClick={logout}>
+                로그아웃
+              </Button>
+            ) : (
+              <Button
+                variant="contained"
+                onClick={(e) => {
+                  navigate("/");
+                }}
+              >
+                로그인/회원가입
+              </Button>
+            )}
+          </li>
+        </ul>
+      </nav>
+    </header>
   );
 }
 

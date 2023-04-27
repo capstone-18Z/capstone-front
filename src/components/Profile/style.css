@@ -1,0 +1,11 @@
+.profile-top-box {
+  display: flex;
+  justify-content: center;
+}
+.profile-info-box,
+.profile-img-box {
+  width: 50%;
+}
+.profile-bottom-box {
+  text-align: left;
+}
