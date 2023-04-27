@@ -9,23 +9,25 @@
 }
 .nickname-box,
 .email-box,
-.githublink-box,
 .grade-box,
-
-.field-toggle-box {
-  display: flex;
+.githublink-box,
+.keyword-box{
+  text-align: left;
 }
+
 .p-title {
   text-align: left;
   width: 90px;
 }
 .inline-box {
   display: flex;
+  margin-bottom: 10px;
 }
 .profile-img {
   margin: 0 auto;
 }
 .field-toggle-box,
 .subject-toggle-box {
+  text-align: left;
   margin-top: 20px;
 }
