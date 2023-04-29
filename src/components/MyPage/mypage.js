@@ -5,7 +5,7 @@ import {ListItem,List,ListItemButton,ListItemText} from '@mui/material';
 import Teams from "./teams";
 import Profile from "./profile";
 import Sidebar from "./sidebar";
-const BASE_URL = "http://localhost:8080";
+const BASE_URL = `${process.env.REACT_APP_API_URL}`;
 
 const Center = styled.div`
   height: 92vh;

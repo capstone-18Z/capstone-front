@@ -1,6 +1,6 @@
 import React from 'react';
 import "./mypagelist.css";
-const BASE_URL = "http://localhost:8080";
+const BASE_URL = `${process.env.REACT_APP_API_URL}`;
 
 function MyPageList(request) {
     const refresh_token = localStorage.getItem("refresh-token");

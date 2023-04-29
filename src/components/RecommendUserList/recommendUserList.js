@@ -8,7 +8,7 @@ function RecommendUserList({teamId}) {
      const refresh_token = localStorage.getItem("refresh-token");
      const login_token = localStorage.getItem("login-token");
     useEffect(() => {           
-            fetch(`http://localhost:8080/teams/${teamId}`,{     
+            fetch(`${process.env.REACT_APP_API_URL}/teams/${teamId}`,{     
                 headers: {
                     'refresh-token': refresh_token,
                     'login-token': login_token,

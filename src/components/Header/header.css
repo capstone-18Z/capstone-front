@@ -7,8 +7,8 @@ header {
   position: sticky;
   top: 0;
   z-index: 10;
-  background-color: white;
-  color: steelblue;
+  background-color: skyblue;
+  color: rgb(9, 59, 100);
   font: bold;
 }
 

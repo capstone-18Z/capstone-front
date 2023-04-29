@@ -1,5 +1,5 @@
 .teamdetail {
-    max-width: 800px;
+    max-width: 1000px;
     margin: 0px auto;
     box-sizing: border-box;
     text-align: center;
@@ -7,4 +7,12 @@
 .teamdetail_summary {
     text-align: left;
     margin-left: 20px
+}
+.모집유형 {
+    display: flex;
+    flex-direction: column;
+}
+.요구능력 {
+    display: flex;
+    text-align: center;
 }
