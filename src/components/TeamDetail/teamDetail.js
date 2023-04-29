@@ -1,10 +1,15 @@
 import React, { useState, useEffect } from "react";
 import {useNavigate} from "react-router-dom";
 import { useParams } from 'react-router-dom';
+import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 import {Button, TextField, Radio,RadioGroup, FormControlLabel} from '@mui/material';
+import { Doughnut } from 'react-chartjs-2';
 
 import RecommendUserList from '../RecommendUserList/recommendUserList';
 import "./teamDetail.css"
+
+ChartJS.register(ArcElement, Tooltip, Legend);
+
 
 function TeamDetail() {
     const refresh_token = localStorage.getItem("refresh-token");
@@ -15,27 +20,24 @@ function TeamDetail() {
     const [updatable, setUpdatable] = useState(false);
 
     const [teamDetail, setTeamDetail] = useState({
-        //프로젝트 제목, 설명, 과목 데이터 관리
-        title: "",
-        detail: "",
-        project_subject: "",
-        //현재 프론트, 백 팀원수 데이터 관리
-        currentTeamMemberCount: 0,
-        //모집 프론트, 백 팀원수 데이터 관리
-        wantTeamMemberCount: 0,
-        //언어 점수 관리
-        c:0,
-        java:0,
-        cpp:0,
-        cs:0,
-        python:0,
-        javascript:0,
-        vb:0,
-        sqlLang:0,
-        createDate: 0,
-        updateDate: 0,
+        createDate:"",
+        currentTeamMemberCount:0,
+        detail:"",
+        imagePaths:[],
+        purpose:null,
+        purposeDetail1:null,
+        purposeDetail2:null,
+        requestList: {},
+        teamKeyword:{},
+        teamDatabase : {}, 
+        teamFramework : {},  
+        teamLanguage: {},
+        teamLeader: "",
+        title:"",
+        updateDate:"", 
+        wantTeamMemberCount:0,
+        writer:null
     });
-    const {currentTeamMemberCount, wantTeamMemberCount, title,detail, project_subject, c,java,cpp,cs,python,javascript,vb,sqlLang,createDate, updateDate} = teamDetail;	//비구조화 할당
    
     const [inputs, setInputs] = useState({
         input_detail: "",
@@ -56,7 +58,7 @@ function TeamDetail() {
     };
 
     const Putinputs = () => {
-        fetch(`http://localhost:8080/user-to-team/${teamId}/add`,{
+        fetch(`${process.env.REACT_APP_API_URL}/user-to-team/${teamId}/add`,{
             method: 'POST',
             headers: {
                 'refresh-token': refresh_token,
@@ -70,40 +72,176 @@ function TeamDetail() {
             }),         
         })
         .then((response) => response.json())
-        .then((obj) => alert(obj.message))
+        .then((obj) => alert(obj.message))        
     }
+    const test = () => {
+        console.log(uppercasedData);
+    }
+    //들어온 요구사항 값을 나눠서 그래프에 띄우기 위해 처리하는 코드로 ~data1이 C,JAVA 같은 문자 data2가 그에 맞는 숫자 값이다.
+    const filteredLanguage = Object.entries(Object.entries(teamDetail.teamLanguage).sort((a, b) => b[1] - a[1])
+    .reduce((acc, [key, value]) => ({ ...acc, [key]: value }), {}))
+    .filter(([key, value]) =>  key !== 'id' && value !== 0);
+    const Languagedata1 = filteredLanguage.map(item => item[0]).map(item => item.toUpperCase().replace('CS', 'C#').replace('CPP','C++'));
+    const Languagedata2 = filteredLanguage.map(item => item[1]);
+
+    const filteredFramework = Object.entries(Object.entries(teamDetail.teamFramework).sort((a, b) => b[1] - a[1])
+    .reduce((acc, [key, value]) => ({ ...acc, [key]: value }), {}))
+    .filter(([key, value]) =>  key !== 'id' && value !== 0);
+    const Frameworkdata1 = filteredFramework.map(item => item[0]).map(item => item.toUpperCase().replace('TDMAX', '3DMAX'));
+    const Frameworkdata2 = filteredFramework.map(item => item[1]);    
+
+    const uppercasedData = Frameworkdata1.map(item => item.toUpperCase().replace('TDMAX', '3DMAX'));
+
+    const filteredDatabase = Object.entries(Object.entries(teamDetail.teamDatabase).sort((a, b) => b[1] - a[1])
+    .reduce((acc, [key, value]) => ({ ...acc, [key]: value }), {}))
+    .filter(([key, value]) =>  key !== 'id' && value !== 0);
+    const Databasedata1 = filteredDatabase.map(item => item[0]).map(item => item.toUpperCase().replace('MYSQLL', 'MYSQL').replace('MARIADBL','MARIA DB').replace('MONGODBL','MONGO DB').replace('SCHEMAL','SCHEMA'));
+    const Databasedata2 = filteredDatabase.map(item => item[1]);
 
     useEffect(() => {                 
-        fetch(`http://localhost:8080/teams/${teamId}`,{     
+        fetch(`${process.env.REACT_APP_API_URL}/teams/${teamId}`,{     
             headers: {
                 'refresh-token': refresh_token,
                 'login-token': login_token,
             } 
     })
     .then((response) => response.json())        
-    .then((obj) => {setTeamDetail(obj.data); setUpdatable(obj.updatable); console.log(obj)});
+    .then((obj) => {setTeamDetail(obj.data); setUpdatable(obj.updatable); console.log(obj);});
     }, []);
+
+    
+    //도넛 그래프를 위해 선언해놓는거
+    const Databasedonut = {
+        labels: Databasedata1,
+        datasets: [
+          {
+            label: '# of Votes',            
+            data: Databasedata2,
+            backgroundColor: [
+              'rgba(255, 99, 132, 0.2)',
+              'rgba(54, 162, 235, 0.2)',
+              'rgba(255, 206, 86, 0.2)',
+              'rgba(75, 192, 192, 0.2)',
+              'rgba(153, 102, 255, 0.2)',
+              'rgba(255, 159, 64, 0.2)',
+            ],
+            borderColor: [            
+              'rgba(255, 99, 132, 1)',
+              'rgba(54, 162, 235, 1)',
+              'rgba(255, 206, 86, 1)',
+              'rgba(75, 192, 192, 1)',
+              'rgba(153, 102, 255, 1)',
+              'rgba(255, 159, 64, 1)',
+            ],
+            borderWidth: 1,
+          },
+        ],        
+    };
+
+    const Frameworkdonut = {
+        labels: Frameworkdata1,
+        datasets: [
+          {
+            label: '# of Votes',            
+            data: Frameworkdata2,
+            backgroundColor: [
+              'rgba(255, 99, 132, 0.2)',
+              'rgba(54, 162, 235, 0.2)',
+              'rgba(255, 206, 86, 0.2)',
+              'rgba(75, 192, 192, 0.2)',
+              'rgba(153, 102, 255, 0.2)',
+              'rgba(255, 159, 64, 0.2)',
+            ],
+            borderColor: [            
+              'rgba(255, 99, 132, 1)',
+              'rgba(54, 162, 235, 1)',
+              'rgba(255, 206, 86, 1)',
+              'rgba(75, 192, 192, 1)',
+              'rgba(153, 102, 255, 1)',
+              'rgba(255, 159, 64, 1)',
+            ],
+            borderWidth: 1,
+          },
+        ],        
+    };
+
+    const Languagedonut = {
+        labels: Languagedata1,
+        datasets: [
+          {
+            label: '# of Votes',            
+            data: Languagedata2,
+            backgroundColor: [
+              'rgba(255, 99, 132, 0.2)',
+              'rgba(54, 162, 235, 0.2)',
+              'rgba(255, 206, 86, 0.2)',
+              'rgba(75, 192, 192, 0.2)',
+              'rgba(153, 102, 255, 0.2)',
+              'rgba(255, 159, 64, 0.2)',
+            ],
+            borderColor: [            
+              'rgba(255, 99, 132, 1)',
+              'rgba(54, 162, 235, 1)',
+              'rgba(255, 206, 86, 1)',
+              'rgba(75, 192, 192, 1)',
+              'rgba(153, 102, 255, 1)',
+              'rgba(255, 159, 64, 1)',
+            ],
+            borderWidth: 1,
+            borderRadius: 1,
+          },
+        ],        
+    };      
+    
+
 
     return (
         <div className="teamdetail">
-            <div className="teamdetail_head">
+            
+            <div className="teamdetail1">
                 <div className="teamdetail_head">
-                    <div className="title"><h1>제목: {title}</h1></div>                    
-                </div>                
-            </div>
-            <div className="teamdetail_summary">
-                <div className="summary">     
-                내용:         
-                <div dangerouslySetInnerHTML={{ __html: detail }} />
+                    <div className="title"><h1>제목: {teamDetail.title}</h1></div>                    
                 </div>
-                <div className="team_member">
-                현재 인원: {currentTeamMemberCount} 
-                모집 인원: {wantTeamMemberCount}
+            <hr/>
+                {teamDetail.teamKeyword.sub ==null ? 
+                <h3>{teamDetail.teamKeyword.field}의 {teamDetail.teamKeyword.sub}반에서 {teamDetail.teamKeyword.category}로 뽑고 있습니다! </h3>
+                :
+                <h3>{teamDetail.teamKeyword.category}에서 {teamDetail.teamKeyword.field}를 뽑고 있습니다! </h3>
+            }
+                <div className="teamdetail_summary">
+                    <div className="모집유형">
+                        <h3>모집유형</h3>
+                        <span>팀 빌딩 목적&emsp; {teamDetail.teamKeyword.category} </span>
+                        <span>모집 역할&emsp; {teamDetail.teamKeyword.field} </span>
+                        <span>모집 인원&emsp; {teamDetail.wantTeamMemberCount} </span>
+                        <h3>요구 능력</h3>
+                        <div className="요구능력">
+                            <div>
+                            {filteredLanguage.length === 0 ? null: "프로그래밍 언어"}
+                            {filteredLanguage.length === 0 ? null: <div style={{width:300, height:300}}><Doughnut data={Languagedonut} /></div>  }                       
+                            </div>
+                            <div>
+                            {filteredFramework.length === 0 ? null: "프레임워크"}
+                            {filteredFramework.length === 0 ? null: <div style={{width:300, height:300}}><Doughnut data={Frameworkdonut}/></div> }                      
+                            </div>
+                            <div>
+                            {filteredDatabase.length === 0 ? null: "데이터베이스"}
+                            {filteredDatabase.length === 0 ? null: <div style={{width:300, height:300}}><Doughnut data={Databasedonut}/></div> }                       
+                            </div>
+                        </div>
+                    </div>                    
+                    <hr/>
+                    <div className="summary">     
+                        <h2>내용</h2>         
+                        <div dangerouslySetInnerHTML={{ __html: teamDetail.detail }} />    
+                    </div>
+                </div>         
+                <div className="teamdetail_recommenduserlist">
+                    <RecommendUserList teamId={teamId}/>
                 </div>
+                <button onClick={test}></button>
             </div>
-            <div className="teamdetail_recommenduserlist">
-                <RecommendUserList teamId={teamId}/>
-            </div>
+            
             {(updatable?
             <div className="teamdetail_bottom">
                 <button onClick={() =>{ 
@@ -112,7 +250,7 @@ function TeamDetail() {
                 수정하기</button>
 
                 <button onClick={() =>{
-                    fetch(`http://localhost:8080/teams/${teamId}/delete`,{
+                    fetch(`${process.env.REACT_APP_API_URL}/teams/${teamId}/delete`,{
                         method: 'POST',
                         headers: {
                             'refresh-token': refresh_token,
@@ -129,6 +267,7 @@ function TeamDetail() {
                 
                 <div className="teamdetail_bottom">
                     <details >
+                        
                         <summary>팀원 신청 하기</summary>
                         간단한 자기 어필:
                         <TextField sx={{ width: { sm: 650 }, marginBottom: '16px' }} variant="standard" value={input_detail} name="input_detail" onChange={onChange} />

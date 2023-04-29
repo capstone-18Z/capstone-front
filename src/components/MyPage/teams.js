@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import MyPageList from "../MyPageList/mypagelist";
-
+import { Card } from "../Card/card";
+import "./myteamlist.css";
 const Teams = () => {
   const refresh_token = localStorage.getItem("refresh-token");
     const login_token = localStorage.getItem("login-token");
@@ -18,19 +19,19 @@ const Teams = () => {
     }, []);
 
   return (
-    <div>
-      {mypagedata && mypagedata.map(myAllTeams =>(  
-                    <div key={myAllTeams.teamId} className="requestlist">
-                    <div>
-                    <li className='tap'
-                    onClick={() => (console.log(myAllTeams))}>팀 제목: {myAllTeams.title}  목적:{myAllTeams.teamKeyword.category}</li>                       
-                    {myAllTeams.requestList && myAllTeams.requestList.map(request => (                        
-                        <MyPageList key={request.requestId} request={request}/>
-                    ))}
-                    </div>
-                    
-                    </div>                                       
-                ))}    
+    <div className="myteamlist_wrapper">
+        {mypagedata && mypagedata.map(myAllTeams =>(  
+          <div className="first-div" key={myAllTeams.teamId}>            
+              <div className="card-wrapper">
+                <Card team={myAllTeams} />                
+              </div>
+              {myAllTeams && myAllTeams.requestList && myAllTeams.requestList.map(request => (
+                <div className="my-page-list-wrapper" key={request.requestId}>
+                  <MyPageList request={request} />
+                </div>
+              ))}                      
+          </div>
+        ))}
     </div>
   );
 };

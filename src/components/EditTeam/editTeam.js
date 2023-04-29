@@ -13,7 +13,7 @@ function EditTeam() {
  
 
     useEffect(() => {                       
-        fetch(`http://localhost:8080/teams/${teamId}`,{     
+        fetch(`${process.env.REACT_APP_API_URL}/teams/${teamId}`,{     
                 headers: {
                     'refresh-token': refresh_token,
                     'login-token': login_token,
@@ -99,7 +99,7 @@ const PostRequest = (e) => {
 }
 
 const onSubmitHandler = (e) => {
-    fetch(`http://localhost:8080/teams/${teamId}/update`,{
+    fetch(`${process.env.REACT_APP_API_URL}/teams/${teamId}/update`,{
       method: 'POST',
       headers: {
         'refresh-token': refresh_token,

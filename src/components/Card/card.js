@@ -1,7 +1,7 @@
 import {useNavigate} from "react-router-dom";
 import { useState } from "react";
 import "./card.css"
-const BASE_URL ='http://localhost:8080';
+
 
 export const Card = (team) => {
   const navigate = useNavigate();

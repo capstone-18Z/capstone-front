@@ -98,7 +98,7 @@ function TeamBuilding() {
         });       
         
         try {
-            const response = await axios.post("http://localhost:8080/teams/new", test, {
+            const response = await axios.post(`${process.env.REACT_APP_API_URL}/teams/new`, test, {
             headers: {
               "Content-Type": "multipart/form-data",
               'refresh-token': refresh_token,
@@ -115,7 +115,7 @@ function TeamBuilding() {
       };
       /*
     const onSubmitHandler = (e) => {
-        fetch('http://localhost:8080/teams/new',{
+        fetch('${process.env.REACT_APP_API_URL}/teams/new',{
           method: 'POST',
           headers: {
             'refresh-token': refresh_token,
@@ -215,10 +215,10 @@ function TeamBuilding() {
                 <div style={{ display: 'flex' }}>
                     <h3>과목</h3>
                     <Select name="field" value={field} label="과목 선택" onChange={onChange}>
-                        <MenuItem value={"webpramework1"}>웹프레임워크1</MenuItem>
-                        <MenuItem value={"network"}>네트워크프로그래밍</MenuItem>
-                        <MenuItem value={"android"}>안드로이드프로그래밍</MenuItem>
-                        <MenuItem value={"highAndroid"}>고급모바일프로그래밍</MenuItem>                        
+                        <MenuItem value={"웹프레임워크1"}>웹프레임워크1</MenuItem>
+                        <MenuItem value={"네트워크프로그래밍"}>네트워크프로그래밍</MenuItem>
+                        <MenuItem value={"안드로이드프로그래밍"}>안드로이드프로그래밍</MenuItem>
+                        <MenuItem value={"고급모바일프로그래밍"}>고급모바일프로그래밍</MenuItem>                        
                     </Select>
                     <h3>분반</h3>
                     <Select name="sub" value={sub} label="분반 선택" onChange={onChange}>
@@ -237,9 +237,9 @@ function TeamBuilding() {
                     <div style={{ display: 'flex' }}>
                     <h3>역할 선택</h3>
                     <Select name="field" value={field} label="역할 선택" onChange={onChange}>
-                        <MenuItem value={"front"}>프론트엔드</MenuItem>
-                        <MenuItem value={"back"}>백엔드</MenuItem>
-                        <MenuItem value={"free"}>상관없음</MenuItem> 
+                        <MenuItem value={"프론트엔드"}>프론트엔드</MenuItem>
+                        <MenuItem value={"백엔드"}>백엔드</MenuItem>
+                        <MenuItem value={"상관없음"}>상관없음</MenuItem> 
                     </Select>
                     </div>
                 )}
