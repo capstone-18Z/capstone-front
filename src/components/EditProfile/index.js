@@ -8,39 +8,54 @@ import Framework from "../TechniqueStack/framework";
 import Database from "../TechniqueStack/database";
 import axios from "axios";
 
-function EditProfile(fetchData) {
+function EditProfile({fetchData}) {
   const navigate = useNavigate();
-  const [memberData, setMemberData] = useState(fetchData.fetchData);
+  const [memberData, setMemberData] = useState(fetchData.data.member);
   const [inputs, setInputs] = useInput({
-    nickname: memberData.data.member.nickname || "",
-    email: memberData.data.member.email || "",
-    //grade: "",
-    github: memberData.data.member.github || "",
+    solvedNickname: memberData.solvedNickname || "",
+    nickname: memberData.nickname || "",
+    email: memberData.email || "",
+    grade: memberData.grade || "",
+    github: memberData.github || "",
   });
   const [memberKeywords, setMemberKeywords] = useState([]);
-  const [category, setCategory] = useState(memberData.data.member.memberKeywords.map(keyword => keyword.category));
-  console.log(memberData.data.member)
-  const [field, setField] = useState(memberData.data.member.memberKeywords.filter(keyword => keyword.category !== "과목 팀프로젝트").map(keyword => keyword.field));
+  const [category, setCategory] = useState(memberData.memberKeywords.map((keyword) => keyword.category));
+  const [field, setField] = useState(
+    memberData.memberKeywords
+      .filter((keyword) => keyword.category !== "과목 팀프로젝트")
+      .map((keyword) => keyword.field)
+      .join()
+  );
   const [fieldToggle, setFieldToggle] = useState(false); // 추가
-  const [subject, setSubject] = useState(memberData.data.member.memberKeywords.filter(keyword => keyword.category === "과목 팀프로젝트").map(keyword => keyword.field));
-  const [sub, setSub] = useState(memberData.data.member.memberKeywords.filter(keyword => keyword.category === "과목 팀프로젝트").map(keyword => keyword.sub));
+  const [subject, setSubject] = useState(
+    memberData.memberKeywords
+      .filter((keyword) => keyword.category === "과목 팀프로젝트")
+      .map((keyword) => keyword.field)
+      .join()
+  );
+  const [sub, setSub] = useState(
+    memberData.memberKeywords
+      .filter((keyword) => keyword.category === "과목 팀프로젝트")
+      .map((keyword) => keyword.sub)
+      .join()
+  );
   const [subjectToggle, setSubjectToggle] = useState(false);
-  const [showImg, setShowImg] = useState(null);
+  const [showImg, setShowImg] = useState(memberData.profileImageUrl);
   const [imgFile, setImgFile] = useState(null);
   const imgRef = useRef();
   const [memberLang, setMemberLang] = useState({
-    c: 0,
-    cpp: 0,
-    cs: 0,
-    java: 0,
-    javascript: 0,
-    sql_Lang: 0,
-    swift: 0,
-    kotlin: 0,
-    typescript: 0,
-    python: 0,
-    html: 0,
-    r: 0,
+    c: memberData.memberLang.c,
+    cpp: memberData.memberLang.cpp,
+    cs: memberData.memberLang.cs,
+    java: memberData.memberLang.java,
+    javascript: memberData.memberLang.javascript,
+    sql_Lang: memberData.memberLang.sql_Lang,
+    swift: memberData.memberLang.swift,
+    kotlin: memberData.memberLang.kotlin,
+    typescript: memberData.memberLang.typescript,
+    python: memberData.memberLang.python,
+    html: memberData.memberLang.html,
+    r: memberData.memberLang.r,
   });
 
   const handleLanguageValueChange = (newLanguageValues) => {
@@ -48,14 +63,14 @@ function EditProfile(fetchData) {
   };
 
   const [memberFramework, setMemberFramework] = useState({
-    react: 0,
-    android: 0,
-    node: 0,
-    xcode: 0,
-    spring: 0,
-    unity: 0,
-    unreal: 0,
-    tdmax: 0,
+    react: memberData.memberFramework.react,
+    android: memberData.memberFramework.android,
+    node: memberData.memberFramework.node,
+    xcode: memberData.memberFramework.xcode,
+    spring: memberData.memberFramework.spring,
+    unity: memberData.memberFramework.unity,
+    unreal: memberData.memberFramework.unreal,
+    tdmax: memberData.memberFramework.tdmax,
   });
 
   const handleFrameworkValueChange = (frameworkValues) => {
@@ -63,10 +78,10 @@ function EditProfile(fetchData) {
   };
 
   const [memberDB, setMemberDB] = useState({
-    mysqlL: 0,
-    mariadbL: 0,
-    mongodbL: 0,
-    schemaL: 0,
+    mysqlL: memberData.memberDB.mysqlL,
+    mariadbL: memberData.memberDB.mariadbL,
+    mongodbL: memberData.memberDB.mongodbL,
+    schemaL: memberData.memberDB.schemal,
   });
 
   const handleDatabaseValueChange = (databaseValues) => {
@@ -80,7 +95,11 @@ function EditProfile(fetchData) {
     if (value === "과목 팀프로젝트") {
       setSubjectToggle((e) => !e);
     } else {
-      setFieldToggle(newCategory.includes("캡스톤 디자인") || newCategory.includes("공모전 및 대회") || newCategory.includes("개인 팀프로젝트"));
+      setFieldToggle(
+        newCategory.includes("캡스톤 디자인") ||
+          newCategory.includes("공모전 및 대회") ||
+          newCategory.includes("개인 팀프로젝트")
+      );
     }
   };
 
@@ -95,7 +114,7 @@ function EditProfile(fetchData) {
     };
     console.log(getAllFormData);
     formData.append("metadata", JSON.stringify(getAllFormData));
-    formData.append("files", imgFile);
+    formData.append("file", imgFile);
     //데이터 보내기
     axios
       .post(`${process.env.REACT_APP_API_URL}/member/userForm/update`, formData, {
@@ -142,6 +161,7 @@ function EditProfile(fetchData) {
   };
 
   useEffect(() => {
+    console.log(field, subject, sub);
     const newPurpose = category.map((data) => {
       if (data === "과목 팀프로젝트") {
         return { category: data, field: subject, sub: sub };
@@ -149,9 +169,21 @@ function EditProfile(fetchData) {
         return { category: data, field: field };
       }
     });
-
     setMemberKeywords(newPurpose);
   }, [category, subject, sub, field]);
+
+  useEffect(() => {
+    const hasSubjectTeamProject = memberData.memberKeywords.some((keyword) => keyword.category === "과목 팀프로젝트");
+    if (hasSubjectTeamProject) {
+      setSubjectToggle((e) => !e);
+    }
+    const hasOtherKeywords = memberData.memberKeywords.some((keyword) =>
+      ["캡스톤 디자인", "개인 팀프로젝트", "공모전 및 대회"].includes(keyword.category)
+    );
+    if (hasOtherKeywords) {
+      setFieldToggle((e) => !e);
+    }
+  }, [memberData.memberKeywords]);
 
   return (
     <div className="profile-box">
@@ -166,6 +198,15 @@ function EditProfile(fetchData) {
                 placeholder="닉네임을 입력해주세요"
                 name="nickname"
                 value={inputs.nickname}
+                onChange={setInputs}
+              />
+              <InputLabel shrink>백준 닉네임</InputLabel>
+              <TextField
+                size="small"
+                sx={{ marginBottom: "10px" }}
+                placeholder="닉네임을 입력해주세요"
+                name="solvedNickname"
+                value={inputs.solvedNickname}
                 onChange={setInputs}
               />
             </div>
@@ -214,8 +255,9 @@ function EditProfile(fetchData) {
         </div>
         <div className="keyword-box">
           <div className="button-box">
-            <TextField fullWidth size="small" margin="dense" value={category.map((data) => data)} />
-            <Button variant="outlined" sx={{margin:"10px"}}  value="캡스톤 디자인" onClick={onChange3}>
+            <InputLabel shrink>원하는 팀을 골라주세요</InputLabel>
+            <TextField fullWidth size="small" value={category.map((data) => data)} />
+            <Button variant="outlined" sx={{ margin: "10px" }} value="캡스톤 디자인" onClick={onChange3}>
               캡스톤 디자인
             </Button>
             <Button variant="outlined" sx={{ margin: "10px" }} value="과목 팀프로젝트" onClick={onChange3}>
@@ -235,7 +277,6 @@ function EditProfile(fetchData) {
             <FormControl size="small">
               <Select
                 sx={{ width: "200px" }}
-                
                 name="field"
                 value={field}
                 onChange={(e) => {
