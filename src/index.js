@@ -25,9 +25,6 @@ root.render(
   // </React.StrictMode>
   <ThemeProvider theme={theme}>
     <CssBaseline>
-      <Button variant="contained" color="primary">
-        버튼
-      </Button>
       <App />
     </CssBaseline>
   </ThemeProvider>
