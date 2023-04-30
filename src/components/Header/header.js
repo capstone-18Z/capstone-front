@@ -23,6 +23,9 @@ function Header() {
 
   const logout = () => {
     localStorage.removeItem("refresh-token");
+    localStorage.removeItem("login-token");
+    localStorage.removeItem("email");
+    localStorage.removeItem("nickname");
     navigate("/");
   };
 
@@ -39,6 +42,14 @@ function Header() {
         <ul>
           <li>
             <div>자유게시판</div>
+          </li>
+          <li>
+            <div onClick={(e) => {
+                navigate("/list/members");
+              }}
+            >
+              유저 찾기
+              </div>
           </li>
           <li>
             <div
@@ -66,7 +77,7 @@ function Header() {
             {loginCheck ? (
               <div
                 onClick={(e) => {
-                  navigate("/profile");
+                  navigate(`/profile/${localStorage.getItem("email")}`);
                 }}
               >
                 프로필

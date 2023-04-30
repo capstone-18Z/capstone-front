@@ -1,0 +1,23 @@
+.member-card-wrapper {
+  width: 400px;
+  height: 300px;
+}
+.card-top-box {
+  display: flex; 
+  height: 50%;
+}
+.top-left-box {
+  margin: 10px;
+}
+.top-right-box {
+  padding: 10px;
+  margin-left: 20px;
+}
+.member-card-body{
+  height: 40%;
+  padding: 10px;
+}
+.card-footer {
+  height: 10%;
+  padding-left: 10px;
+}

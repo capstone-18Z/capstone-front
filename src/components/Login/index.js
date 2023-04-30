@@ -1,5 +1,5 @@
 import "./style.css";
-import { TextField, Button } from "@mui/material";
+import { TextField, Button, Typography } from "@mui/material";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import useInput from "../../hooks/useInput";
@@ -44,7 +44,8 @@ function Login() {
           console.log(axios.defaults.headers.common);
           localStorage.setItem("refresh-token", response.data.data.token.refreshToken);
           localStorage.setItem("login-token", response.data.data.token.accessToken);
-          //localStorage.setItem("nickname", response.data.data.member.nickname);
+          localStorage.setItem("nickname", response.data.data.nickname);
+          localStorage.setItem("email", response.data.data.member.email)
           setInterval(onSilentRefresh, 1200000); // 20분 후 refreshtoken 갱신
           navigate("/main");
         }
@@ -71,6 +72,7 @@ function Login() {
         </div>
         <div className="login-text">
           <TextField
+            
             margin="normal"
             label="비밀번호"
             type="password"
