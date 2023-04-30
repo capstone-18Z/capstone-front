@@ -8,9 +8,9 @@ import Framework from "../TechniqueStack/framework";
 import Database from "../TechniqueStack/database";
 import axios from "axios";
 
-function EditProfile({fetchData}) {
+function EditProfile({fetchData, payload}) {
   const navigate = useNavigate();
-  const [memberData, setMemberData] = useState(fetchData.data.member);
+  const [memberData, setMemberData] = useState(payload.data.member);
   const [inputs, setInputs] = useInput({
     solvedNickname: memberData.solvedNickname || "",
     nickname: memberData.nickname || "",
@@ -125,6 +125,7 @@ function EditProfile({fetchData}) {
       .then((response) => {
         if (response.data) {
           alert("등록 완료");
+          fetchData();
           navigate("/profile");
         }
       })

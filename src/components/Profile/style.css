@@ -5,6 +5,7 @@
 .profile-info-box,
 .profile-img-box {
   width: 50%;
+  text-align: left;
 }
 .profile-bottom-box {
   text-align: left;

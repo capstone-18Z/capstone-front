@@ -5,6 +5,27 @@ import { useNavigate } from "react-router-dom";
 function Profile({ payload, fetchData }) {
   const navigate = useNavigate();
   const memberData = payload.data.member;
+  console.log(memberData)
+  const getRankInfo = (solvedTier) => {
+    switch (true) {
+      case solvedTier === 0:
+        return "Unranked";
+      case solvedTier >= 1 && solvedTier <= 5:
+        return `Bronze ${6 - solvedTier}`;
+      case solvedTier >= 6 && solvedTier <= 10:
+        return `Silver ${11 - solvedTier}`;
+      case solvedTier >= 11 && solvedTier <= 15:
+        return `Gold ${16 - solvedTier}`;
+      case solvedTier >= 16 && solvedTier <= 20:
+        return `Platinum ${21 - solvedTier}`;
+      case solvedTier >= 21 && solvedTier <= 25:
+        return `Diamond ${26 - solvedTier}`;
+      case solvedTier >= 26 && solvedTier <= 30:
+        return `Ruby ${31 - solvedTier}`;
+      default:
+        return "";
+    }
+  };
   return (
     <div className="profile-box">
       <div className="profile-top-box">
@@ -13,6 +34,9 @@ function Profile({ payload, fetchData }) {
           <h5 className="email-box">이메일: {memberData.email}</h5>
           <h5 className="githublink-box">깃허브 링크: {memberData.github}</h5>
           <h5 className="grade-box">학년: {memberData.grade}</h5>
+          <h5 className="bj-nickname">백준 닉네임: {memberData.solvedNickname}</h5>
+          <h5 className="bj-tier">백준 티어: {getRankInfo(memberData.solvedTier)}</h5>
+          <h5 className="bj-solvedcount">백준 푼 문제: {memberData.solvedCount}</h5>
         </div>
         <div className="profile-img-box">
           <Avatar alt="Remy Sharp" src={memberData.profileImageUrl} sx={{ width: 200, height: 200 }} />
@@ -39,29 +63,31 @@ function Profile({ payload, fetchData }) {
         </div>
         <div>
           <p>잘 다뤄요!</p>
-          {[memberData.memberLang, memberData.memberFramework, memberData.memberDB].flatMap((obj) =>
-            Object.entries(obj)
-              .filter(([key, value]) => value === 100)
-              .map(([key, value]) => <Chip key={key} label={key} color="primary" variant="outlined" />)
-              .concat(
-                Object.entries(obj).filter(([key, value]) => value === 100).length === 0 && (
-                  <Chip label="프로필을 수정하여 추가해주세요" color="secondary" variant="outlined" />
-                )
-              )
-          )}
+          {[memberData.memberLang, memberData.memberFramework, memberData.memberDB]
+            .flatMap((obj) =>
+              Object.entries(obj)
+                .filter(([key, value]) => value === 100)
+                .map(([key, value]) => <Chip key={key} label={key} color="primary" variant="outlined" />)
+            )
+            .concat(
+              ![memberData.memberLang, memberData.memberFramework, memberData.memberDB].some((obj) =>
+                Object.entries(obj).some(([key, value]) => value === 100)
+              ) && <Chip label="프로필을 수정하여 추가해주세요" color="secondary" variant="outlined" />
+            )}
         </div>
         <div>
           <p>써본적은 있지만 잘 다루진 못해요</p>
-          {[memberData.memberLang, memberData.memberFramework, memberData.memberDB].flatMap((obj) =>
-            Object.entries(obj)
-              .filter(([key, value]) => value === 50)
-              .map(([key, value]) => <Chip key={key} label={key} color="primary" variant="outlined" />)
-              .concat(
-                Object.entries(obj).filter(([key, value]) => value === 50).length === 0 && (
-                  <Chip label="프로필을 수정하여 추가해주세요" color="secondary" variant="outlined" />
-                )
-              )
-          )}
+          {[memberData.memberLang, memberData.memberFramework, memberData.memberDB]
+            .flatMap((obj) =>
+              Object.entries(obj)
+                .filter(([key, value]) => value === 50)
+                .map(([key, value]) => <Chip key={key} label={key} color="primary" variant="outlined" />)
+            )
+            .concat(
+              ![memberData.memberLang, memberData.memberFramework, memberData.memberDB].some((obj) =>
+                Object.entries(obj).some(([key, value]) => value === 50)
+              ) && <Chip label="프로필을 수정하여 추가해주세요" color="secondary" variant="outlined" />
+            )}
         </div>
       </div>
       <div>
