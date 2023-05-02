@@ -3,21 +3,21 @@
   height: 300px;
 }
 .card-top-box {
-  display: flex; 
+  display: flex;
   height: 50%;
-}
-.top-left-box {
-  margin: 10px;
+  padding-left: 16px;
 }
 .top-right-box {
   padding: 10px;
   margin-left: 20px;
 }
-.member-card-body{
-  height: 40%;
-  padding: 10px;
+.card-proimg {
+  display: flex;
+  justify-content: center;
 }
-.card-footer {
-  height: 10%;
-  padding-left: 10px;
+.member-card-text {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }

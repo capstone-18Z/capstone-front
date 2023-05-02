@@ -8,7 +8,16 @@ import Header from "./components/Header/header"
 import MyPage from "./components/MyPage/mypage";
 import ProfilePage from "./pages/ProfilePage";
 import ListPage from "./pages/ListPage";
+import "./App.css";
+import { createTheme, ThemeProvider } from '@mui/material';
 
+const theme = createTheme({
+  typography: {
+    fontFamily: [
+      'Noto Sans KR',
+      'sans-serif',
+    ].join(','),
+  },});
 
 function App() {
   const refresh = localStorage.getItem("refresh-token");
@@ -35,6 +44,7 @@ function App() {
   }, [refresh]);
   
   return (
+    <ThemeProvider theme={theme}>
     <div className="App">
       <BrowserRouter>
         <Routes>
@@ -48,6 +58,7 @@ function App() {
         </Routes>
       </BrowserRouter>
     </div>
+    </ThemeProvider>
   );
 }
 

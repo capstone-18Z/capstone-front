@@ -8,11 +8,11 @@ import Framework from "../TechniqueStack/framework";
 import Database from "../TechniqueStack/database";
 import axios from "axios";
 
-function EditProfile({fetchData, payload}) {
+function EditProfile({ fetchData, payload }) {
   const navigate = useNavigate();
   const [memberData, setMemberData] = useState(payload.data.member);
   const [inputs, setInputs] = useInput({
-    solvedNickname: memberData.solvedNickname || "",
+    solvedNickname: memberData.solvedNickname === "!!No User!!" ? "" : memberData.solvedNickname || "",
     nickname: memberData.nickname || "",
     email: memberData.email || "",
     grade: memberData.grade || "",
@@ -81,7 +81,7 @@ function EditProfile({fetchData, payload}) {
     mysqlL: memberData.memberDB.mysqlL,
     mariadbL: memberData.memberDB.mariadbL,
     mongodbL: memberData.memberDB.mongodbL,
-    schemaL: memberData.memberDB.schemal,
+    schemaL: memberData.memberDB.schemaL,
   });
 
   const handleDatabaseValueChange = (databaseValues) => {
@@ -126,7 +126,7 @@ function EditProfile({fetchData, payload}) {
         if (response.data) {
           alert("등록 완료");
           fetchData();
-          navigate("/profile");
+          navigate(`/profile/${localStorage.getItem("email")}`);
         }
       })
       .catch((err) => {
@@ -162,7 +162,6 @@ function EditProfile({fetchData, payload}) {
   };
 
   useEffect(() => {
-    console.log(field, subject, sub);
     const newPurpose = category.map((data) => {
       if (data === "과목 팀프로젝트") {
         return { category: data, field: subject, sub: sub };
@@ -330,7 +329,7 @@ function EditProfile({fetchData, payload}) {
             <Database databaseValues={memberDB} onDatabaseValueChange={handleDatabaseValueChange} />
           </Box>
         </div>
-        <Button variant="outlined" onClick={onChange2}>
+        <Button sx={{ marginTop: "20px" }} variant="outlined" onClick={onChange2}>
           등록
         </Button>
       </form>

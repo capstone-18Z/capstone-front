@@ -11,7 +11,7 @@ function ProfilePage() {
   );
 
   if (!payload) {
-    return <><Alert severity="error">정보를 읽어오는데 실패했습니다.</Alert></>
+    return <></>
   }
 
   if (loading) {

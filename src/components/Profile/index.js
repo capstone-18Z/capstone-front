@@ -8,7 +8,7 @@ function Profile({ payload, fetchData }) {
   const navigate = useNavigate();
   const location = useLocation();
   const [memberData, setmemberData] = useState(payload.data.member);
-  const [currentLastUrl, setCurrentLastUrl] = useState(null);
+  console.log(memberData);
   const [buttonVisible, setButtonVisible] = useState(true);
 
   const getAnotherProfile = async (email) => {
@@ -22,15 +22,16 @@ function Profile({ payload, fetchData }) {
   };
 
   useEffect(() => {
-    if (location.state?.email !== localStorage.getItem("email")) {
+    console.log(location.state?.email);
+    if (location.state?.email && location.state.email !== localStorage.getItem("email")) {
       getAnotherProfile(location.state?.email);
     } else {
       return;
     }
-  }, [location]);
+  }, [location.state?.email]);
 
   const checkSolvedNickname = (memberData) => {
-    if (memberData.solvedNickname) {
+    if (memberData.solvedNickname !== "!!No User!!" && memberData.solvedNickname !== "") {
       return (
         <>
           <h5 className="bj-nickname">백준 닉네임: {memberData.solvedNickname}</h5>
@@ -79,9 +80,7 @@ function Profile({ payload, fetchData }) {
       <div className="profile-bottom-box">
         <div className="wantteam-box">
           <p>원하는 팀</p>
-          {memberData.memberKeywords.length === 0 && (
-            <Chip label="미작성" color="secondary" variant="outlined" />
-          )}
+          {memberData.memberKeywords.length === 0 && <Chip label="미작성" color="secondary" variant="outlined" />}
           {memberData.memberKeywords.map((keyword) => (
             <Chip
               label={`${keyword.category}/${
@@ -132,6 +131,7 @@ function Profile({ payload, fetchData }) {
           <Button
             variant="contained"
             onClick={(e) => {
+              fetchData();
               navigate("/profile/edit");
             }}
           >

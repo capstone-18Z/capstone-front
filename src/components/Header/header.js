@@ -44,12 +44,13 @@ function Header() {
             <div>자유게시판</div>
           </li>
           <li>
-            <div onClick={(e) => {
+            <div
+              onClick={(e) => {
                 navigate("/list/members");
               }}
             >
               유저 찾기
-              </div>
+            </div>
           </li>
           <li>
             <div
