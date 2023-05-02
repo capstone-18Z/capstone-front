@@ -36,7 +36,7 @@ function Members() {
       </div>
       <div className="search-box">
         <TextField  placeholder="닉네임으로 검색" variant="outlined" size="small" />
-        <Button  variant="contained" sx={{ marginLeft: "5px" }} onClick={}>
+        <Button  variant="contained" sx={{ marginLeft: "5px" }}>
           검색
         </Button>
       </div>
