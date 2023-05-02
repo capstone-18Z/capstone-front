@@ -28,6 +28,7 @@ function Sidebar() {
     { name: "프로필", path: "/mypage/profile" },    
     { name: "프로필 수정", path: "/mypage/profile" },    
     { name: "내 팀 목록", path: "/mypage/team" },
+    { name: "추천 유저", path: "/mypage/recommend"}
   ];
   return (
     <Side>

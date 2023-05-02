@@ -1,16 +1,6 @@
 import React, { useState } from 'react';
-import { Button,Slider  } from "@mui/material";
-function Framework({ frameworkValues, onFrameworkValueChange }) {
-    const [selectedFrameworks, setSelectedFrameworks] = useState({
-        react: false,
-        android: false,
-        node: false,
-        xcode:false,
-        spring:false,
-        unity:false,
-        unreal:false,
-        tdmax: false,        
-      });
+import { Button, IconButton ,Slider  } from "@mui/material";
+function Framework({ frameworkValues, onFrameworkValueChange ,selectedFrameworks, setSelectedFrameworks}) {    
     
       const toggleFramework = (framework) => {
         const isFrameworkSelected = selectedFrameworks[framework];
@@ -65,13 +55,16 @@ function Framework({ frameworkValues, onFrameworkValueChange }) {
           </div>
         );
       };
-      const data = ['react','android', 'node','xcode', 'spring', 'unity', 'unreal', 'tdmax' ]; // lang 변수가 버튼의 이름이자 서버에 넘길 값들
+      const data = ['react','android', 'node','xcode', 'spring', 'unity', 'unreal', 'tdmax' ]; // data 변수가 버튼의 이름이자 서버에 넘길 값들
     
       return (
         <div>
         <div style={{ width: "500px", display: "flex", justifyContent: "center", flexWrap: "wrap", margin: "0 auto" }}>
           {data.map(data => (
             <Button key={data} variant="outlined" onClick={() => toggleFramework(data)} style={{ margin: '8px' }}>
+              <IconButton >
+              <img src={`https://firebasestorage.googleapis.com/v0/b/caps-1edf8.appspot.com/o/langIcon%2F${data}.png?alt=media`} alt="logo" width={30}/>
+              </IconButton>
               {data.toUpperCase().replace('TDMAX', '3DMAX')}
             </Button>
           ))}

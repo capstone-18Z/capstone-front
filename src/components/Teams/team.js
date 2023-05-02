@@ -91,6 +91,7 @@ function Team() {
             onChange={searchBarOnChange}
             />
             <button onClick={searchTeam}>고우</button>
+            <h3>카테고리</h3>
             <p>팀원 모집중</p>
             {page_number}페이지임
             

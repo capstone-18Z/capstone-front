@@ -2,9 +2,10 @@ import React, { useState, useEffect } from "react";
 import MyPageList from "../MyPageList/mypagelist";
 import { Card } from "../Card/card";
 import "./myteamlist.css";
+import RecommendUserList from "../RecommendUserList/recommendUserList";
 const Teams = () => {
   const refresh_token = localStorage.getItem("refresh-token");
-    const login_token = localStorage.getItem("login-token");
+  const login_token = localStorage.getItem("login-token");
 
     const [mypagedata, setMyPageData] = useState();
     useEffect(() => {                 
@@ -21,7 +22,8 @@ const Teams = () => {
   return (
     <div className="myteamlist_wrapper">
         {mypagedata && mypagedata.map(myAllTeams =>(  
-          <div className="first-div" key={myAllTeams.teamId}>            
+          <div className="first-div" key={myAllTeams.teamId}>      
+                  
               <div className="card-wrapper">
                 <Card team={myAllTeams} />                
               </div>

@@ -17,8 +17,6 @@ function MyPageList(request) {
         })                            
         .then((response) => response.json())
         .then((obj)=>{alert(obj.message); window.location.reload()})
-              
-       
     }
     return (
         <div className='MyPageList_profile' key={request.waitingId}>             

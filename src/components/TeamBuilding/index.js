@@ -41,24 +41,23 @@ function TeamBuilding() {
         setInputs(nextInputs);           
     },[keywords])
 
+    
+
     const [inputs, setInputs] = useState({
         //프로젝트 제목, 목적 데이터 관리
         title: "",
         category : "",
         field: "",
-        sub: "",
-        wantTeamMemberCount: 0,
-        //현재 프론트, 백 팀원수 데이터 관리
-        currentFrontMember: 0,
-        currentBackMember:0,
-        //모집 프론트, 백 팀원수 데이터 관리
-        wantedFrontMember: 0,
-        wantedBackEndMember: 0,       
-       
-        //팀 키워드
-        teamKeywords: {},
+        sub: "none",
+        wantTeamMemberCount: 0,       
         createDate: today,
     });
+
+    useEffect(()=>{        
+        setInputs({...inputs, sub:"none"});           
+        console.log(inputs);
+    },[inputs.category])
+    
     const {wantTeamMemberCount, title,category,field,sub ,createDate, updateDate} = inputs;	//비구조화 할당
     const onChange = (e) => {
         const {name, value} = e.target;
@@ -86,7 +85,7 @@ function TeamBuilding() {
           teamDatabase,
           teamKeyword : {
             category : category,
-            field: field,
+            field: field,            
             sub: sub,
           }
         }
@@ -151,6 +150,20 @@ function TeamBuilding() {
     const handleTeamLanguageChange = (teamLanguage) => {
         setTeamLanguage(teamLanguage);       
     };
+    const [selectedLanguages, setSelectedLanguages] = useState({
+        c: false,
+        cpp: false,
+        cs: false,
+        java:false,
+        javascript:false,
+        sql_Lang:false,
+        swift:false,
+        kotlin:false,
+        typescript:false,
+        python:false,
+        html:false,
+        r:false
+    });
 
     const [teamFramework, setTeamFramework] = useState({
         react: 0, androidStudio: 0, nodejs: 0, xcode:0,
@@ -161,6 +174,17 @@ function TeamBuilding() {
         setTeamFramework(teamFramework);       
     };
    
+    const [selectedFrameworks, setSelectedFrameworks] = useState({
+        react: false,
+        android: false,
+        node: false,
+        xcode:false,
+        spring:false,
+        unity:false,
+        unreal:false,
+        tdmax: false,        
+    });
+
     const [teamDatabase, setTeamDatabase] = useState({
         mysqlL: 0, mariadbL: 0, mongodbL: 0, schemaL:0,   
       });
@@ -168,6 +192,13 @@ function TeamBuilding() {
     const handleTeamDatabaseChange = (teamDatabase) => {
         setTeamDatabase(teamDatabase);       
     };
+
+    const [selectedDatabases, setSelectedDatabases] = useState({
+        mysqlL: false, //mysql
+        mariadbL: false,
+        mongodbL: false,
+        schemaL:false,     
+    });
 
     const valuetest= () => {
     }
@@ -222,11 +253,11 @@ function TeamBuilding() {
                     </Select>
                     <h3>분반</h3>
                     <Select name="sub" value={sub} label="분반 선택" onChange={onChange}>
-                        <MenuItem value={"a"}>A</MenuItem>
-                        <MenuItem value={"b"}>B</MenuItem>
-                        <MenuItem value={"c"}>C</MenuItem>
-                        <MenuItem value={"d"}>D</MenuItem>   
-                        <MenuItem value={"e"}>E</MenuItem>
+                        <MenuItem value={"A"}>A</MenuItem>
+                        <MenuItem value={"B"}>B</MenuItem>
+                        <MenuItem value={"C"}>C</MenuItem>
+                        <MenuItem value={"D"}>D</MenuItem>   
+                        <MenuItem value={"E"}>E</MenuItem>
                         <MenuItem value={"7"}>7</MenuItem>      
                         <MenuItem value={"8"}>8</MenuItem>    
                         <MenuItem value={"N"}>N</MenuItem>   
@@ -243,15 +274,6 @@ function TeamBuilding() {
                     </Select>
                     </div>
                 )}
-                <div style={{ display: 'flex' }}>
-                    <h3>모집 분야</h3>
-                    <Grid container direction="row" alignItems="center">
-                        <FormControlLabel control={<Checkbox value="프론트엔드 개발자" onChange={handleChange} name="프론트엔드 개발자" />} label="프론트엔드 개발자" />  
-                        <FormControlLabel control={<Checkbox value="백엔드 개발자" onChange={handleChange} name="백엔드 개발자" />} label="백엔드 개발자" />
-                        <FormControlLabel control={<Checkbox value="JAVA 마스터" onChange={handleChange} name="JAVA 마스터" />} label="JAVA 마스터" />  
-                        <FormControlLabel control={<Checkbox value="C언어 마스터" onChange={handleChange} name="C언어 마스터" />} label="C언어 마스터" />                 
-                    </Grid>
-                </div>
                
                 <div style={{ display: 'flex' }}>
                     <h3>모집 인원</h3>
@@ -273,15 +295,15 @@ function TeamBuilding() {
                 <div className="team-lang-box" style={{  justifyContent: 'center' }}>                       
                     <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                         <h3>LANGUAGE</h3>    
-                        <Languages languageValues={teamLanguage}  onLanguageValueChange={handleTeamLanguageChange}/>                    
+                        <Languages languageValues={teamLanguage}  onLanguageValueChange={handleTeamLanguageChange}  selectedLanguages={selectedLanguages} setSelectedLanguages= {setSelectedLanguages}/>                     
                     </Box>
                     <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                         <h3>FRAMEWORK & PLATFORM</h3>    
-                        <Framework frameworkValues={teamFramework}  onFrameworkValueChange={handleTeamFrameworkValueChange}/>                    
+                        <Framework frameworkValues={teamFramework}  onFrameworkValueChange={handleTeamFrameworkValueChange} selectedFrameworks={selectedFrameworks} setSelectedFrameworks={setSelectedFrameworks}/>                    
                     </Box>
                     <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                         <h3>DATABASE</h3>    
-                        <Database databaseValues={teamDatabase} onDatabaseValueChange={handleTeamDatabaseChange}/>         
+                        <Database databaseValues={teamDatabase} onDatabaseValueChange={handleTeamDatabaseChange} selectedDatabases={selectedDatabases} setSelectedDatabases={setSelectedDatabases}/>         
                     </Box>
                 </div>  
 

@@ -200,7 +200,12 @@ function TeamDetail() {
             
             <div className="teamdetail1">
                 <div className="teamdetail_head">
-                    <div className="title"><h1>제목: {teamDetail.title}</h1></div>                    
+                    <div className="title"><h1>제목: {teamDetail.title}</h1></div> 
+                    <div className="image">
+                    {teamDetail.imagePaths.map(filename => (
+                      <img src={`${filename}`} alt={filename} key={filename} style={{ width: "80%", height: "auto" }} />
+                    ))}    
+                    </div>                   
                 </div>
             <hr/>
                 {teamDetail.teamKeyword.sub ==null ? 
@@ -235,17 +240,13 @@ function TeamDetail() {
                         <h2>내용</h2>         
                         <div dangerouslySetInnerHTML={{ __html: teamDetail.detail }} />    
                     </div>
-                </div>         
-                <div className="teamdetail_recommenduserlist">
-                    <RecommendUserList teamId={teamId}/>
-                </div>
-                <button onClick={test}></button>
+                </div>      
             </div>
             
             {(updatable?
             <div className="teamdetail_bottom">
                 <button onClick={() =>{ 
-                    navigate(`/team/${teamId}/editTeam`)                    
+                    navigate(`/post/team/${teamId}/editTeam`)                    
                 }}>        
                 수정하기</button>
 
@@ -288,6 +289,10 @@ function TeamDetail() {
             </div>
 
                 )}
+
+            <div>
+                <h2>이 팀의 다른 공고</h2>
+            </div>
             
         </div>
     );

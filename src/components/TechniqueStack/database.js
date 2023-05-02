@@ -1,13 +1,7 @@
 import React, { useState } from 'react';
-import { Button,Slider  } from "@mui/material";
+import { Button, IconButton ,Slider  } from "@mui/material";
 
-function Database({ databaseValues, onDatabaseValueChange }) {
-    const [selectedDatabases, setSelectedDatabases] = useState({
-        mysqlL: false, //mysql
-        mariadbL: false,
-        mongodbL: false,
-        schemaL:false,     
-      });
+function Database({ databaseValues, onDatabaseValueChange, selectedDatabases, setSelectedDatabases }) {    
     
       const toggleDatabase = (database) => {
         const isDatabaseSelected = selectedDatabases[database];
@@ -64,13 +58,16 @@ function Database({ databaseValues, onDatabaseValueChange }) {
           </div>
         );
       };
-      const data = ['mysqlL', 'mariadbL' , 'mongodbL', 'schemaL']; // lang 변수가 버튼의 이름이자 서버에 넘길 값들
+      const data = ['mysqlL', 'mariadbL' , 'mongodbL', 'schemaL']; // data 변수가 버튼의 이름이자 서버에 넘길 값들
     
       return (
         <div>
             <div style={{ width: "500px", display: "flex", justifyContent: "center", flexWrap: "wrap", margin: "0 auto" }}>
                 {data.map(data => (
                     <Button key={data} variant="outlined" onClick={() => toggleDatabase(data)} style={{ margin: '8px' }}>
+                    <IconButton >
+                      <img src={`https://firebasestorage.googleapis.com/v0/b/caps-1edf8.appspot.com/o/langIcon%2F${data}.png?alt=media`} alt="logo" width={30}/>
+                    </IconButton>
                     {data.toUpperCase().replace('MYSQLL', 'MYSQL').replace('MARIADBL','MARIA DB').replace('MONGODBL','MONGO DB').replace('SCHEMAL','SCHEMA')}
                     </Button>
                 ))}

@@ -1,21 +1,7 @@
-import React, { useState } from 'react';
-import { Button,Slider  } from "@mui/material";
-function Languages({ languageValues, onLanguageValueChange }) {
-    const [selectedLanguages, setSelectedLanguages] = useState({
-        c: false,
-        cpp: false,
-        cs: false,
-        java:false,
-        javascript:false,
-        sql_Lang:false,
-        swift:false,
-        kotlin:false,
-        typescript:false,
-        python:false,
-        html:false,
-        r:false
-      });
-    
+import React, { useEffect, useState } from 'react';
+import { Button, IconButton ,Slider  } from "@mui/material";
+function Languages({ languageValues, onLanguageValueChange, selectedLanguages,setSelectedLanguages }) {    
+
       const toggleLanguage = (language) => {
         const isLanguageSelected = selectedLanguages[language];
         setSelectedLanguages({
@@ -64,21 +50,28 @@ function Languages({ languageValues, onLanguageValueChange }) {
               {language === 'cpp' ? 'C++' : null }
               {language === 'cs' ? 'C#' : null }
               {language !== 'cpp' && language !== 'cs' ? language.toUpperCase() : null}
-            </div>          
+            </div>
+                      
             <Slider  aria-label="Custom marks"  value ={languageValues[language]} step={null} 
                     valueLabelDisplay="auto" marks={marks} onChange={(event) => handleSliderChange(event, language)} sx={{ width: "350px", marginLeft: "50px" }}/>
           </div>
         );
       };
       const lang = ['c', 'cpp', 'cs', 'java', 'javascript','sql_Lang','swift','kotlin','typescript','python','html','r']; // lang 변수가 버튼의 이름이자 서버에 넘길 값들
-    
+      
       return (
         <div>
           <div style={{ width: "500px", display: "flex", justifyContent: "center", flexWrap: "wrap", margin: "0 auto" }}>
+          
           {lang.map(lang => ( //map함수로 여러개의 button을 생성
-            <Button key={lang} variant="outlined" onClick={() => toggleLanguage(lang)} style={{ margin: '8px' }}>
+            <>            
+            <Button  variant="outlined" onClick={() => toggleLanguage(lang)} style={{ margin: '8px' }}>
+            <IconButton >
+              <img src={`https://firebasestorage.googleapis.com/v0/b/caps-1edf8.appspot.com/o/langIcon%2F${lang}.png?alt=media`} alt="logo" width={30}/>
+            </IconButton>
               {lang.toUpperCase().replace('CS', 'C#').replace('CPP','C++')}
             </Button>
+            </>
           ))}
           </div>
           <div className='language_slidebars'>

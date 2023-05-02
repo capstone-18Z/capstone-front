@@ -65,7 +65,7 @@ function Header() {
             {loginCheck ? (
               <div
                 onClick={(e) => {
-                  navigate("/mypage");
+                  navigate("/mypage/profile");
                 }}
               >
                 마이페이지
