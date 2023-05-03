@@ -1,7 +1,7 @@
 import "./style.css";
 import React, { useEffect ,useState, useRef } from 'react';
 import {useNavigate} from "react-router-dom";
-import { TextField, Button, Box, Checkbox, Grid ,FormControlLabel, Select, MenuItem  } from "@mui/material";
+import { TextField, Button, Box, Select, MenuItem  } from "@mui/material";
 import { Editor as ToastEditor } from '@toast-ui/react-editor';
 import '@toast-ui/editor/dist/toastui-editor.css';
 import '@toast-ui/editor/dist/i18n/ko-kr'

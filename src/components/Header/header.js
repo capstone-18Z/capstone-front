@@ -62,6 +62,15 @@ function Header() {
             </div>
           </li>
           <li>
+            <div
+              onClick={(e) => {
+                navigate("/list/contest?page=1");
+              }}
+            >
+              공모전
+            </div>
+          </li>
+          <li>
             {loginCheck ? (
               <div
                 onClick={(e) => {

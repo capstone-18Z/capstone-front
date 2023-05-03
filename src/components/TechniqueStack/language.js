@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { Button, IconButton ,Slider  } from "@mui/material";
-function Languages({ languageValues, onLanguageValueChange, selectedLanguages,setSelectedLanguages }) {    
+function Languages({ languageValues, onLanguageValueChange, selectedLanguages,setSelectedLanguages }) { 
+  
+  const imglink = "https://firebasestorage.googleapis.com/v0/b/caps-1edf8.appspot.com/o/langIcon%2F";
 
       const toggleLanguage = (language) => {
         const isLanguageSelected = selectedLanguages[language];
@@ -47,6 +49,7 @@ function Languages({ languageValues, onLanguageValueChange, selectedLanguages,se
         return (
           <div key={language} style={{ display: "flex", alignItems: "center" }}>
             <div style={{ width: "150px", textAlign: "center" }}>
+              <img src={`${imglink}${language}.png?alt=media`} alt="logo" width={30}/> 
               {language === 'cpp' ? 'C++' : null }
               {language === 'cs' ? 'C#' : null }
               {language !== 'cpp' && language !== 'cs' ? language.toUpperCase() : null}
@@ -67,9 +70,9 @@ function Languages({ languageValues, onLanguageValueChange, selectedLanguages,se
             <>            
             <Button  variant="outlined" onClick={() => toggleLanguage(lang)} style={{ margin: '8px' }}>
             <IconButton >
-              <img src={`https://firebasestorage.googleapis.com/v0/b/caps-1edf8.appspot.com/o/langIcon%2F${lang}.png?alt=media`} alt="logo" width={30}/>
+              <img src={`${imglink}${lang}.png?alt=media`} alt="logo" width={30}/>
             </IconButton>
-              {lang.toUpperCase().replace('CS', 'C#').replace('CPP','C++')}
+              {lang.toUpperCase().replace('CS', 'C#').replace('CPP','C++').replace('SQL_LANG',"SQL")}
             </Button>
             </>
           ))}
