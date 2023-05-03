@@ -58,6 +58,29 @@ function EditProfile({ fetchData, payload }) {
     r: memberData.memberLang.r,
   });
 
+  const [selectedLanguages, setSelectedLanguages] = useState({
+    c: false,
+    cpp: false,
+    cs: false,
+    java: false,
+    javascript: false,
+    sql_Lang: false,
+    swift: false,
+    kotlin: false,
+    typescript: false,
+    python: false,
+    html: false,
+    r: false,
+  });
+
+  useEffect(() => {
+    const updatedSelectedLanguages = {};
+    Object.keys(memberData.memberLang).forEach((language) => {
+      updatedSelectedLanguages[language] = memberData.memberLang[language] > 0;
+    });
+    setSelectedLanguages(updatedSelectedLanguages);
+  }, [memberData.memberLang]);
+
   const handleLanguageValueChange = (newLanguageValues) => {
     setMemberLang(newLanguageValues);
   };
@@ -73,6 +96,25 @@ function EditProfile({ fetchData, payload }) {
     tdmax: memberData.memberFramework.tdmax,
   });
 
+  const [selectedFrameworks, setSelectedFrameworks] = useState({
+    react: false,
+    android: false,
+    node: false,
+    xcode: false,
+    spring: false,
+    unity: false,
+    unreal: false,
+    tdmax: false,
+  });
+
+  useEffect(() => {
+    const updatedSelectedFramework = {};
+    Object.keys(memberData.memberFramework).forEach((framework) => {
+      updatedSelectedFramework[framework] = memberData.memberFramework[framework] > 0;
+    });
+    setSelectedFrameworks(updatedSelectedFramework);
+  }, [memberData.memberFramework]);
+
   const handleFrameworkValueChange = (frameworkValues) => {
     setMemberFramework(frameworkValues);
   };
@@ -83,6 +125,21 @@ function EditProfile({ fetchData, payload }) {
     mongodbL: memberData.memberDB.mongodbL,
     schemaL: memberData.memberDB.schemaL,
   });
+
+  const [selectedDatabases, setSelectedDatabases] = useState({
+    mysqlL: false, //mysql
+    mariadbL: false,
+    mongodbL: false,
+    schemaL: false,
+  });
+
+  useEffect(() => {
+    const updatedSelectedDB = {};
+    Object.keys(memberData.memberDB).forEach((DB) => {
+      updatedSelectedDB[DB] = memberData.memberDB[DB] > 0;
+    });
+    setSelectedDatabases(updatedSelectedDB);
+  }, [memberData.memberDB]);
 
   const handleDatabaseValueChange = (databaseValues) => {
     setMemberDB(databaseValues);
@@ -178,7 +235,7 @@ function EditProfile({ fetchData, payload }) {
       setSubjectToggle((e) => !e);
     }
     const hasOtherKeywords = memberData.memberKeywords.some((keyword) =>
-      ["캡스톤 디자인", "개인 팀프로젝트", "공모전 및 대회"].includes(keyword.category)
+      ["캡스톤 디자인", "사이드 프로젝트", "공모전 및 대회"].includes(keyword.category)
     );
     if (hasOtherKeywords) {
       setFieldToggle((e) => !e);
@@ -266,14 +323,14 @@ function EditProfile({ fetchData, payload }) {
             <Button variant="outlined" sx={{ margin: "10px" }} value="공모전 및 대회" onClick={onChange3}>
               공모전 및 대회
             </Button>
-            <Button variant="outlined" sx={{ margin: "10px" }} value="개인 팀프로젝트" onClick={onChange3}>
-              개인 팀프로젝트
+            <Button variant="outlined" sx={{ margin: "10px" }} value="사이드 프로젝트" onClick={onChange3}>
+              사이드 프로젝트
             </Button>
           </div>
         </div>
         {fieldToggle && (
           <div className="field-toggle-box">
-            <InputLabel shrink>프론트엔드와 백엔드를 나눠야할 경우 골라주세요</InputLabel>
+            <InputLabel shrink>개발 포지션을 골라주세요</InputLabel>
             <FormControl size="small">
               <Select
                 sx={{ width: "200px" }}
@@ -318,15 +375,15 @@ function EditProfile({ fetchData, payload }) {
         <div className="team-lang-box" style={{ justifyContent: "center" }}>
           <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
             <h3>LANGUAGE</h3>
-            <Languages languageValues={memberLang} onLanguageValueChange={handleLanguageValueChange} />
+            <Languages languageValues={memberLang} onLanguageValueChange={handleLanguageValueChange} selectedLanguages={selectedLanguages} setSelectedLanguages={setSelectedLanguages} />
           </Box>
           <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
             <h3>FRAMEWORK & PLATFORM</h3>
-            <Framework frameworkValues={memberFramework} onFrameworkValueChange={handleFrameworkValueChange} />
+            <Framework frameworkValues={memberFramework} onFrameworkValueChange={handleFrameworkValueChange} selectedFrameworks={selectedFrameworks} setSelectedFrameworks={setSelectedFrameworks} />
           </Box>
           <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
             <h3>DATABASE</h3>
-            <Database databaseValues={memberDB} onDatabaseValueChange={handleDatabaseValueChange} />
+            <Database databaseValues={memberDB} onDatabaseValueChange={handleDatabaseValueChange} selectedDatabases={selectedDatabases} setSelectedDatabases={setSelectedDatabases} />
           </Box>
         </div>
         <Button sx={{ marginTop: "20px" }} variant="outlined" onClick={onChange2}>

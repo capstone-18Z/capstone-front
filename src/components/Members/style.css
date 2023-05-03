@@ -1,4 +1,4 @@
-.search-box{
+.search-box {
   margin: 20px;
   text-align: center;
 }
@@ -8,6 +8,12 @@
 .subtitle {
   color: rgb(120, 121, 121);
 }
-.member-card-box {
-  width: 345px;
+.member-card-container {
+  /* background-color: black; */
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  grid-gap: 27px;
+  margin-left: 176px;
+  margin-right: 176px;
 }

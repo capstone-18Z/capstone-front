@@ -63,15 +63,11 @@ function Languages({ languageValues, onLanguageValueChange, selectedLanguages,se
         <div>
           <div style={{ width: "500px", display: "flex", justifyContent: "center", flexWrap: "wrap", margin: "0 auto" }}>
           
-          {lang.map(lang => ( //map함수로 여러개의 button을 생성
-            <>            
-            <Button  variant="outlined" onClick={() => toggleLanguage(lang)} style={{ margin: '8px' }}>
-            <IconButton >
-              <img src={`https://firebasestorage.googleapis.com/v0/b/caps-1edf8.appspot.com/o/langIcon%2F${lang}.png?alt=media`} alt="logo" width={30}/>
-            </IconButton>
+          {lang.map(lang => ( //map함수로 여러개의 button을 생성      
+            <Button key={lang} variant="outlined" onClick={() => toggleLanguage(lang)} style={{ margin: '8px' }}>
+            <img src={`https://firebasestorage.googleapis.com/v0/b/caps-1edf8.appspot.com/o/langIcon%2F${lang}.png?alt=media`} alt="logo" width={30} style={{marginRight:"8px"}}/>
               {lang.toUpperCase().replace('CS', 'C#').replace('CPP','C++')}
             </Button>
-            </>
           ))}
           </div>
           <div className='language_slidebars'>

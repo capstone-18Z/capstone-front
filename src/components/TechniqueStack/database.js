@@ -65,9 +65,7 @@ function Database({ databaseValues, onDatabaseValueChange, selectedDatabases, se
             <div style={{ width: "500px", display: "flex", justifyContent: "center", flexWrap: "wrap", margin: "0 auto" }}>
                 {data.map(data => (
                     <Button key={data} variant="outlined" onClick={() => toggleDatabase(data)} style={{ margin: '8px' }}>
-                    <IconButton >
-                      <img src={`https://firebasestorage.googleapis.com/v0/b/caps-1edf8.appspot.com/o/langIcon%2F${data}.png?alt=media`} alt="logo" width={30}/>
-                    </IconButton>
+                    <img src={`https://firebasestorage.googleapis.com/v0/b/caps-1edf8.appspot.com/o/langIcon%2F${data}.png?alt=media`} alt="logo" width={30} style={{marginRight:"5px"}}/>
                     {data.toUpperCase().replace('MYSQLL', 'MYSQL').replace('MARIADBL','MARIA DB').replace('MONGODBL','MONGO DB').replace('SCHEMAL','SCHEMA')}
                     </Button>
                 ))}
