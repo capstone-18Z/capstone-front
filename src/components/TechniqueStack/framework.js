@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { Button, IconButton ,Slider  } from "@mui/material";
-function Framework({ frameworkValues, onFrameworkValueChange ,selectedFrameworks, setSelectedFrameworks}) {    
+function Framework({ frameworkValues, onFrameworkValueChange ,selectedFrameworks, setSelectedFrameworks}) {   
+  
+  const imglink = "https://firebasestorage.googleapis.com/v0/b/caps-1edf8.appspot.com/o/langIcon%2F";
     
       const toggleFramework = (framework) => {
         const isFrameworkSelected = selectedFrameworks[framework];
@@ -46,7 +48,8 @@ function Framework({ frameworkValues, onFrameworkValueChange ,selectedFrameworks
     
         return (
           <div key={framework} style={{ display: "flex", alignItems: "center" }}>
-            <div style={{ width: "150px", textAlign: "center" }}>     
+            <div style={{ width: "150px", textAlign: "center" }}>
+                <img src={`${imglink}${framework}.png?alt=media`} alt="logo" width={30}/> 
                 {framework === 'tdmax' ? '3DMAX' : null }         
                 {framework !== 'tdmax' ? framework.toUpperCase() : null}
             </div>          
@@ -62,7 +65,7 @@ function Framework({ frameworkValues, onFrameworkValueChange ,selectedFrameworks
         <div style={{ width: "500px", display: "flex", justifyContent: "center", flexWrap: "wrap", margin: "0 auto" }}>
           {data.map(data => (
             <Button key={data} variant="outlined" onClick={() => toggleFramework(data)} style={{ margin: '8px' }}>
-              <img src={`https://firebasestorage.googleapis.com/v0/b/caps-1edf8.appspot.com/o/langIcon%2F${data}.png?alt=media`} alt="logo" width={30} style={{marginRight:"5px"}}/>
+             <img src={`${imglink}${framework}.png?alt=media`} alt="logo" width={30} style={{marginRight:"5px"}}/>
               {data.toUpperCase().replace('TDMAX', '3DMAX')}
             </Button>
           ))}

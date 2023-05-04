@@ -1,7 +1,7 @@
 import "./style.css";
 import React, { useEffect ,useState, useRef } from 'react';
 import {useNavigate} from "react-router-dom";
-import { TextField, Button, Box, Checkbox, Grid ,FormControlLabel, Select, MenuItem  } from "@mui/material";
+import { TextField, Button, Box, Select, MenuItem  } from "@mui/material";
 import { Editor as ToastEditor } from '@toast-ui/react-editor';
 import '@toast-ui/editor/dist/toastui-editor.css';
 import '@toast-ui/editor/dist/i18n/ko-kr'
@@ -19,7 +19,6 @@ function TeamBuilding() {
     const today = new Date();
     
     const navigate = useNavigate();
-    
     
     const [keywords, setKeywords] = useState([]);      
     const handleChange = (event) => {        
@@ -40,8 +39,6 @@ function TeamBuilding() {
         };   
         setInputs(nextInputs);           
     },[keywords])
-
-    
 
     const [inputs, setInputs] = useState({
         //프로젝트 제목, 목적 데이터 관리
@@ -112,23 +109,7 @@ function TeamBuilding() {
           console.error(error);
         }
       };
-      /*
-    const onSubmitHandler = (e) => {
-        fetch('${process.env.REACT_APP_API_URL}/teams/new',{
-          method: 'POST',
-          headers: {
-            'refresh-token': refresh_token,
-            'login-token': login_token,
-            'Content-Type' : 'application/json',
-          },          
-            body: JSON.stringify(inputs),
-        })
-        .then((response) => response.json())
-        .then((obj) => console.log(obj));
-      };
-      //변수명 서버랑 똑같이 해야 보내짐
-      */
-      
+   
       const editorRef = useRef();
 
       const DetailOnChange = () => {
@@ -199,9 +180,6 @@ function TeamBuilding() {
         mongodbL: false,
         schemaL:false,     
     });
-
-    const valuetest= () => {
-    }
     
     return (
         <div className="teambuildingform">

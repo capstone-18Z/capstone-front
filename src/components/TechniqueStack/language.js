@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { Button, IconButton ,Slider  } from "@mui/material";
-function Languages({ languageValues, onLanguageValueChange, selectedLanguages,setSelectedLanguages }) {    
+function Languages({ languageValues, onLanguageValueChange, selectedLanguages,setSelectedLanguages }) { 
+  
+  const imglink = "https://firebasestorage.googleapis.com/v0/b/caps-1edf8.appspot.com/o/langIcon%2F";
 
       const toggleLanguage = (language) => {
         const isLanguageSelected = selectedLanguages[language];
@@ -47,6 +49,7 @@ function Languages({ languageValues, onLanguageValueChange, selectedLanguages,se
         return (
           <div key={language} style={{ display: "flex", alignItems: "center" }}>
             <div style={{ width: "150px", textAlign: "center" }}>
+              <img src={`${imglink}${language}.png?alt=media`} alt="logo" width={30}/> 
               {language === 'cpp' ? 'C++' : null }
               {language === 'cs' ? 'C#' : null }
               {language !== 'cpp' && language !== 'cs' ? language.toUpperCase() : null}
@@ -62,10 +65,9 @@ function Languages({ languageValues, onLanguageValueChange, selectedLanguages,se
       return (
         <div>
           <div style={{ width: "500px", display: "flex", justifyContent: "center", flexWrap: "wrap", margin: "0 auto" }}>
-          
           {lang.map(lang => ( //map함수로 여러개의 button을 생성      
             <Button key={lang} variant="outlined" onClick={() => toggleLanguage(lang)} style={{ margin: '8px' }}>
-            <img src={`https://firebasestorage.googleapis.com/v0/b/caps-1edf8.appspot.com/o/langIcon%2F${lang}.png?alt=media`} alt="logo" width={30} style={{marginRight:"8px"}}/>
+            <img src={`${imglink}${lang}.png?alt=media`} alt="logo" width={30} style={{marginRight:"8px"}}/>
               {lang.toUpperCase().replace('CS', 'C#').replace('CPP','C++')}
             </Button>
           ))}

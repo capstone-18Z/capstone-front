@@ -3,6 +3,7 @@ import { Button, IconButton ,Slider  } from "@mui/material";
 
 function Database({ databaseValues, onDatabaseValueChange, selectedDatabases, setSelectedDatabases }) {    
     
+    const imglink = "https://firebasestorage.googleapis.com/v0/b/caps-1edf8.appspot.com/o/langIcon%2F";
       const toggleDatabase = (database) => {
         const isDatabaseSelected = selectedDatabases[database];
         setSelectedDatabases({
@@ -39,6 +40,7 @@ function Database({ databaseValues, onDatabaseValueChange, selectedDatabases, se
           label: '아주잘함',
         },
       ];
+      const data = ['mysqlL', 'mariadbL' , 'mongodbL', 'schemaL']; // data 변수가 버튼의 이름이자 서버에 넘길 값들
     
       const renderDatabaseSlider = (database) => {
         if (!selectedDatabases[database]) {
@@ -47,25 +49,26 @@ function Database({ databaseValues, onDatabaseValueChange, selectedDatabases, se
     
         return (
           <div key={database} style={{ display: "flex", alignItems: "center" }}>
-            <div style={{ width: "150px", textAlign: "center" }}>  
-                {database === 'mysqlL' ? 'MYSQL' : null }
-                {database === 'mariadbL' ? 'MARIA DB' : null }
-                {database === 'mongodbL' ? 'MONGO DB' : null }
-                {database === 'schemaL' ? 'DB 설계' : null }
+            <div style={{ width: "200px", textAlign: "center" }}>
+                  <img src={`${imglink}${database}.png?alt=media`} alt="logo" width={30}/>
+                  {database === 'mysqlL' ? 'MYSQL' : null }
+                  {database === 'mariadbL' ? 'MARIA DB' : null }
+                  {database === 'mongodbL' ? 'MONGO DB' : null }
+                  {database === 'schemaL' ? 'DB 설계' : null }
             </div>          
             <Slider aria-label="Custom marks"  value ={databaseValues[database]} step={null} 
                     valueLabelDisplay="auto" marks={marks} onChange={(event) => handleSliderChange(event, database)} sx={{ width: "350px", marginLeft: "50px" }}/>
           </div>
         );
       };
-      const data = ['mysqlL', 'mariadbL' , 'mongodbL', 'schemaL']; // data 변수가 버튼의 이름이자 서버에 넘길 값들
+     
     
       return (
         <div>
             <div style={{ width: "500px", display: "flex", justifyContent: "center", flexWrap: "wrap", margin: "0 auto" }}>
                 {data.map(data => (
                     <Button key={data} variant="outlined" onClick={() => toggleDatabase(data)} style={{ margin: '8px' }}>
-                    <img src={`https://firebasestorage.googleapis.com/v0/b/caps-1edf8.appspot.com/o/langIcon%2F${data}.png?alt=media`} alt="logo" width={30} style={{marginRight:"5px"}}/>
+                      <img src={`${imglink}${data}.png?alt=media`} alt="logo" width={30} style={{marginRight:"5px"}}/>
                     {data.toUpperCase().replace('MYSQLL', 'MYSQL').replace('MARIADBL','MARIA DB').replace('MONGODBL','MONGO DB').replace('SCHEMAL','SCHEMA')}
                     </Button>
                 ))}
