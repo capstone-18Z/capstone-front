@@ -65,7 +65,7 @@ function Framework({ frameworkValues, onFrameworkValueChange ,selectedFrameworks
         <div style={{ width: "500px", display: "flex", justifyContent: "center", flexWrap: "wrap", margin: "0 auto" }}>
           {data.map(data => (
             <Button key={data} variant="outlined" onClick={() => toggleFramework(data)} style={{ margin: '8px' }}>
-             <img src={`${imglink}${framework}.png?alt=media`} alt="logo" width={30} style={{marginRight:"5px"}}/>
+             <img src={`${imglink}${data}.png?alt=media`} alt="logo" width={30} style={{marginRight:"5px"}}/>
               {data.toUpperCase().replace('TDMAX', '3DMAX')}
             </Button>
           ))}
