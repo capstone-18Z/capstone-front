@@ -65,16 +65,11 @@ function Languages({ languageValues, onLanguageValueChange, selectedLanguages,se
       return (
         <div>
           <div style={{ width: "500px", display: "flex", justifyContent: "center", flexWrap: "wrap", margin: "0 auto" }}>
-          
-          {lang.map(lang => ( //map함수로 여러개의 button을 생성
-            <>            
-            <Button  variant="outlined" onClick={() => toggleLanguage(lang)} style={{ margin: '8px' }}>
-            <IconButton >
-              <img src={`${imglink}${lang}.png?alt=media`} alt="logo" width={30}/>
-            </IconButton>
-              {lang.toUpperCase().replace('CS', 'C#').replace('CPP','C++').replace('SQL_LANG',"SQL")}
+          {lang.map(lang => ( //map함수로 여러개의 button을 생성      
+            <Button key={lang} variant="outlined" onClick={() => toggleLanguage(lang)} style={{ margin: '8px' }}>
+            <img src={`${imglink}${lang}.png?alt=media`} alt="logo" width={30} style={{marginRight:"8px"}}/>
+              {lang.toUpperCase().replace('CS', 'C#').replace('CPP','C++')}
             </Button>
-            </>
           ))}
           </div>
           <div className='language_slidebars'>

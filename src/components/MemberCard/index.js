@@ -11,6 +11,19 @@ function MemberCard({ payload, fetchData }) {
   const navigate = useNavigate();
   const memberData = payload;
 
+  const checkGrade = (grade) => {
+    if(grade) {
+      return (
+        <>
+          <h3 className="member-card-title">한성대학교/{grade}학년</h3>
+        </>
+      )
+    } else {
+        <>
+          <h3 className="member-card-title">한성대학교</h3>
+        </>
+    }
+  }
   return (
     <Card
       sx={{ width:"345px", height:"330px" }}
@@ -29,12 +42,12 @@ function MemberCard({ payload, fetchData }) {
           </div>
           <div className="top-right-box">
             <h1 className="member-card-title">{memberData.nickname}</h1>
-            <h3 className="member-card-title">{memberData.grade}학년</h3>
+            <h3 className="member-card-title">{checkGrade(memberData.grade)}</h3>
           </div>
         </div>
         <CardContent sx={{width:"313px", marginTop:"10px"}} className="card-bottom-box">
-          <Typography variant="body2" color="text.secondary">
-            <p className="member-card-text">
+          <Typography variant="div" color="text.secondary">
+            <div className="member-card-text">
               {memberData.memberKeywords.map(
                 (keyword) =>
                   `#${keyword.category}/${
@@ -47,7 +60,7 @@ function MemberCard({ payload, fetchData }) {
                       : keyword.field
                   }`
               )}
-            </p>
+            </div>
           </Typography>
         </CardContent>
       </CardActionArea>

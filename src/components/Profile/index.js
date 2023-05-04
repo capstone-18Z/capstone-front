@@ -30,8 +30,28 @@ function Profile({ payload, fetchData }) {
     }
   }, [location.state?.email]);
 
+  const checkGrade = (grade) => {
+    if(grade !== 0) {
+      return (
+        <>
+          <h5 className="grade-box">학년: {grade}</h5>
+        </>
+      )
+    }
+  }
+
+  const checkGit = (git) => {
+    if(git !== null && git !== "") {
+      return (
+        <>
+          <h5 className="githublink-box">깃허브 링크: {git}</h5>
+        </>
+      )
+    }
+  } 
+
   const checkSolvedNickname = (memberData) => {
-    if (memberData.solvedNickname !== "!!No User!!" && memberData.solvedNickname !== "") {
+    if (memberData.solvedNickname !== "!!No User!!" && memberData.solvedNickname !== "" && memberData.solvedNickname !== null) {
       return (
         <>
           <h5 className="bj-nickname">백준 닉네임: {memberData.solvedNickname}</h5>
@@ -69,8 +89,8 @@ function Profile({ payload, fetchData }) {
         <div className="profile-info-box">
           <h3 className="nickname-box">닉네임: {memberData.nickname}</h3>
           <h5 className="email-box">이메일: {memberData.email}</h5>
-          <h5 className="githublink-box">깃허브 링크: {memberData.github}</h5>
-          <h5 className="grade-box">학년: {memberData.grade}</h5>
+          <h5 className="githublink-box">{checkGit(memberData.github)}</h5>
+          <h5 className="grade-box">{checkGrade(memberData.grade)}</h5>
           {checkSolvedNickname(memberData)}
         </div>
         <div className="profile-img-box">
@@ -79,7 +99,7 @@ function Profile({ payload, fetchData }) {
       </div>
       <div className="profile-bottom-box">
         <div className="wantteam-box">
-          <p>원하는 팀</p>
+          <h4>원하는 팀</h4>
           {memberData.memberKeywords.length === 0 && <Chip label="미작성" color="secondary" variant="outlined" />}
           {memberData.memberKeywords.map((keyword) => (
             <Chip
@@ -98,7 +118,7 @@ function Profile({ payload, fetchData }) {
           ))}
         </div>
         <div>
-          <p>잘 다뤄요!</p>
+          <h4>잘 다뤄요!</h4>
           {[memberData.memberLang, memberData.memberFramework, memberData.memberDB]
             .flatMap((obj) =>
               Object.entries(obj)
@@ -112,7 +132,7 @@ function Profile({ payload, fetchData }) {
             )}
         </div>
         <div>
-          <p>써본적은 있지만 잘 다루진 못해요</p>
+          <h4>써본적은 있지만 잘 다루진 못해요</h4>
           {[memberData.memberLang, memberData.memberFramework, memberData.memberDB]
             .flatMap((obj) =>
               Object.entries(obj)

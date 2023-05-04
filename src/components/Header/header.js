@@ -46,7 +46,7 @@ function Header() {
           <li>
             <div
               onClick={(e) => {
-                navigate("/list/members");
+                navigate("/list/members?page=1");
               }}
             >
               유저 찾기
