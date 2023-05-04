@@ -4,6 +4,7 @@ import { Card } from "../Card/card.js"
 import {Link} from "react-router-dom";
 import {useSearchParams} from "react-router-dom";
 import { Alert, CircularProgress, TextField, Button, Pagination } from "@mui/material";
+import {useNavigate} from "react-router-dom";
 import "./team.css";
 import Category from './category.js';
 
@@ -38,28 +39,53 @@ function Team() {
     const [page_maxcount, setPage_maxcount] = useState(0);
 
     useEffect(() => {
-        if(search_string != null){
-            setSearch(search_string);
-            fetch(`${process.env.REACT_APP_API_URL}/teams/search/${search_string}?page=${page_number}`,{
-                headers: {
-                    'refresh-token': refresh_token,
-                    'login-token': login_token,//헤더로 로그인 토큰 넣어야 삭제됨
-                },      
-            })
-            .then((response) => response.json())        
-            .then((obj) => {setTeamList(obj.data)
-            console.log(obj); setPage_maxcount(obj.metadata.totalPage);})
+        /*
+        
+        */
+        if(search_string==null) {//search string이 비었으면 그냥 페이지 방식
+            if(checkCategory==[]||checkRule==[]||checkSubject==[]){ //카테고리 체크한개 셋다 빈상태면
+                fetch(`${process.env.REACT_APP_API_URL}/teams?page=${page_number}`,{
+                    headers: {
+                        'refresh-token': refresh_token,
+                        'login-token': login_token,//헤더로 로그인 토큰 넣어야 삭제됨
+                    },      
+                })
+                .then((response) => response.json())        
+                .then((obj) => {setTeamList(obj.data)
+                console.log(obj); setPage_maxcount(obj.metadata.totalPage);}) 
+            }
+            else{   //카테고리 체크한개가 하나라도 있으면 카테고리 방식으로 보냄 즉 카테고리 체크한 상태에서의 2페이지 이상을 확인할때 이 fetch가 돔
+                console.log(`서버에 카테고리 방식으로 보냄 ${page_number}페이지`);
+                fetch(`${process.env.REACT_APP_API_URL}/teams/filter?category=${category}&subject=${isSpecialCategory ? combined : subject}&rule=${rule}&page=${page_number}`,{
+                    headers: {
+                        'refresh-token': refresh_token,
+                        'login-token': login_token,//헤더로 로그인 토큰 넣어야 삭제됨
+                    },      
+                })
+                .then((response) => response.json())        
+                .then((obj) => {setTeamList(obj.data)
+                    console.log(obj); setPage_maxcount(obj.metadata.totalPage);
+                    window.location.href = `/list/team&page=1`;
+                    console.log(checkCategory,checkRule,checkSubject);
+                })
+            }             
         }        
-        else {
-            fetch(`${process.env.REACT_APP_API_URL}/teams?page=${page_number}`,{
-                headers: {
-                    'refresh-token': refresh_token,
-                    'login-token': login_token,//헤더로 로그인 토큰 넣어야 삭제됨
-                },      
-            })
-            .then((response) => response.json())        
-            .then((obj) => {setTeamList(obj.data)
-            console.log(obj); setPage_maxcount(obj.metadata.totalPage);})
+        else { //검색한게 있으면 
+            if(checkCategory==[]||checkRule==[]||checkSubject==[]){ //카테고리 체크한개 셋다 빈상태면
+                setSearch(search_string);
+                fetch(`${process.env.REACT_APP_API_URL}/teams/search/${search_string}?page=${page_number}`,{
+                    headers: {
+                        'refresh-token': refresh_token,
+                        'login-token': login_token,//헤더로 로그인 토큰 넣어야 삭제됨
+                    },      
+                })
+                .then((response) => response.json())        
+                .then((obj) => {setTeamList(obj.data)
+                console.log(obj); setPage_maxcount(obj.metadata.totalPage);})  
+            } 
+            else { //카테고리가 있으면 카테고리 거른 상태에서 검색한것을 보내야함
+                
+            }
         }              
     }, []);
     
@@ -78,7 +104,7 @@ function Team() {
           minWidth: 200,
         },
       };
-    
+    const navigate = useNavigate();
 
     const [checkCategory, setCheckCategory] = useState([]);
     const [checkRule, setCheckRule] = useState([]);
@@ -110,7 +136,9 @@ function Team() {
         console.log(checkCategory,checkRule,checkSubject)
     })}
     
-    
+    const onClick =(e) => { //팀원 모집 으로 보내기
+        navigate(`/post/team`);
+    }
 
     return (
         <div className='team_list'>
@@ -126,15 +154,12 @@ function Team() {
             검색
             </Button>
         </div>
-            <Link to="/post/team">
-                팀원 모집 하기
-                </Link>                
-            <h3>카테고리</h3>
+        <Button onClick={onClick} variant="contained" sx={{ width: "245px" }}>팀원 모집 하기</Button>
             <div class="team-container">
-                <div style={{ width: '200px' , padding: '0 20px' }}>
+                
                 <Category checkCategory={checkCategory} setCheckCategory={setCheckCategory} checkRule={checkRule}
                     setCheckRule={setCheckRule} checkSubject={checkSubject} setCheckSubject={setCheckSubject} categoryOnClick={categoryOnClick}/>
-                </div>
+               
                 <div className="card-container" style={{ flex: 1 }}>          
                     {teamList && teamList.map(team => (
                         <div key={team.teamId} className="card_ryu" sx={{ ...cardStyle, ...mediaQueryStyle }}>                    

@@ -1,5 +1,6 @@
 import React,{useEffect} from 'react';
 import { Button} from "@mui/material";
+import "./category.css"
 const category = [
   { id: "개인 팀프로젝트", title: "개인 팀프로젝트" },
   { id: "공모전 및 대회", title: "공모전 및 대회" },
@@ -21,7 +22,7 @@ const rule = [
   { id: "백엔드", title: "백엔드"},
 ];
 
-function Category({checkCategory,setCheckCategory, checkRule,setCheckRule,checkSubject,setCheckSubject , categoryOnClick ,handleCheckboxChange }) {
+function Category({checkCategory,setCheckCategory, checkRule,setCheckRule,checkSubject,setCheckSubject , categoryOnClick  }) {
   
    // 체크된 아이템을 담을 배열을 props로 받는다.
    function handleCheck(event) {
@@ -49,6 +50,7 @@ function Category({checkCategory,setCheckCategory, checkRule,setCheckRule,checkS
         case "category":
           if(checkCategory.includes("과목 팀프로젝트")){
             setCheckSubject([]);
+            localStorage.setItem("subject", JSON.stringify([]));
           }
           setCheckCategory((prev) => prev.filter((id) => id !== value));
           localStorage.setItem("category", JSON.stringify(checkCategory.filter((id) => id !== value)));          
@@ -75,10 +77,16 @@ function Category({checkCategory,setCheckCategory, checkRule,setCheckRule,checkS
       setCheckCategory(allDataItems);
       setCheckRule(allRuleItems);
       setCheckSubject(allSubjectItems);
+      localStorage.setItem("category", JSON.stringify([allDataItems])); 
+      localStorage.setItem("subject", JSON.stringify([allRuleItems]));
+      localStorage.setItem("rule", JSON.stringify([allSubjectItems]));
     } else {
       setCheckCategory([]);
       setCheckRule([]);
       setCheckSubject([]);
+      localStorage.setItem("category", JSON.stringify([])); 
+      localStorage.setItem("subject", JSON.stringify([]));
+      localStorage.setItem("rule", JSON.stringify([]));
     }   
   }
 
@@ -94,6 +102,10 @@ function Category({checkCategory,setCheckCategory, checkRule,setCheckRule,checkS
   }, []);
 
   return (
+    <div className='category-table'>
+    <div className='category-title'>
+    <h2>카테고리</h2>
+    </div>
     <table>    
       <tbody>
         <tr>
@@ -154,9 +166,10 @@ function Category({checkCategory,setCheckCategory, checkRule,setCheckRule,checkS
           
         </tr>        
         ))}
-        <Button onClick={{handleCheckboxChange, categoryOnClick}} variant="contained" sx={{ width: "200px" }}>필터 적용</Button>
+        <Button onClick={categoryOnClick} variant="contained" sx={{ width: "200px" }}>필터 적용</Button>
       </tbody>
     </table>
+    </div>
   );
 }
 export default Category;
