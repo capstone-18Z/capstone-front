@@ -1,11 +1,19 @@
 import "./style.css";
-import { TextField, Button } from "@mui/material";
+import { TextField, Button, Dialog } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import useInput from "../../hooks/useInput";
 import axios from "axios";
+import Login from "../Login";
 
-function SignUp() {
+function SignUp({goSignUp}) {
+  const [open, setOpen] = useState(goSignUp);
+  const [goBackLogin, setGoBackLogin] = useState(false);
+
+  const handleBackLogin = () => {
+    setOpen(false);
+    setGoBackLogin(true);
+  }
   const navigate = useNavigate();
   const [signUpInfo, setSignUpInfo] = useInput({
     email: "",
@@ -20,7 +28,6 @@ function SignUp() {
       .then((response) => {
         if (response.data) {
           alert("회원가입 완료");
-          navigate("/");
         }
       })
       .catch((err) => {
@@ -53,7 +60,7 @@ function SignUp() {
   };
 
   return (
-    <div className="signup-box">
+    <Dialog open={open} onClose={handleBackLogin}>
       <h1 className="signup-title">회원가입</h1>
       <form>
         <div className="signup-text">
@@ -113,9 +120,11 @@ function SignUp() {
           <Button variant="contained" onClick={onClick}>
             회원가입 완료
           </Button>
+          <Button variant="text" onClick={handleBackLogin}>로그인</Button>
+          <Login open={goBackLogin}/>
         </div>
       </form>
-    </div>
+    </Dialog>
   );
 }
 

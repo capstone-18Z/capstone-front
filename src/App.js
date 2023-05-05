@@ -20,6 +20,10 @@ const theme = createTheme({
   },});
 
 function App() {
+  // 새로고침을 하면 axios.defaults.headers가 날아가는거 방지용
+  axios.defaults.headers.common["login-token"] = localStorage.getItem("login-token");
+  axios.defaults.headers.common["refresh-token"] = localStorage.getItem("refresh-token");
+
   const refresh = localStorage.getItem("refresh-token");
   useEffect(() => {
     const onSilentRefresh = () => {

@@ -10,11 +10,7 @@ function ProfilePage() {
     `${process.env.REACT_APP_API_URL}/member/userForm`
   );
 
-  if (!payload) {
-    return <></>
-  }
-
-  if (loading) {
+  if (loading || !payload) {
     return <><CircularProgress color="inherit" /></>
   }
 

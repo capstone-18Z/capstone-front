@@ -1,41 +1,36 @@
 import { Avatar, Chip } from "@mui/material";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
-import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
-import { CardActionArea } from "@mui/material";
+import { CardActionArea, IconButton } from "@mui/material";
 import "./style.css";
 import { useNavigate } from "react-router-dom";
+
+const imglink = "https://firebasestorage.googleapis.com/v0/b/caps-1edf8.appspot.com/o/langIcon%2F";
 
 function MemberCard({ payload, fetchData }) {
   const navigate = useNavigate();
   const memberData = payload;
 
   const checkGrade = (grade) => {
-    if(grade) {
-      return (
-        <>
-          <h3 className="member-card-title">한성대학교/{grade}학년</h3>
-        </>
-      )
+    if (grade !== 0) {
+      return <h4 className="member-card-title">한성대학교/{grade}학년</h4>;
     } else {
-        <>
-          <h3 className="member-card-title">한성대학교</h3>
-        </>
+      return <h4 className="member-card-title">한성대학교</h4>;
     }
-  }
+  };
   return (
     <Card
-      sx={{ width:"345px", height:"330px" }}
+      sx={{ width: "345px", height: "330px" }}
       onClick={(e) => {
-        navigate(`/profile/${memberData.email}`, {
+        navigate(`/profile/${memberData.id}`, {
           state: {
-            email: memberData.email,
+            userId: memberData.id,
           },
         });
       }}
     >
-      <CardActionArea sx={{ width:"345px", height:"330px" }}>
+      <CardActionArea sx={{ width: "345px", height: "330px" }}>
         <div className="card-top-box">
           <div className="top-left-box">
             <Avatar alt="Remy Sharp" src={memberData.profileImageUrl} sx={{ width: 150, height: 150 }} />
@@ -45,7 +40,7 @@ function MemberCard({ payload, fetchData }) {
             <h3 className="member-card-title">{checkGrade(memberData.grade)}</h3>
           </div>
         </div>
-        <CardContent sx={{width:"313px", marginTop:"10px"}} className="card-bottom-box">
+        <CardContent sx={{ width: "313px", marginTop: "10px" }} className="card-bottom-box">
           <Typography variant="div" color="text.secondary">
             <div className="member-card-text">
               {memberData.memberKeywords.map(
@@ -62,6 +57,16 @@ function MemberCard({ payload, fetchData }) {
               )}
             </div>
           </Typography>
+          <div>
+            {[memberData.memberLang, memberData.memberFramework, memberData.memberDB]
+            .flatMap((obj) =>
+              Object.entries(obj)
+                .filter(([key, value]) => value == 100)
+                .map(([key, value]) => (
+                  <img src={`${imglink}${key}.png?alt=media`} alt="logo" width={30} height={30} style={{ marginRight: "10px" }} />
+                ))
+            )}
+          </div>
         </CardContent>
       </CardActionArea>
     </Card>

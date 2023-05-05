@@ -1,10 +1,30 @@
 import "./style.css";
-import { TextField, Button, Typography } from "@mui/material";
+import { TextField, Button, Typography, Dialog, DialogActions } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import useInput from "../../hooks/useInput";
 import axios from "axios";
+import { useState, useEffect } from "react";
+import SignUp from "../SignUp";
 
-function Login() {
+function Login({ loginOpen }) {
+  console.log(loginOpen);
+  const [open, setOpen] = useState(loginOpen);
+  const [goSignUp, setGoSignup] = useState(false);
+
+  useEffect(() => {
+    setOpen(loginOpen);
+  }, [loginOpen]);
+
+  const handleGoSignup = () => {
+    setOpen(false);
+    setGoSignup(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+    setGoSignup(false);
+  };
+
   const navigate = useNavigate();
   const [userInfo, setUserInfo] = useInput({
     email: "",
@@ -55,47 +75,48 @@ function Login() {
       });
   };
 
-  return (
-    <div className="login-box">
-      <h1 className="login-title">로그인</h1>
-      <form className="login-form-box">
-        <div className="login-text">
-          <TextField
-            margin="normal"
-            label="이메일"
-            variant="outlined"
-            value={userInfo.email}
-            name="email"
-            onChange={setUserInfo}
-          />
-        </div>
-        <div className="login-text">
-          <TextField
-            margin="normal"
-            label="비밀번호"
-            type="password"
-            variant="outlined"
-            value={userInfo.password}
-            name="password"
-            onChange={setUserInfo}
-          />
-        </div>
-        <div className="login-button">
-          <Button variant="contained" onClick={onClick}>
-            로그인
-          </Button>
-        </div>
-        <div className="signup-button">
-          <Button
-            onClick={(e) => {
-              navigate("/signup");
-            }}
-          >
-            회원가입
-          </Button>
-        </div>
-      </form>
-    </div>
+  return goSignUp ? (
+    <SignUp goSignUp={goSignUp} />
+  ) : (
+    <Dialog open={open} onClose={handleClose}>
+      <div className="login-box">
+        <h1 className="login-title">로그인</h1>
+        <form className="login-form-box">
+          <div className="login-text">
+            <TextField
+              margin="normal"
+              label="이메일"
+              variant="outlined"
+              value={userInfo.email}
+              name="email"
+              onChange={setUserInfo}
+            />
+          </div>
+          <div className="login-text">
+            <TextField
+              margin="normal"
+              label="비밀번호"
+              type="password"
+              variant="outlined"
+              value={userInfo.password}
+              name="password"
+              onChange={setUserInfo}
+            />
+          </div>
+          <div className="login-button">
+            <Button variant="contained" onClick={onClick}>
+              로그인
+            </Button>
+          </div>
+          <div className="signup-button">
+            <Button onClick={handleGoSignup}>회원가입</Button>
+          </div>
+        </form>
+      </div>
+      <DialogActions>
+        <Button onClick={handleClose}>Close</Button>
+      </DialogActions>
+    </Dialog>
   );
 }
 

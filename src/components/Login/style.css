@@ -1,12 +1,13 @@
 .login-box {
   width: 500px;
   height: 500px;
-  position: absolute;
+  margin: 0;
+  /* position: absolute;
   left: 50%;
   top: 50%;
   margin-left: -250px;
   margin-top: -250px;
-  padding: 20px;
+  padding: 20px; */
 }
 .login-title {
   font-size: 36px;

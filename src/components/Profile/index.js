@@ -1,57 +1,116 @@
 import "./style.css";
-import { Chip, Avatar, Button, Alert, CircularProgress } from "@mui/material";
+import {
+  Chip,
+  Avatar,
+  Button,
+  Dialog,
+  DialogTitle,
+  DialogContentText,
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem,
+  DialogActions,
+  IconButton,
+} from "@mui/material";
 import { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
+import useInput from "../../hooks/useInput";
 
-function Profile({ payload, fetchData }) {
+const imglink = "https://firebasestorage.googleapis.com/v0/b/caps-1edf8.appspot.com/o/langIcon%2F";
+
+function Profile({ payload }) {
   const navigate = useNavigate();
   const location = useLocation();
   const [memberData, setmemberData] = useState(payload.data.member);
-  console.log(memberData);
+  const [myTeams, setMyTeams] = useState("");
+  const [inputs, setInputs] = useInput({
+    teamId: "",
+  });
   const [buttonVisible, setButtonVisible] = useState(true);
-
-  const getAnotherProfile = async (email) => {
+  const [requestVisible, setRequestVisible] = useState(false);
+  const [open, setOpen] = useState(false);
+  const getAnotherProfile = async (uid) => {
     try {
-      const response = await axios.get(`${process.env.REACT_APP_API_URL}/member/search/email/${email}`);
+      const response = await axios.get(`${process.env.REACT_APP_API_URL}/member/search/uid/${uid}`);
       setmemberData(response.data);
       setButtonVisible(false);
+      setRequestVisible(true);
     } catch (error) {
       console.log(error);
     }
   };
 
   useEffect(() => {
-    console.log(location.state?.email);
-    if (location.state?.email && location.state.email !== localStorage.getItem("email")) {
-      getAnotherProfile(location.state?.email);
+    if (location.state?.userId !== localStorage.getItem("userId")) {
+      console.log("실행");
+      getAnotherProfile(location.state?.userId);
     } else {
       return;
     }
-  }, [location.state?.email]);
+  }, [location.state?.userId]);
+
+  const handleRequest = () => {
+    setOpen(true);
+    console.log(open);
+    axios
+      .get(`${process.env.REACT_APP_API_URL}/teams/myteams`)
+      .then((response) => {
+        setMyTeams(response.data);
+        console.log(response.data);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
+
+  const handleDialogClose = () => {
+    setOpen(false);
+  };
+
+  const onClickRequest = () => {
+    axios
+      .post(`${process.env.REACT_APP_API_URL}/${inputs.teamId}/match-request`, {
+        userId: location.state?.userId,
+      })
+      .then((response) => {
+        if (response.data) {
+          alert("요청 완료");
+        }
+      })
+      .catch((err) => {
+        console.log(err.response);
+        alert(err.response.data.message);
+      });
+  };
 
   const checkGrade = (grade) => {
-    if(grade !== 0) {
+    if (grade !== 0) {
       return (
         <>
           <h5 className="grade-box">학년: {grade}</h5>
         </>
-      )
+      );
     }
-  }
+  };
 
   const checkGit = (git) => {
-    if(git !== null && git !== "") {
+    if (git !== null && git !== "") {
       return (
         <>
           <h5 className="githublink-box">깃허브 링크: {git}</h5>
         </>
-      )
+      );
     }
-  } 
+  };
 
   const checkSolvedNickname = (memberData) => {
-    if (memberData.solvedNickname !== "!!No User!!" && memberData.solvedNickname !== "" && memberData.solvedNickname !== null) {
+    if (
+      memberData.solvedNickname !== "!!No User!!" &&
+      memberData.solvedNickname !== "" &&
+      memberData.solvedNickname !== null
+    ) {
       return (
         <>
           <h5 className="bj-nickname">백준 닉네임: {memberData.solvedNickname}</h5>
@@ -89,8 +148,8 @@ function Profile({ payload, fetchData }) {
         <div className="profile-info-box">
           <h3 className="nickname-box">닉네임: {memberData.nickname}</h3>
           <h5 className="email-box">이메일: {memberData.email}</h5>
-          <h5 className="githublink-box">{checkGit(memberData.github)}</h5>
-          <h5 className="grade-box">{checkGrade(memberData.grade)}</h5>
+          {checkGit(memberData.github)}
+          {checkGrade(memberData.grade)}
           {checkSolvedNickname(memberData)}
         </div>
         <div className="profile-img-box">
@@ -123,7 +182,11 @@ function Profile({ payload, fetchData }) {
             .flatMap((obj) =>
               Object.entries(obj)
                 .filter(([key, value]) => value === 100)
-                .map(([key, value]) => <Chip key={key} label={key} color="primary" variant="outlined" />)
+                .map(([key, value]) => (
+                  <IconButton disabled>
+                    <img src={`${imglink}${key}.png?alt=media`} alt="logo" width={30} style={{ marginRight: "5px" }} />
+                  </IconButton>
+                ))
             )
             .concat(
               ![memberData.memberLang, memberData.memberFramework, memberData.memberDB].some((obj) =>
@@ -137,7 +200,11 @@ function Profile({ payload, fetchData }) {
             .flatMap((obj) =>
               Object.entries(obj)
                 .filter(([key, value]) => value === 50)
-                .map(([key, value]) => <Chip key={key} label={key} color="primary" variant="outlined" />)
+                .map(([key, value]) => (
+                  <IconButton disabled>
+                    <img src={`${imglink}${key}.png?alt=media`} alt="logo" width={30} style={{ marginRight: "5px" }} />
+                  </IconButton>
+                ))
             )
             .concat(
               ![memberData.memberLang, memberData.memberFramework, memberData.memberDB].some((obj) =>
@@ -151,12 +218,44 @@ function Profile({ payload, fetchData }) {
           <Button
             variant="contained"
             onClick={(e) => {
-              fetchData();
               navigate("/profile/edit");
             }}
           >
             프로필 수정
           </Button>
+        )}
+        {requestVisible && (
+          <>
+            <Button variant="contained" onClick={() => handleRequest()}>
+              팀 요청하기
+            </Button>
+            {myTeams?.data?.length > 0 ? (
+              <Dialog open={open} onClose={handleDialogClose}>
+                <DialogTitle>팀 요청하기</DialogTitle>
+                <DialogContentText>요청할 팀을 골라주세요</DialogContentText>
+                <FormControl sx={{ mt: 2, minWidth: 120 }}>
+                  <InputLabel>팀</InputLabel>
+                  <Select name="teamId" value={inputs.teamId} onChange={setInputs}>
+                    {myTeams.data.map((team) => {
+                      return <MenuItem value={team.teamId}>{team.title}</MenuItem>;
+                    })}
+                  </Select>
+                </FormControl>
+                <DialogActions>
+                  <Button onClick={handleDialogClose}>Close</Button>
+                  <Button onClick={onClickRequest}>요청</Button>
+                </DialogActions>
+              </Dialog>
+            ) : (
+              <Dialog open={open} onClose={handleDialogClose}>
+                <DialogTitle>팀 요청하기</DialogTitle>
+                <DialogContentText>팀이 없습니다.</DialogContentText>
+                <DialogActions>
+                  <Button onClick={handleDialogClose}>Close</Button>
+                </DialogActions>
+              </Dialog>
+            )}
+          </>
         )}
       </div>
     </div>
