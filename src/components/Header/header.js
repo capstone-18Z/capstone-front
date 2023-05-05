@@ -1,6 +1,5 @@
 import React from "react";
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { Button, Dialog } from "@mui/material";
 import "./header.css";
@@ -9,9 +8,19 @@ import SignUp from "../SignUp";
 
 function Header() {
   const [loginOpen, setLoginOpen] = useState(false);
+  const [signupOpen, setSignupOpen] = useState(false);
 
-  const handleClickOpen = () => {
+  const handleLoginOpen = () => {
     setLoginOpen(true);
+  };
+
+  const handleSignupOpen = () => {
+    setSignupOpen(true);
+  };
+
+  const handleClose = () => {
+    setLoginOpen(false);
+    setSignupOpen(false);
   };
 
   const navigate = useNavigate();
@@ -113,10 +122,15 @@ function Header() {
               </Button>
             ) : (
               <>
-                <Button variant="contained" onClick={handleClickOpen}>
+                <Button variant="contained" onClick={handleLoginOpen}>
                   로그인/회원가입
                 </Button>
-                <Login loginOpen={loginOpen} />
+                <Dialog open={loginOpen} onClose={handleClose}>
+                  <Login onClose={handleClose} onSignupClick={handleSignupOpen} />
+                </Dialog>
+                <Dialog open={signupOpen} onClose={handleClose}>
+                  <SignUp onClose={handleClose} onLoginClick={handleLoginOpen} />
+                </Dialog>
               </>
             )}
           </li>

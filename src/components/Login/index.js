@@ -1,35 +1,39 @@
 import "./style.css";
-import { TextField, Button, Typography, Dialog, DialogActions } from "@mui/material";
-import { useNavigate } from "react-router-dom";
+import { TextField, Button, Alert } from "@mui/material";
+import { useState } from "react";
 import useInput from "../../hooks/useInput";
 import axios from "axios";
-import { useState, useEffect } from "react";
-import SignUp from "../SignUp";
 
-function Login({ loginOpen }) {
-  console.log(loginOpen);
-  const [open, setOpen] = useState(loginOpen);
-  const [goSignUp, setGoSignup] = useState(false);
-
-  useEffect(() => {
-    setOpen(loginOpen);
-  }, [loginOpen]);
-
-  const handleGoSignup = () => {
-    setOpen(false);
-    setGoSignup(true);
+function Login({ onClose, onSignupClick }) {
+  const handleSignupClick = () => {
+    onClose();
+    onSignupClick();
   };
 
-  const handleClose = () => {
-    setOpen(false);
-    setGoSignup(false);
-  };
-
-  const navigate = useNavigate();
   const [userInfo, setUserInfo] = useInput({
     email: "",
     password: "",
   });
+  const [alertMessage, setAlertMessage] = useState("");
+
+  const validateEmail = () => {
+    const emailRegex = /\S+@\S+\.\S+/;
+    if (userInfo.email === "") {
+      return "";
+    } else if (!emailRegex.test(userInfo.email)) {
+      return "유효한 이메일 주소를 입력해주세요.";
+    }
+    return "";
+  };
+
+  const validatePassword = () => {
+    if (userInfo.password === "") {
+      return "";
+    } else if (userInfo.password.length < 8) {
+      return "비밀번호는 8자리 이상 입력해주세요.";
+    }
+    return "";
+  };
 
   const onSilentRefresh = () => {
     axios
@@ -66,57 +70,61 @@ function Login({ loginOpen }) {
           localStorage.setItem("nickname", response.data.data.member.nickname);
           localStorage.setItem("email", response.data.data.member.email);
           setInterval(onSilentRefresh, 1200000); // 20분 후 refreshtoken 갱신
-          navigate("/main");
+          onClose();
         }
       })
       .catch((err) => {
-        console.log(err.response);
-        alert(err.response.data.message);
+        setAlertMessage(err.response.data.message);
       });
   };
 
-  return goSignUp ? (
-    <SignUp goSignUp={goSignUp} />
-  ) : (
-    <Dialog open={open} onClose={handleClose}>
-      <div className="login-box">
-        <h1 className="login-title">로그인</h1>
-        <form className="login-form-box">
-          <div className="login-text">
-            <TextField
-              margin="normal"
-              label="이메일"
-              variant="outlined"
-              value={userInfo.email}
-              name="email"
-              onChange={setUserInfo}
-            />
-          </div>
-          <div className="login-text">
-            <TextField
-              margin="normal"
-              label="비밀번호"
-              type="password"
-              variant="outlined"
-              value={userInfo.password}
-              name="password"
-              onChange={setUserInfo}
-            />
-          </div>
-          <div className="login-button">
-            <Button variant="contained" onClick={onClick}>
-              로그인
-            </Button>
-          </div>
-          <div className="signup-button">
-            <Button onClick={handleGoSignup}>회원가입</Button>
-          </div>
-        </form>
-      </div>
-      <DialogActions>
-        <Button onClick={handleClose}>Close</Button>
-      </DialogActions>
-    </Dialog>
+  const showAlert = () => {
+    if (alertMessage !== "") {
+      return <Alert severity="error">{alertMessage}</Alert>;
+    } else return;
+  };
+
+  return (
+    <div className="login-box">
+      <h1 className="login-title">로그인</h1>
+      <form className="login-form-box">
+        <div className="login-text">
+          <TextField
+            margin="normal"
+            label="이메일"
+            variant="outlined"
+            value={userInfo.email}
+            name="email"
+            onChange={setUserInfo}
+            helperText={validateEmail()}
+            error={validateEmail() !== ""}
+          />
+        </div>
+        <div className="login-text">
+          <TextField
+            margin="normal"
+            label="비밀번호"
+            type="password"
+            variant="outlined"
+            value={userInfo.password}
+            name="password"
+            onChange={setUserInfo}
+            helperText={validatePassword()}
+            error={validatePassword() !== ""}
+          />
+        </div>
+        <div>{showAlert()}</div>
+        <div className="login-button">
+          <Button variant="contained" onClick={onClick}>
+            로그인
+          </Button>
+        </div>
+        <div className="gosignup-button" onClick={handleSignupClick}>
+          <p>계정이 없으신가요?</p>
+          <Button>회원가입</Button>
+        </div>
+      </form>
+    </div>
   );
 }
 
