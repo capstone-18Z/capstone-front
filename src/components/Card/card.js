@@ -48,17 +48,21 @@ export const Card = (team) => {
                       <img src={`${filename}`} alt={filename} key={filename} style={{ width: "100%", height: "auto" }} />
                     ))}
                     </div>
+                    <hr/>
                     <div className="card-body">
-                    <h5 className="card-title">제목:{data.team.title} </h5>  
-                    <h5 className="card-title">팀 빌딩 목적:{data.team.teamKeyword == null ? "없다" : data.team.teamKeyword.category}</h5>                    
-                    <p className="card-text">역할 :{data.team.teamKeyword == null ? "없다" : data.team.teamKeyword.field} {data.team.teamKeyword.sub=="none" ? null: data.team.teamKeyword.sub.toUpperCase()+"반"} </p>
-                    <p className="card-text">{data.team.wantTeamMemberCount}명 모집 </p>
-                    {combinedArr.map(data => (
-                      <img src={`https://firebasestorage.googleapis.com/v0/b/caps-1edf8.appspot.com/o/langIcon%2F${data}.png?alt=media`} alt={data} width={50} key={data}/>                    
-                    ))}
-                    <p className="card-text"><small className="text-muted">{time()}</small></p>
+                    <h5 className="card-text">{data.team.title}</h5> 
+                    <h5 className="card-text">{time()}</h5>
                     </div>
-                
+                    <div className="card-body">
+                    <h5 className="card-text">{data.team.teamKeyword == null ? "미확인" :`${data.team.teamKeyword.category} / ${data.team.teamKeyword.field}`}
+                    {data.team.teamKeyword.sub=="none" ? null: ` ${data.team.teamKeyword.sub.toUpperCase()}반`} </h5>
+                    <h5 className="card-text">{`${data.team.wantTeamMemberCount}명 모집 `}</h5>
+                    </div>
+                    <div className="icon_image">
+                    {combinedArr.map(data => (
+                      <img src={`https://firebasestorage.googleapis.com/v0/b/caps-1edf8.appspot.com/o/langIcon%2F${data}.png?alt=media`} alt={data} width={50} height={50} key={data}/>                    
+                    ))}
+                    </div>
     </div>
   );
 };

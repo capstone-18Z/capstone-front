@@ -14,7 +14,7 @@ function Team() {
     
     const [teamList, setTeamList] = useState(null);
     const [searchParams, setSearchParams] = useSearchParams();
-
+    const [page,setPage] =useState(1);
     const [search, setSearch] = useState("");
     const searchBarOnChange = (e) => {
         setSearch(e.target.value)
@@ -23,7 +23,7 @@ function Team() {
     
 
     const searchTeam = () => {
-        fetch(`${process.env.REACT_APP_API_URL}/teams/search/${search}?page=1`,{
+        fetch(`${process.env.REACT_APP_API_URL}/teams/filter?search=${search}&category=${category}&subject=${isSpecialCategory ? combined : subject}&rule=${rule}&page=1`,{
             headers: {
                 'refresh-token': refresh_token,
                 'login-token': login_token,//헤더로 로그인 토큰 넣어야 삭제됨
@@ -32,19 +32,25 @@ function Team() {
         .then((response) => response.json())        
         .then((obj) => {setTeamList(obj.data)
         console.log(obj); setPage_maxcount(obj.metadata.totalPage);
-        window.location.href = `/list/team?search=${search}&page=1`;
+        ;
     })}
 
-    const page_number = searchParams.get("page");
     const [page_maxcount, setPage_maxcount] = useState(0);
-
+    useEffect(()=>{
+        fetch(`${process.env.REACT_APP_API_URL}/teams/filter?search=${search}&category=${category}&subject=${isSpecialCategory ? combined : subject}&rule=${rule}&page=${page}`,{
+            headers: {
+                'refresh-token': refresh_token,
+                'login-token': login_token,//헤더로 로그인 토큰 넣어야 삭제됨
+            },      
+        })
+        .then((response) => response.json())        
+        .then((obj) => {setTeamList(obj.data)
+        console.log(obj); setPage_maxcount(obj.metadata.totalPage);})  
+    },[page])
     useEffect(() => {
-        /*
-        
-        */
-        if(search_string==null) {//search string이 비었으면 그냥 페이지 방식
-            if(checkCategory==[]||checkRule==[]||checkSubject==[]){ //카테고리 체크한개 셋다 빈상태면
-                fetch(`${process.env.REACT_APP_API_URL}/teams?page=${page_number}`,{
+            if(checkCategory.length==0 && checkRule.length==0 && checkSubject.length==0){ //카테고리 체크한개 셋다 빈상태면
+
+                fetch(`${process.env.REACT_APP_API_URL}/teams?page=${page}`,{
                     headers: {
                         'refresh-token': refresh_token,
                         'login-token': login_token,//헤더로 로그인 토큰 넣어야 삭제됨
@@ -54,9 +60,9 @@ function Team() {
                 .then((obj) => {setTeamList(obj.data)
                 console.log(obj); setPage_maxcount(obj.metadata.totalPage);}) 
             }
-            else{   //카테고리 체크한개가 하나라도 있으면 카테고리 방식으로 보냄 즉 카테고리 체크한 상태에서의 2페이지 이상을 확인할때 이 fetch가 돔
-                console.log(`서버에 카테고리 방식으로 보냄 ${page_number}페이지`);
-                fetch(`${process.env.REACT_APP_API_URL}/teams/filter?category=${category}&subject=${isSpecialCategory ? combined : subject}&rule=${rule}&page=${page_number}`,{
+            if(checkCategory.length>=1 || checkRule.length>=1 || checkSubject.length>=1){   //카테고리 체크한개가 하나라도 있으면 카테고리 방식으로 보냄 즉 카테고리 체크한 상태에서의 2페이지 이상을 확인할때 이 fetch가 돔
+                console.log(`서버에 카테고리 방식으로 보냄 ${page}페이지`);
+                fetch(`${process.env.REACT_APP_API_URL}/teams/filter?search=${search}&category=${category}&subject=${isSpecialCategory ? combined : subject}&rule=${rule}&page=${page}`,{
                     headers: {
                         'refresh-token': refresh_token,
                         'login-token': login_token,//헤더로 로그인 토큰 넣어야 삭제됨
@@ -65,28 +71,9 @@ function Team() {
                 .then((response) => response.json())        
                 .then((obj) => {setTeamList(obj.data)
                     console.log(obj); setPage_maxcount(obj.metadata.totalPage);
-                    window.location.href = `/list/team&page=1`;
                     console.log(checkCategory,checkRule,checkSubject);
                 })
-            }             
-        }        
-        else { //검색한게 있으면 
-            if(checkCategory==[]||checkRule==[]||checkSubject==[]){ //카테고리 체크한개 셋다 빈상태면
-                setSearch(search_string);
-                fetch(`${process.env.REACT_APP_API_URL}/teams/search/${search_string}?page=${page_number}`,{
-                    headers: {
-                        'refresh-token': refresh_token,
-                        'login-token': login_token,//헤더로 로그인 토큰 넣어야 삭제됨
-                    },      
-                })
-                .then((response) => response.json())        
-                .then((obj) => {setTeamList(obj.data)
-                console.log(obj); setPage_maxcount(obj.metadata.totalPage);})  
-            } 
-            else { //카테고리가 있으면 카테고리 거른 상태에서 검색한것을 보내야함
-                
-            }
-        }              
+            }                 
     }, []);
     
     //삭제할때 teams/{team.id}/delete 이렇게 post로 보내면 삭제됨
@@ -120,10 +107,10 @@ function Team() {
     const isSpecialCategory = checkCategory.includes("개인 팀프로젝트") ||
                           checkCategory.includes("공모전 및 대회") ||
                           checkCategory.includes("캡스톤 디자인");
-    const combined = [...subject, "상관없음"].join(',');
+    const combined = [...checkRule, "상관없음"].join(',');
 
     const categoryOnClick= () =>{  
-        fetch(`${process.env.REACT_APP_API_URL}/teams/filter?category=${category}&subject=${isSpecialCategory ? combined : subject}&rule=${rule}&page=1`,{
+        fetch(`${process.env.REACT_APP_API_URL}/teams/filter?search=${search}&category=${category}&subject=${subject}&rule=${isSpecialCategory ? combined : rule}&page=1`,{
             headers: {
                 'refresh-token': refresh_token,
                 'login-token': login_token,//헤더로 로그인 토큰 넣어야 삭제됨
@@ -132,7 +119,6 @@ function Team() {
         .then((response) => response.json())        
         .then((obj) => {setTeamList(obj.data)
         console.log(obj); setPage_maxcount(obj.metadata.totalPage);
-        window.location.href = `/list/team&page=1`;
         console.log(checkCategory,checkRule,checkSubject)
     })}
     
@@ -147,10 +133,11 @@ function Team() {
         <p className="subtitle">원하는 팀을 찾아보세요!</p>
         
         </div>
-        <div className="search-box">
-            <TextField onChange={searchBarOnChange}
+        <div className="search-box mt-3 text-center pxp-hero-form-round">
+            
+            <TextField className="search-bar" onChange={searchBarOnChange}
             placeholder={search_string==null ? "팀을 검색해보세요. ":search_string} variant="outlined" size="small" />
-            <Button onClick={searchTeam} variant="contained" sx={{ marginLeft: "5px" }}>
+            <Button className="search-btn" onClick={searchTeam} variant="contained" sx={{ marginLeft: "5px" }}>
             검색
             </Button>
         </div>
@@ -158,7 +145,7 @@ function Team() {
             <div class="team-container">
                 
                 <Category checkCategory={checkCategory} setCheckCategory={setCheckCategory} checkRule={checkRule}
-                    setCheckRule={setCheckRule} checkSubject={checkSubject} setCheckSubject={setCheckSubject} categoryOnClick={categoryOnClick}/>
+                    setCheckRule={setCheckRule} checkSubject={checkSubject} setCheckSubject={setCheckSubject} categoryOnClick={categoryOnClick} />
                
                 <div className="card-container" style={{ flex: 1 }}>          
                     {teamList && teamList.map(team => (
@@ -169,13 +156,9 @@ function Team() {
                 </div>
             </div>
             <div class="page">
-            <Pagination page={Number(searchParams.get("page"))} count={page_maxcount} size="large" 
+            <Pagination page={page} count={page_maxcount} size="large" 
              onChange={(e, value) => {
-                search === "" ? 
-                window.location.href = `/list/team?page=${value}`
-                :
-                window.location.href = `/list/team?search=${search}&page=${value}`
-                ;
+                setPage(value);
               }}
             />
             </div>

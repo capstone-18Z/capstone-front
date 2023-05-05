@@ -22,9 +22,8 @@ const Teams = () => {
   return (
     <div className="myteamlist_wrapper">
         {mypagedata && mypagedata.map(myAllTeams =>(  
-          <div className="first-div" key={myAllTeams.teamId}>      
-                  
-              <div className="card-wrapper">
+          <div className="first-div" key={myAllTeams.teamId}>
+              <div>
                 <Card team={myAllTeams} />                
               </div>
               {myAllTeams && myAllTeams.requestList && myAllTeams.requestList.map(request => (

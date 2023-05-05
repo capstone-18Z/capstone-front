@@ -10,7 +10,7 @@ const category = [
 
 
 
-const subject = [ //과목 팀프로젝트용
+const subject = [ 
   {id:"웹프레임워크1" ,title:"웹프레임워크1"},
   {id:"네트워크프로그래밍" ,title:"네트워크프로그래밍"},
   {id:"안드로이드프로그래밍" ,title:"안드로이드프로그래밍"},
@@ -22,8 +22,11 @@ const rule = [
   { id: "백엔드", title: "백엔드"},
 ];
 
+
 function Category({checkCategory,setCheckCategory, checkRule,setCheckRule,checkSubject,setCheckSubject , categoryOnClick  }) {
-  
+  useEffect(()=>{
+    categoryOnClick();
+  },[checkCategory,checkRule,checkSubject])
    // 체크된 아이템을 담을 배열을 props로 받는다.
    function handleCheck(event) {
     const { name, value, checked } = event.target;
@@ -32,40 +35,41 @@ function Category({checkCategory,setCheckCategory, checkRule,setCheckRule,checkS
       switch (name) {
         case "category":
           setCheckCategory((prev) => [...prev, value]);
-          localStorage.setItem("category", JSON.stringify([...checkCategory, value]));          
+               
           break;
         case "rule":
           setCheckRule((prev) => [...prev, value]);
-          localStorage.setItem("rule", JSON.stringify([...checkRule, value]));
+          
           break;
         case "subject":
           setCheckSubject((prev) => [...prev, value]);
-          localStorage.setItem("subject", JSON.stringify([...checkSubject, value]));
+          
           break;
         default:
           break;
       }
+     
     } else {
       switch (name) {
         case "category":
           if(checkCategory.includes("과목 팀프로젝트")){
             setCheckSubject([]);
-            localStorage.setItem("subject", JSON.stringify([]));
+         
           }
           setCheckCategory((prev) => prev.filter((id) => id !== value));
-          localStorage.setItem("category", JSON.stringify(checkCategory.filter((id) => id !== value)));          
+                
           break;
         case "rule":
           setCheckRule((prev) => prev.filter((id) => id !== value));
-          localStorage.setItem("rule", JSON.stringify(checkRule.filter((id) => id !== value)));
+          
           break;
         case "subject":
           setCheckSubject((prev) => prev.filter((id) => id !== value));
-          localStorage.setItem("subject", JSON.stringify(checkSubject.filter((id) => id !== value)));
           break;
         default:
           break;
       }
+      
     }
   }
 
@@ -77,29 +81,14 @@ function Category({checkCategory,setCheckCategory, checkRule,setCheckRule,checkS
       setCheckCategory(allDataItems);
       setCheckRule(allRuleItems);
       setCheckSubject(allSubjectItems);
-      localStorage.setItem("category", JSON.stringify([allDataItems])); 
-      localStorage.setItem("subject", JSON.stringify([allRuleItems]));
-      localStorage.setItem("rule", JSON.stringify([allSubjectItems]));
     } else {
       setCheckCategory([]);
       setCheckRule([]);
       setCheckSubject([]);
-      localStorage.setItem("category", JSON.stringify([])); 
-      localStorage.setItem("subject", JSON.stringify([]));
-      localStorage.setItem("rule", JSON.stringify([]));
     }   
   }
 
-  useEffect(() => {
-      // 로컬 스토리지에서 체크박스 값 불러오기
-      const category = localStorage.getItem("category");
-      const rule = localStorage.getItem("rule");
-      const subject = localStorage.getItem("subject");
-  
-      if (category) setCheckCategory(JSON.parse(category));
-      if (rule) setCheckRule(JSON.parse(rule));
-      if (subject) setCheckSubject(JSON.parse(subject));
-  }, []);
+
 
   return (
     <div className='category-table'>

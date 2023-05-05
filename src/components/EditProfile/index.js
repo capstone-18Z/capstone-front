@@ -341,9 +341,9 @@ function EditProfile({ fetchData, payload }) {
                   console.log(e.target.value);
                 }}
               >
-                <MenuItem value={1}>프론트엔드</MenuItem>
-                <MenuItem value={2}>백엔드</MenuItem>
-                <MenuItem value={0}>상관없음</MenuItem>
+                <MenuItem value={"프론트엔드"}>프론트엔드</MenuItem>
+                <MenuItem value={"백엔드"}>백엔드</MenuItem>
+                <MenuItem value={"상관없음"}>상관없음</MenuItem>
               </Select>
             </FormControl>
           </div>

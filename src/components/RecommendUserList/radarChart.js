@@ -60,7 +60,6 @@ const frameworkoptions = {
 export 
 
 function RadarChart({teamdata, memberdata}) { 
-    console.log("레이더차트",teamdata);
     const langArr = Object.keys(teamdata.teamLanguage).filter(key => key !== 'id' && teamdata.teamLanguage[key] !== 0);
     const teamlangvalue = Object.entries(teamdata.teamLanguage).filter(([key, value]) => key !== 'id' && value !== 0).map(([key, value]) => value);
     
@@ -127,13 +126,14 @@ function RadarChart({teamdata, memberdata}) {
     return (
       <div style={{ display: "flex" }}>
         <div style={{width: "500px" }}>
-            <Bar options={langoptions} data={langdata} />
+          {langArr.length===0 ? null:<Bar options={langoptions} data={langdata} />}
         </div>
-        <div style={{width: "500px" }}>
-          <Bar options={frameworkoptions} data={frameworkdata} />
+        <div style={{width: "500px" }}>          
+          {frameworkArr.length===0 ? null:<Bar options={frameworkoptions} data={frameworkdata} />}
         </div>
+        
         <div style={{width: "500px" }}>
-          <Bar options={databaseoptions} data={databasedata} />
+          {databaseArr.length===0 ? null:<Bar options={databaseoptions} data={databasedata} />}          
         </div>        
       </div>
     );

@@ -10,6 +10,7 @@ import axios from 'axios';
 import Languages from "../TechniqueStack/language";
 import Framework from "../TechniqueStack/framework";
 import Database from "../TechniqueStack/database";
+import { Autocomplete } from "@mui/material";
 
 function TeamBuilding() {
     //로그인 토큰 저장
@@ -180,6 +181,19 @@ function TeamBuilding() {
         mongodbL: false,
         schemaL:false,     
     });
+
+    const onChangeAuto = (e,value) => {
+        const nextInputs = {
+          //spread 문법. 현재 상태의 내용이 이 자리로 온다.
+          ...inputs,
+          field: value,
+        };
+        //객체를 새로운 상태로 쓰겠다.
+        setInputs(nextInputs);
+        console.log(inputs);
+    };
+
+    const subjectList = ["웹프레임워크1","네트워크프로그래밍","안드로이드프로그래밍","고급모바일프로그래밍"]
     
     return (
         <div className="teambuildingform">
@@ -223,12 +237,15 @@ function TeamBuilding() {
                 {category === "과목 팀프로젝트" ? (
                 <div style={{ display: 'flex' }}>
                     <h3>과목</h3>
-                    <Select name="field" value={field} label="과목 선택" onChange={onChange}>
-                        <MenuItem value={"웹프레임워크1"}>웹프레임워크1</MenuItem>
-                        <MenuItem value={"네트워크프로그래밍"}>네트워크프로그래밍</MenuItem>
-                        <MenuItem value={"안드로이드프로그래밍"}>안드로이드프로그래밍</MenuItem>
-                        <MenuItem value={"고급모바일프로그래밍"}>고급모바일프로그래밍</MenuItem>                        
-                    </Select>
+                    <Autocomplete
+                        disablePortal
+                        id="combo-box-demo"
+                        options={subjectList}
+                        sx={{ width: 300 }}
+                        onChange={onChangeAuto}
+                        name="field"
+                        renderInput={(params) => <TextField {...params} label="과목" />}
+                    />
                     <h3>분반</h3>
                     <Select name="sub" value={sub} label="분반 선택" onChange={onChange}>
                         <MenuItem value={"A"}>A</MenuItem>
