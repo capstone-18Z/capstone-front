@@ -1,15 +1,39 @@
 import "./style.css";
-import { TextField, Button, Typography } from "@mui/material";
-import { useNavigate } from "react-router-dom";
+import { TextField, Button, Alert } from "@mui/material";
+import { useState } from "react";
 import useInput from "../../hooks/useInput";
 import axios from "axios";
 
-function Login() {
-  const navigate = useNavigate();
+function Login({ onClose, onSignupClick }) {
+  const handleSignupClick = () => {
+    onClose();
+    onSignupClick();
+  };
+
   const [userInfo, setUserInfo] = useInput({
     email: "",
     password: "",
   });
+  const [alertMessage, setAlertMessage] = useState("");
+
+  const validateEmail = () => {
+    const emailRegex = /\S+@\S+\.\S+/;
+    if (userInfo.email === "") {
+      return "";
+    } else if (!emailRegex.test(userInfo.email)) {
+      return "유효한 이메일 주소를 입력해주세요.";
+    }
+    return "";
+  };
+
+  const validatePassword = () => {
+    if (userInfo.password === "") {
+      return "";
+    } else if (userInfo.password.length < 8) {
+      return "비밀번호는 8자리 이상 입력해주세요.";
+    }
+    return "";
+  };
 
   const onSilentRefresh = () => {
     axios
@@ -46,13 +70,18 @@ function Login() {
           localStorage.setItem("nickname", response.data.data.member.nickname);
           localStorage.setItem("email", response.data.data.member.email);
           setInterval(onSilentRefresh, 1200000); // 20분 후 refreshtoken 갱신
-          navigate("/main");
+          onClose();
         }
       })
       .catch((err) => {
-        console.log(err.response);
-        alert(err.response.data.message);
+        setAlertMessage(err.response.data.message);
       });
+  };
+
+  const showAlert = () => {
+    if (alertMessage !== "") {
+      return <Alert severity="error">{alertMessage}</Alert>;
+    } else return;
   };
 
   return (
@@ -67,6 +96,8 @@ function Login() {
             value={userInfo.email}
             name="email"
             onChange={setUserInfo}
+            helperText={validateEmail()}
+            error={validateEmail() !== ""}
           />
         </div>
         <div className="login-text">
@@ -78,21 +109,19 @@ function Login() {
             value={userInfo.password}
             name="password"
             onChange={setUserInfo}
+            helperText={validatePassword()}
+            error={validatePassword() !== ""}
           />
         </div>
+        <div>{showAlert()}</div>
         <div className="login-button">
           <Button variant="contained" onClick={onClick}>
             로그인
           </Button>
         </div>
-        <div className="signup-button">
-          <Button
-            onClick={(e) => {
-              navigate("/signup");
-            }}
-          >
-            회원가입
-          </Button>
+        <div className="gosignup-button" onClick={handleSignupClick}>
+          <p>계정이 없으신가요?</p>
+          <Button>회원가입</Button>
         </div>
       </form>
     </div>

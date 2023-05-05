@@ -1,7 +1,6 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import {useEffect} from "react";
 import axios from "axios";
-import LoginPage from "./pages/LoginPage";
 import MainPage from "./pages/MainPage";
 import PostPage from "./pages/PostPage";
 import Header from "./components/Header/header"
@@ -20,6 +19,10 @@ const theme = createTheme({
   },});
 
 function App() {
+  // 새로고침을 하면 axios.defaults.headers가 날아가는거 방지용
+  axios.defaults.headers.common["login-token"] = localStorage.getItem("login-token");
+  axios.defaults.headers.common["refresh-token"] = localStorage.getItem("refresh-token");
+
   const refresh = localStorage.getItem("refresh-token");
   useEffect(() => {
     const onSilentRefresh = () => {
@@ -48,11 +51,9 @@ function App() {
     <div className="App">
       <BrowserRouter>
         <Routes>
-          <Route path="/*" element={<><Header /><LoginPage /></>}></Route>
-          <Route path="/main" element={<><Header /><MainPage /></>}></Route>
+          <Route path="/" element={<><Header /><MainPage /></>}></Route>
           <Route path="/mypage/*" element={<><Header/><MyPage /></>}></Route>
           <Route path="/profile/*" element={<><Header/><ProfilePage/></>}></Route>
-          {}
           <Route path="/list/*" element={<><Header/><ListPage/></>}></Route>
           <Route path="/post/*" element={<><Header/><PostPage /></>}></Route>          
         </Routes>

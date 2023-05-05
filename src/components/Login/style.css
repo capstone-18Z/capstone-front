@@ -1,12 +1,11 @@
 .login-box {
   width: 500px;
-  height: 500px;
-  position: absolute;
+  /* position: absolute;
   left: 50%;
   top: 50%;
   margin-left: -250px;
   margin-top: -250px;
-  padding: 20px;
+  padding: 20px; */
 }
 .login-title {
   font-size: 36px;
@@ -16,10 +15,14 @@
 .login-text {
   text-align: center;
 }
-.login-button,
-.signup-button {
-  text-align: center;
+.login-button {
+  display: flex;
+  justify-content: center;
   padding: 5px;
+}
+.gosignup-button {
+  display: flex;
+  justify-content: center;
 }
 .Button {
   font-family: "Noto Sans KR", sans-serif;
