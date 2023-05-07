@@ -33,9 +33,17 @@ function Framework({ frameworkValues, onFrameworkValueChange ,selectedFrameworks
           label: '아예 못함',
         },
         {
-            value: 50,
-            label: '보통',
-          },
+          value: 25,
+          label: '못함',
+        },
+        {
+          value: 50,
+          label: '보통',
+        },
+        {
+          value: 75,
+          label: '잘함',
+        },
         {
           value: 100,
           label: '아주잘함',
@@ -48,14 +56,14 @@ function Framework({ frameworkValues, onFrameworkValueChange ,selectedFrameworks
         }
     
         return (
-          <div key={framework} style={{ display: "flex", alignItems: "center" }}>
+          <div className='framework_slidebars' key={framework} style={{ display: "flex", alignItems: "center" }}>
             <div style={{ width: "150px", textAlign: "center" }}>
-                <img src={`${imglink}${framework}.png?alt=media`} alt="logo" width={30}/> 
+                <img src={`${imglink}${framework}.png?alt=media`} alt="logo" width={30} height={30} style={{ marginRight: '5px' }}/> 
                 {framework === 'tdmax' ? '3DMAX' : null }         
                 {framework !== 'tdmax' ? framework.toUpperCase() : null}
             </div>          
             <Slider aria-label="Custom marks"  value ={frameworkValues[framework]} step={null} 
-                    valueLabelDisplay="auto" marks={marks} onChange={(event) => handleSliderChange(event, framework)} sx={{ width: "350px", marginLeft: "50px" }}/>
+                    valueLabelDisplay="auto" marks={marks} onChange={(event) => handleSliderChange(event, framework)} sx={{ width: "600px", marginLeft: "50px" }}/>
           </div>
         );
       };
@@ -63,15 +71,15 @@ function Framework({ frameworkValues, onFrameworkValueChange ,selectedFrameworks
     
       return (
         <div>
-        <div className="framework-buttons" style={{ width: "500px", display: "flex", justifyContent: "center", flexWrap: "wrap", margin: "0 auto" }}>
+        <div className="framework-buttons">
           {data.map(data => (
             <Button className={selectedFrameworks[data] ? "selected" : ""} key={data} variant="outlined" onClick={() => toggleFramework(data)} style={{ margin: '8px' }}>
-             <img src={`${imglink}${data}.png?alt=media`} alt="logo" width={30} style={{marginRight:"5px"}}/>
+             <img src={`${imglink}${data}.png?alt=media`} alt="logo" width={30} height={30} style={{ marginRight: '5px' }}/>
               {data.toUpperCase().replace('TDMAX', '3DMAX')}
             </Button>
           ))}
         </div>
-        <div className='framework_slidebars' style={{ marginLeft: "50px" }}>
+        <div>
           {data.map((framework) => (renderFrameworkSlider(framework)))}
         </div>
       </div>

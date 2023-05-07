@@ -7,6 +7,7 @@ import { Alert, CircularProgress, TextField, Button, Pagination } from "@mui/mat
 import {useNavigate} from "react-router-dom";
 import "./team.css";
 import Category from './category.js';
+import { FaSearch } from 'react-icons/fa'
 
 function Team() {
     const refresh_token = localStorage.getItem("refresh-token");
@@ -19,7 +20,6 @@ function Team() {
     const searchBarOnChange = (e) => {
         setSearch(e.target.value)
     }   
-    const search_string = searchParams.get("search");
     
 
     const searchTeam = () => {
@@ -49,7 +49,6 @@ function Team() {
     },[page])
     useEffect(() => {
             if(checkCategory.length==0 && checkRule.length==0 && checkSubject.length==0){ //카테고리 체크한개 셋다 빈상태면
-
                 fetch(`${process.env.REACT_APP_API_URL}/teams?page=${page}`,{
                     headers: {
                         'refresh-token': refresh_token,
@@ -125,25 +124,42 @@ function Team() {
     const onClick =(e) => { //팀원 모집 으로 보내기
         navigate(`/post/team`);
     }
+    const handleKeyDown = (event) => {
+        const key = event.code;
+        switch(key){
+            case 'Enter':
+                searchTeam();
+            break;
+            default:
+        }
+    }
 
     return (
         <div className='team_list'>
             <div className="members-title-box">
-        <h1>한성 메이트</h1>
-        <p className="subtitle">원하는 팀을 찾아보세요!</p>
         
         </div>
-        <div className="search-box mt-3 text-center pxp-hero-form-round">
-            
-            <TextField className="search-bar" onChange={searchBarOnChange}
-            placeholder={search_string==null ? "팀을 검색해보세요. ":search_string} variant="outlined" size="small" />
-            <Button className="search-btn" onClick={searchTeam} variant="contained" sx={{ marginLeft: "5px" }}>
-            검색
-            </Button>
+        <div className='contest_search'>
+                <p className='contest_search_title'>
+                    팀 검색
+                </p>
+                <div class="search-form">
+                    <input
+                    type="text"
+                    placeholder={search==[] ? "팀을 검색해보세요. ":search}
+                    className="search_bar"
+                    name="searchText"
+                    onChange={searchBarOnChange}
+                    onKeyDown={handleKeyDown}
+                    />
+                    <button class="search-button" onClick={searchTeam}>
+                        <FaSearch/>
+                    </button>
+                </div>
         </div>
+        <div className='team-body'>  
         <Button onClick={onClick} variant="contained" sx={{ width: "245px" }}>팀원 모집 하기</Button>
-            <div class="team-container">
-                
+            <div class="team-container">                
                 <Category checkCategory={checkCategory} setCheckCategory={setCheckCategory} checkRule={checkRule}
                     setCheckRule={setCheckRule} checkSubject={checkSubject} setCheckSubject={setCheckSubject} categoryOnClick={categoryOnClick} />
                
@@ -155,14 +171,14 @@ function Team() {
                         ))}
                 </div>
             </div>
+            </div>    
             <div className="page">
             <Pagination page={page} count={page_maxcount} size="large" 
              onChange={(e, value) => {
                 setPage(value);
               }}
-            />
-            </div>
-            
+            />            
+            </div>            
         </div>
     );
             

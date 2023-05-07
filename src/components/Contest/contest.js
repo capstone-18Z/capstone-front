@@ -109,11 +109,7 @@ function Contest() {
                         <FaSearch/>
                     </button>
                 </div>
-            </div>
-            <h3>카테고리</h3>
-            <p>팀원 모집중</p>
-            {page_number}페이지
-            
+            </div>           
             
             <div className="card-container">          
                 {contestList && contestList.map(contest => (

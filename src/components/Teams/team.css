@@ -4,12 +4,10 @@
   display: grid;
   padding: 20px;
   grid-gap: 40px;
-  }
-
-.Pagination {
-  margin-top: 20px;
 }
+
 .page {
+  margin-top: 30px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -17,4 +15,9 @@
 .team-container {
   display: flex;
   justify-content: space-between;
+}
+.team-body{
+  padding-left: 150px;
+  margin-right: auto;
+  margin-left: auto;
 }

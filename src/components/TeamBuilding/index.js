@@ -12,6 +12,12 @@ import Framework from "../TechniqueStack/framework";
 import Database from "../TechniqueStack/database";
 import { Autocomplete } from "@mui/material";
 
+import dayjs from 'dayjs';
+import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+
 function TeamBuilding() {
     //로그인 토큰 저장
     const refresh_token = localStorage.getItem("refresh-token");
@@ -193,17 +199,17 @@ function TeamBuilding() {
         setInputs(nextInputs);
         console.log(inputs);
     };
-
     const subjectList = ["웹프레임워크1","네트워크프로그래밍","안드로이드프로그래밍","고급모바일프로그래밍"]
-    
+    const [selectedDate, setSelectedDate] = useState(null);
     return (
         <div className="teambuildingform">
             <div className="team_form">            
-            <h1>새 팀 등록</h1>  
-            <hr/>          
+            <h1>새 팀 등록</h1>         
             
-            <form name="team-form" onSubmit={PostRequest}>
+            <form onSubmit={PostRequest}>
+                <div className="team_label">
                 <h3>프로젝트 기본 정보를 입력해주세요.</h3>
+                </div>
                 <div className="team_row">
                 <div className="team_item">
                     <label>
@@ -274,6 +280,18 @@ function TeamBuilding() {
                     </Select>
                     </div>
                 )}
+                <div className="team_item">
+                    <h3>마감 기간 </h3>
+                    <LocalizationProvider dateAdapter={AdapterDayjs}>
+                    <DemoContainer components={['DatePicker', 'DatePicker']}>
+                        <DatePicker
+                        label="모집 마감 날짜"
+                        value={selectedDate}
+                        onChange={(newValue) => setSelectedDate(newValue)}
+                        />
+                    </DemoContainer>
+                    </LocalizationProvider>             
+                </div>
                
                 <div className="team_item">
                     <h3>모집 인원</h3>
@@ -292,10 +310,11 @@ function TeamBuilding() {
                         <MenuItem value={5}>5</MenuItem>
                     </Select> 
                 </div>
+                
                 </div>
-
+                <div className="team_label">
                 <h3>요구 사항</h3>
-                <hr/>
+                </div>
                 <div className="team-lang-box" style={{  justifyContent: 'center' }}>                       
                     <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                         <h3>LANGUAGE</h3>    
@@ -309,33 +328,40 @@ function TeamBuilding() {
                         <h3>DATABASE</h3>    
                         <Database databaseValues={teamDatabase} onDatabaseValueChange={handleTeamDatabaseChange} selectedDatabases={selectedDatabases} setSelectedDatabases={setSelectedDatabases}/>         
                     </Box>
-                </div>  
+                </div> 
+                <div className="team_label">
                 <h3>프로젝트에 대해 소개 시켜주세요.</h3>
-                <hr/>       
-                <p>제목</p>
-                <TextField                            
-                    required
-                    label="글 제목을 입력해주세요"
-                    value={title}                    
-                    name="title"
-                    variant="outlined"
-                    onChange={onChange}
-                    style={{ width: '100%' }}
-                /> 
-                <h3>상세 소개</h3>
-                <ToastEditor
-                    previewStyle="vertical"
-                    hideModeSwitch={true}
-                    language="ko-KR"
-                    initialEditType="wysiwyg"     
-                    ref={editorRef}
-                    onChange={DetailOnChange}                       
-                />   
+                </div>
+                <h3>제목</h3>
+                <div className="team_editor">
+                    <TextField                            
+                        required
+                        label="글 제목을 입력해주세요"
+                        value={title}                    
+                        name="title"
+                        variant="outlined"
+                        onChange={onChange}
+                        style={{ width: '100%' }}
+                    />
+                </div>
+                <div className="team_editor">
+                    <ToastEditor                    
+                        previewStyle="vertical"
+                        hideModeSwitch={true}
+                        language="ko-KR"
+                        initialEditType="wysiwyg"     
+                        ref={editorRef}
+                        onChange={DetailOnChange}                       
+                    />   
+                </div>
+                <div className="team_editor">
+                    <MyDropzone uploadedFiles={uploadedFiles} setUploadedFiles={setUploadedFiles}/>
+                </div>
                 
-                <MyDropzone uploadedFiles={uploadedFiles} setUploadedFiles={setUploadedFiles}/>
-
-                
-                <div style={{ display: "flex", justifyContent: "flex-end" }}>
+                <div className="team_button" style={{ display: "flex", justifyContent: "flex-end" }}>
+                <Button variant="contained" onClick={() => {
+                    navigate('/list/team');
+                }}>취소</Button>
                 <Button variant="contained" onClick={() => {
                     //valuetest();
                     testSubmitHandler();   

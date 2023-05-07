@@ -33,9 +33,17 @@ function Database({ databaseValues, onDatabaseValueChange, selectedDatabases, se
           label: '아예 못함',
         },
         {
-            value: 50,
-            label: '보통',
-          },
+          value: 25,
+          label: '못함',
+        },
+        {
+          value: 50,
+          label: '보통',
+        },
+        {
+          value: 75,
+          label: '잘함',
+        },
         {
           value: 100,
           label: '아주잘함',
@@ -49,16 +57,16 @@ function Database({ databaseValues, onDatabaseValueChange, selectedDatabases, se
         }
     
         return (
-          <div key={database} style={{ display: "flex", alignItems: "center" }}>
+          <div className='database_slidebars' key={database} style={{ display: "flex", alignItems: "center" }}>
             <div style={{ width: "200px", textAlign: "center" }}>
-                  <img src={`${imglink}${database}.png?alt=media`} alt="logo" width={30}/>
+                  <img src={`${imglink}${database}.png?alt=media`} alt="logo" width={30} height={30} style={{ marginRight: '5px' }}/>
                   {database === 'mysqlL' ? 'MYSQL' : null }
                   {database === 'mariadbL' ? 'MARIA DB' : null }
                   {database === 'mongodbL' ? 'MONGO DB' : null }
                   {database === 'schemaL' ? 'DB 설계' : null }
             </div>          
             <Slider aria-label="Custom marks"  value ={databaseValues[database]} step={null} 
-                    valueLabelDisplay="auto" marks={marks} onChange={(event) => handleSliderChange(event, database)} sx={{ width: "350px", marginLeft: "50px" }}/>
+                    valueLabelDisplay="auto" marks={marks} onChange={(event) => handleSliderChange(event, database)} sx={{ width: "600px", marginLeft: "50px" }}/>
           </div>
         );
       };
@@ -66,15 +74,15 @@ function Database({ databaseValues, onDatabaseValueChange, selectedDatabases, se
     
       return (
         <div>
-            <div className="database-buttons" style={{ width: "500px", display: "flex", justifyContent: "center", flexWrap: "wrap", margin: "0 auto" }}>
+            <div className="database-buttons">
                 {data.map(data => (
                     <Button className={selectedDatabases[data] ? "selected" : ""} key={data} variant="outlined" onClick={() => toggleDatabase(data)} style={{ margin: '8px' }}>
-                      <img src={`${imglink}${data}.png?alt=media`} alt="logo" width={30} style={{marginRight:"5px"}}/>
+                      <img src={`${imglink}${data}.png?alt=media`} alt="logo" width={30} height={30} style={{ marginRight: '5px' }}/>
                     {data.toUpperCase().replace('MYSQLL', 'MYSQL').replace('MARIADBL','MARIA DB').replace('MONGODBL','MONGO DB').replace('SCHEMAL','SCHEMA')}
                     </Button>
                 ))}
             </div>
-            <div className='database_slidebars'>
+            <div>
                 {data.map((database) => (renderDatabaseSlider(database)))}
             </div>
         </div>

@@ -1,6 +1,8 @@
 .category-table{
+    margin-top: 20px;
     background-color:paleturquoise;
     padding: 20px;
+    max-height: 570px;
 }
 .category-title{
     text-align : center;

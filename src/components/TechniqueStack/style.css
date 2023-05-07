@@ -1,16 +1,45 @@
+.language-buttons{
+  width: 700px;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin: 0 auto;
+}
+.database-buttons{
+  width: 700px;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin: 0 auto;
+}
+.framework-buttons{
+  width: 700px;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin: 0 auto;
+}
 .framework-buttons button.selected {
-    background-color:deepskyblue;
-    border-color:deepskyblue;
-    color: #fff;
-  }
-  .language-buttons button.selected {
-    background-color: deepskyblue;
-    border-color: deepskyblue;
-    color: #fff;
-  }
-  
-  .database-buttons button.selected {
-    background-color: deepskyblue;
-    border-color: deepskyblue;
-    color: #fff;
-  }
+  background-color:deepskyblue;
+  border-color:deepskyblue;
+  color: #fff;
+}
+.language-buttons button.selected {
+  background-color: deepskyblue;
+  border-color: deepskyblue;
+  color: #fff;
+}
+.database-buttons button.selected {
+  background-color: deepskyblue;
+  border-color: deepskyblue;
+  color: #fff;
+}
+.language_slidebars{
+  margin-top: 10px;
+}
+.framework_slidebars{
+  margin-top: 10px;
+}
+.database_slidebars{
+  margin-top: 10px;
+}
