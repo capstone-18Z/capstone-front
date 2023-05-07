@@ -2,6 +2,7 @@ import React from "react";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button, Dialog } from "@mui/material";
+import { ReactComponent as Hansung } from "../../assets/images/hansungmating.svg";
 import "./header.css";
 import Login from "../Login";
 import SignUp from "../SignUp";
@@ -47,14 +48,32 @@ function Header() {
     navigate("/");
   };
 
+  const [scrollPosition, setScrollPosition] = useState(0);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const currentScrollPosition = window.scrollY || document.documentElement.scrollTop;
+      if (currentScrollPosition !== scrollPosition) {
+        setScrollPosition(currentScrollPosition);
+      }
+    };
+  
+    window.addEventListener('scroll', handleScroll);
+  
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      console.log(scrollPosition)
+    };
+  }, [scrollPosition]);
+
   return (
-    <header>
+    <header className={scrollPosition < 300 ? "original_header" : "change_header"}>
       <h2
         onClick={(e) => {
-          navigate("/main");
+          navigate("/");
         }}
       >
-        한성메이팅
+        <Hansung/>
       </h2>
       <nav>
         <ul>

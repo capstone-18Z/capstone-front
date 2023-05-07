@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Button, IconButton ,Slider  } from "@mui/material";
+import "./style.css"
 function Framework({ frameworkValues, onFrameworkValueChange ,selectedFrameworks, setSelectedFrameworks}) {   
   
   const imglink = "https://firebasestorage.googleapis.com/v0/b/caps-1edf8.appspot.com/o/langIcon%2F";
@@ -62,9 +63,9 @@ function Framework({ frameworkValues, onFrameworkValueChange ,selectedFrameworks
     
       return (
         <div>
-        <div style={{ width: "500px", display: "flex", justifyContent: "center", flexWrap: "wrap", margin: "0 auto" }}>
+        <div className="framework-buttons" style={{ width: "500px", display: "flex", justifyContent: "center", flexWrap: "wrap", margin: "0 auto" }}>
           {data.map(data => (
-            <Button key={data} variant="outlined" onClick={() => toggleFramework(data)} style={{ margin: '8px' }}>
+            <Button className={selectedFrameworks[data] ? "selected" : ""} key={data} variant="outlined" onClick={() => toggleFramework(data)} style={{ margin: '8px' }}>
              <img src={`${imglink}${data}.png?alt=media`} alt="logo" width={30} style={{marginRight:"5px"}}/>
               {data.toUpperCase().replace('TDMAX', '3DMAX')}
             </Button>

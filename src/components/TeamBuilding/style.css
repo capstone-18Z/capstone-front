@@ -1,9 +1,20 @@
 .teambuildingform {
   width: 100%;
-    background-color: aliceblue;
-  }
+  background-color: aliceblue;
+  
+}
 .team_form {  
+  padding: 30px;
   width: 1000px;
   background-color: white;
   margin: auto;
+}
+.team_row {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+.team_item{
+  width: 50%; 
+  margin-bottom: 10px;
 }

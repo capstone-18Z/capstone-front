@@ -43,6 +43,7 @@ function TeamBuilding() {
 
     const [inputs, setInputs] = useState({
         //프로젝트 제목, 목적 데이터 관리
+        teamname:"",
         title: "",
         category : "",
         field: "",
@@ -56,7 +57,7 @@ function TeamBuilding() {
         console.log(inputs);
     },[inputs.category])
     
-    const {wantTeamMemberCount, title,category,field,sub ,createDate, updateDate} = inputs;	//비구조화 할당
+    const {wantTeamMemberCount, teamname,title,category,field,sub ,createDate, updateDate} = inputs;	//비구조화 할당
     const onChange = (e) => {
         const {name, value} = e.target;
         const nextInputs = {
@@ -198,34 +199,31 @@ function TeamBuilding() {
     return (
         <div className="teambuildingform">
             <div className="team_form">            
-            <h1>팀 빌딩 폼</h1>            
+            <h1>새 팀 등록</h1>  
+            <hr/>          
             
             <form name="team-form" onSubmit={PostRequest}>
-                <h2>프로젝트</h2>
-                
-                <TextField                            
+                <h3>프로젝트 기본 정보를 입력해주세요.</h3>
+                <div className="team_row">
+                <div className="team_item">
+                    <label>
+                        <h3>팀 이름</h3>
+                    </label>
+                    <TextField                            
                     required
-                    label="프로젝트 제목"
-                    value={title}                    
-                    name="title"
-                    variant="standard"
+                    label="팀 이름을 입력해주세요"
+                    value={teamname}                    
+                    name="teamname"
+                    variant="outlined"
                     onChange={onChange}
-                />                   
-                
-                <ToastEditor
-                    previewStyle="vertical"
-                    hideModeSwitch={true}
-                    language="ko-KR"
-                    initialEditType="wysiwyg"     
-                    ref={editorRef}
-                    onChange={DetailOnChange}                       
-                />   
-                
-                <MyDropzone uploadedFiles={uploadedFiles} setUploadedFiles={setUploadedFiles}/>
-                
-                <div style={{ display: 'flex' }}>
-                    <h3>팀 빌딩 목적</h3>
-                    <Select name="category" value={category} label="모집 인원 수" onChange={onChange}>
+                    style={{ width: '90%' }}
+                    />   
+                </div>
+                <div className="team_item">
+                    <label>
+                        <h3>팀 빌딩 목적</h3>
+                    </label>                    
+                    <Select style={{ width: '90%' }} name="category" value={category} label="모집 인원 수" onChange={onChange}>
                         <MenuItem value={"개인 팀프로젝트"}>개인 팀프로젝트</MenuItem>
                         <MenuItem value={"공모전 및 대회"}>공모전 및 대회</MenuItem>
                         <MenuItem value={"캡스톤 디자인"}>캡스톤 디자인</MenuItem>
@@ -235,34 +233,41 @@ function TeamBuilding() {
 
                 
                 {category === "과목 팀프로젝트" ? (
-                <div style={{ display: 'flex' }}>
-                    <h3>과목</h3>
-                    <Autocomplete
-                        disablePortal
-                        id="combo-box-demo"
-                        options={subjectList}
-                        sx={{ width: 300 }}
-                        onChange={onChangeAuto}
-                        name="field"
-                        renderInput={(params) => <TextField {...params} label="과목" />}
-                    />
-                    <h3>분반</h3>
-                    <Select name="sub" value={sub} label="분반 선택" onChange={onChange}>
-                        <MenuItem value={"A"}>A</MenuItem>
-                        <MenuItem value={"B"}>B</MenuItem>
-                        <MenuItem value={"C"}>C</MenuItem>
-                        <MenuItem value={"D"}>D</MenuItem>   
-                        <MenuItem value={"E"}>E</MenuItem>
-                        <MenuItem value={"7"}>7</MenuItem>      
-                        <MenuItem value={"8"}>8</MenuItem>    
-                        <MenuItem value={"N"}>N</MenuItem>   
-                        <MenuItem value={"O"}>O</MenuItem>   
-                    </Select>
-                </div>
+                    <>
+                    <div className="team_item" > 
+                        <label>
+                            <h3>과목</h3>
+                        </label>
+                        <Autocomplete
+                            style={{ width: '90%' }}
+                            disablePortal
+                            id="combo-box-demo"
+                            options={subjectList}
+                            sx={{ width: 300 }}
+                            onChange={onChangeAuto}
+                            name="field"
+                            renderInput={(params) => <TextField {...params} label="과목" />}
+                        />
+                    </div>
+                    <div className="team_item">
+                        <h3>분반</h3>
+                        <Select style={{ width: '90%' }} name="sub" value={sub} label="분반 선택" onChange={onChange}>
+                            <MenuItem value={"A"}>A</MenuItem>
+                            <MenuItem value={"B"}>B</MenuItem>
+                            <MenuItem value={"C"}>C</MenuItem>
+                            <MenuItem value={"D"}>D</MenuItem>   
+                            <MenuItem value={"E"}>E</MenuItem>
+                            <MenuItem value={"7"}>7</MenuItem>      
+                            <MenuItem value={"8"}>8</MenuItem>    
+                            <MenuItem value={"N"}>N</MenuItem>   
+                            <MenuItem value={"O"}>O</MenuItem>   
+                        </Select>
+                    </div>                
+                </>
                 ) : (
-                    <div style={{ display: 'flex' }}>
+                    <div className="team_item">
                     <h3>역할 선택</h3>
-                    <Select name="field" value={field} label="역할 선택" onChange={onChange}>
+                    <Select style={{ width: '90%' }} name="field" value={field} label="역할 선택" onChange={onChange}>
                         <MenuItem value={"프론트엔드"}>프론트엔드</MenuItem>
                         <MenuItem value={"백엔드"}>백엔드</MenuItem>
                         <MenuItem value={"상관없음"}>상관없음</MenuItem> 
@@ -270,9 +275,10 @@ function TeamBuilding() {
                     </div>
                 )}
                
-                <div style={{ display: 'flex' }}>
+                <div className="team_item">
                     <h3>모집 인원</h3>
                     <Select
+                        style={{ width: '90%' }}
                         name="wantTeamMemberCount"
                         value={wantTeamMemberCount}
                         label="모집 인원 수"
@@ -286,7 +292,10 @@ function TeamBuilding() {
                         <MenuItem value={5}>5</MenuItem>
                     </Select> 
                 </div>
+                </div>
 
+                <h3>요구 사항</h3>
+                <hr/>
                 <div className="team-lang-box" style={{  justifyContent: 'center' }}>                       
                     <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                         <h3>LANGUAGE</h3>    
@@ -301,6 +310,29 @@ function TeamBuilding() {
                         <Database databaseValues={teamDatabase} onDatabaseValueChange={handleTeamDatabaseChange} selectedDatabases={selectedDatabases} setSelectedDatabases={setSelectedDatabases}/>         
                     </Box>
                 </div>  
+                <h3>프로젝트에 대해 소개 시켜주세요.</h3>
+                <hr/>       
+                <p>제목</p>
+                <TextField                            
+                    required
+                    label="글 제목을 입력해주세요"
+                    value={title}                    
+                    name="title"
+                    variant="outlined"
+                    onChange={onChange}
+                    style={{ width: '100%' }}
+                /> 
+                <h3>상세 소개</h3>
+                <ToastEditor
+                    previewStyle="vertical"
+                    hideModeSwitch={true}
+                    language="ko-KR"
+                    initialEditType="wysiwyg"     
+                    ref={editorRef}
+                    onChange={DetailOnChange}                       
+                />   
+                
+                <MyDropzone uploadedFiles={uploadedFiles} setUploadedFiles={setUploadedFiles}/>
 
                 
                 <div style={{ display: "flex", justifyContent: "flex-end" }}>

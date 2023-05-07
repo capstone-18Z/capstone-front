@@ -1,0 +1,16 @@
+.framework-buttons button.selected {
+    background-color:deepskyblue;
+    border-color:deepskyblue;
+    color: #fff;
+  }
+  .language-buttons button.selected {
+    background-color: deepskyblue;
+    border-color: deepskyblue;
+    color: #fff;
+  }
+  
+  .database-buttons button.selected {
+    background-color: deepskyblue;
+    border-color: deepskyblue;
+    color: #fff;
+  }

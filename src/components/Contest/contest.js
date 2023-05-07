@@ -4,6 +4,8 @@ import { ContestCard } from "../ContestCard/contestCard.js"
 import {Link} from "react-router-dom";
 import {useSearchParams} from "react-router-dom";
 import { Pagination } from "@mui/material";
+import { motion } from "framer-motion";
+import { FaSearch } from 'react-icons/fa'
 import "./contest.css";
 
 function Contest() {
@@ -61,6 +63,16 @@ function Contest() {
             console.log(obj); setPage_maxcount(obj.state);})
         }              
     }, []);
+
+    const handleKeyDown = (event) => {
+        const key = event.code;
+        switch(key){
+            case 'Enter':
+                searchContest();
+            break;
+            default:
+        }
+    }
     
     //삭제할때 teams/{team.id}/delete 이렇게 post로 보내면 삭제됨
     //``역따음표 사이에 값넣기
@@ -77,17 +89,27 @@ function Contest() {
           minWidth: 200,
         },
       };
-
+      
     return (
         <div className='contest_list'>
-            <input
-            type="text"
-            placeholder={search_string==null ? "공모전을 검색해보세요. ":search_string}
-            className="search_bar"
-            name="searchText"
-            onChange={searchBarOnChange}
-            />
-            <button onClick={searchContest}>고우</button>
+            <div className='contest_search'>
+                <p className='contest_search_title'>
+                    공모전 검색
+                </p>
+                <div class="search-form">
+                    <input
+                    type="text"
+                    placeholder={search_string==null ? "공모전을 검색해보세요. ":search_string}
+                    className="search_bar"
+                    name="searchText"
+                    onChange={searchBarOnChange}
+                    onKeyDown={handleKeyDown}
+                    />
+                    <button class="search-button" onClick={searchContest}>
+                        <FaSearch/>
+                    </button>
+                </div>
+            </div>
             <h3>카테고리</h3>
             <p>팀원 모집중</p>
             {page_number}페이지
@@ -95,12 +117,23 @@ function Contest() {
             
             <div className="card-container">          
                 {contestList && contestList.map(contest => (
+                    <motion.div
+                    initial={{ opacity: 0.2 }}
+                    whileInView={{
+                      opacity: 1,
+                      transition: { delay: 0.1 }
+                    }}
+                    whileHover={{
+                      scale: 1.12,
+                      transition: { type: "spring", stiffness: 400, damping: 10 }
+                    }}>
                     <div key={contest.cid} className="card_contest" sx={{ ...cardStyle, ...mediaQueryStyle }}>                    
                         <ContestCard contest={contest} />
                     </div>
+                    </motion.div>
                     ))}
             </div>
-            <div class="page">
+            <div className="page">
             <Pagination page={Number(searchParams.get("page"))} count={page_maxcount} size="large" 
              onChange={(e, value) => {
                 search === "" ? 
@@ -111,7 +144,6 @@ function Contest() {
               }}
             />
             </div>
-            
         </div>
     );
             

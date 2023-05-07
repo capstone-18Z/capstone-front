@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Button, IconButton ,Slider  } from "@mui/material";
+import "./style.css"
 
 function Database({ databaseValues, onDatabaseValueChange, selectedDatabases, setSelectedDatabases }) {    
     
@@ -65,9 +66,9 @@ function Database({ databaseValues, onDatabaseValueChange, selectedDatabases, se
     
       return (
         <div>
-            <div style={{ width: "500px", display: "flex", justifyContent: "center", flexWrap: "wrap", margin: "0 auto" }}>
+            <div className="database-buttons" style={{ width: "500px", display: "flex", justifyContent: "center", flexWrap: "wrap", margin: "0 auto" }}>
                 {data.map(data => (
-                    <Button key={data} variant="outlined" onClick={() => toggleDatabase(data)} style={{ margin: '8px' }}>
+                    <Button className={selectedDatabases[data] ? "selected" : ""} key={data} variant="outlined" onClick={() => toggleDatabase(data)} style={{ margin: '8px' }}>
                       <img src={`${imglink}${data}.png?alt=media`} alt="logo" width={30} style={{marginRight:"5px"}}/>
                     {data.toUpperCase().replace('MYSQLL', 'MYSQL').replace('MARIADBL','MARIA DB').replace('MONGODBL','MONGO DB').replace('SCHEMAL','SCHEMA')}
                     </Button>

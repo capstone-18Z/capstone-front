@@ -155,7 +155,7 @@ function Team() {
                         ))}
                 </div>
             </div>
-            <div class="page">
+            <div className="page">
             <Pagination page={page} count={page_maxcount} size="large" 
              onChange={(e, value) => {
                 setPage(value);
