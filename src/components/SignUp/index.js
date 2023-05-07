@@ -66,9 +66,9 @@ function SignUp({ onClose, onLoginClick }) {
       axios.get(`${process.env.REACT_APP_API_URL}/member/check_email/${signUpInfo.email}/exists`).then((response) => {
         console.log(response.data);
         if (response.data === true) {
-          setAlertNum(3);
-        } else {
           setAlertNum(4);
+        } else {
+          setAlertNum(3);
         }
       });
     } else if (value === "nickname") {
@@ -77,9 +77,9 @@ function SignUp({ onClose, onLoginClick }) {
         .then((response) => {
           console.log(response.data);
           if (response.data === true) {
-            setAlertNum(5);
-          } else {
             setAlertNum(6);
+          } else {
+            setAlertNum(5);
           }
         });
     }
@@ -166,6 +166,7 @@ function SignUp({ onClose, onLoginClick }) {
                 padding: "15px",
                 marginTop: "16px",
               }}
+              disabled={validateEmail() !== ""}
             >
               중복확인
             </Button>
@@ -177,6 +178,7 @@ function SignUp({ onClose, onLoginClick }) {
                 padding: "15px",
                 marginTop: "24px",
               }}
+              disabled={validateNickname() !== ""}
             >
               중복확인
             </Button>
@@ -184,11 +186,15 @@ function SignUp({ onClose, onLoginClick }) {
         </div>
         <div>{showAlert()}</div>
         <div className="signup-button">
-          <Button variant="contained" onClick={onClick}>
-            회원가입 완료
+          <Button
+            variant="contained"
+            onClick={onClick}
+            disabled={validateEmail() !== "" || validateNickname() !== "" || validatePassword() !== ""}
+          >
+            회원가입
           </Button>
           <div className="goLogin-button">
-            <p>이미 계정이 있으신가요?</p>
+            <p className="text">이미 계정이 있으신가요?</p>
             <Button variant="text" onClick={handleLoginClick}>
               로그인
             </Button>

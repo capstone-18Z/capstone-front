@@ -1,4 +1,4 @@
-import { TextField, Button, Select, MenuItem, Box, FormControl, InputLabel } from "@mui/material";
+import { TextField, Button, Select, MenuItem, Box, FormControl, InputLabel, Alert } from "@mui/material";
 import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import "./style.css";
@@ -43,6 +43,8 @@ function EditProfile({ fetchData, payload }) {
   const [showImg, setShowImg] = useState(memberData.profileImageUrl);
   const [imgFile, setImgFile] = useState(null);
   const imgRef = useRef();
+  const [alertNum, setAlertNum] = useState(0);
+  const [alertMessage, setAlertMessage] = useState("");
   const [memberLang, setMemberLang] = useState({
     c: memberData.memberLang.c,
     cpp: memberData.memberLang.cpp,
@@ -235,12 +237,70 @@ function EditProfile({ fetchData, payload }) {
       setSubjectToggle((e) => !e);
     }
     const hasOtherKeywords = memberData.memberKeywords.some((keyword) =>
-      ["캡스톤 디자인", "사이드 프로젝트", "공모전 및 대회"].includes(keyword.category)
+      ["캡스톤 디자인", "개인 팀프로젝트", "공모전 및 대회"].includes(keyword.category)
     );
     if (hasOtherKeywords) {
       setFieldToggle((e) => !e);
     }
   }, [memberData.memberKeywords]);
+
+  const validateEmail = () => {
+    const emailRegex = /\S+@\S+\.\S+/;
+    if (inputs.email === "") {
+      return "";
+    } else if (!emailRegex.test(inputs.email)) {
+      return "유효한 이메일 주소를 입력해주세요.";
+    }
+    return "";
+  };
+
+  const validateGitHubLink = () => {
+    const githubRegex = /^(https?:\/\/)?(www\.)?github\.com\/[a-zA-Z0-9_-]+$/;
+    if (inputs.github === "") {
+      return "";
+    } else if (!githubRegex.test(inputs.github)) {
+      return "유효한 GitHub 프로필 링크를 입력해주세요.";
+    }
+    return "";
+  };
+
+  const checkOverlap = (value) => {
+    //e.preventDefault();
+    if (value === "nickname") {
+      axios
+        .get(`${process.env.REACT_APP_API_URL}/member/check_nickname/${memberData.nickname}/exists`)
+        .then((response) => {
+          console.log(response.data);
+          if (response.data === true) {
+            setAlertNum(2);
+          } else {
+            setAlertNum(1);
+          }
+        });
+    }
+  };
+
+  useEffect(() => {
+    switch (alertNum) {
+      case 1:
+        setAlertMessage("사용 가능한 닉네임입니다.");
+        break;
+      case 2:
+        setAlertMessage("이미 존재하는 닉네임입니다. 다른 닉네임을 입력해주세요.");
+        break;
+      case 5:
+        setAlertMessage("");
+        break;
+    }
+  }, [alertNum, alertMessage]);
+
+  const showAlert = () => {
+    if (alertNum === 2 && alertNum !== 0) {
+      return <Alert severity="error">{alertMessage}</Alert>;
+    } else if (alertNum === 1) {
+      return <Alert severity="success">{alertMessage}</Alert>;
+    } else return;
+  };
 
   return (
     <div className="profile-box">
@@ -248,15 +308,25 @@ function EditProfile({ fetchData, payload }) {
         <div className="inline-box">
           <div>
             <div className="nickname-box">
-              <InputLabel shrink>닉네임</InputLabel>
-              <TextField
-                size="small"
-                sx={{ marginBottom: "10px" }}
-                placeholder="닉네임을 입력해주세요"
-                name="nickname"
-                value={inputs.nickname}
-                onChange={setInputs}
-              />
+              <div>
+                <InputLabel shrink>닉네임</InputLabel>
+                <TextField
+                  size="small"
+                  sx={{ marginBottom: "10px" }}
+                  placeholder="닉네임을 입력해주세요"
+                  name="nickname"
+                  value={inputs.nickname}
+                  onChange={setInputs}
+                />
+                <Button
+                  onClick={(e) => {
+                    checkOverlap("nickname");
+                  }}
+                >
+                  중복확인
+                </Button>
+              </div>
+              <div>{showAlert()}</div>
               <InputLabel shrink>백준 닉네임</InputLabel>
               <TextField
                 size="small"
@@ -276,6 +346,7 @@ function EditProfile({ fetchData, payload }) {
                 name="email"
                 value={inputs.email}
                 onChange={setInputs}
+                disabled
               />
             </div>
             <div className="grade-box">
@@ -298,16 +369,26 @@ function EditProfile({ fetchData, payload }) {
                 name="github"
                 value={inputs.github}
                 onChange={setInputs}
+                helperText={validateGitHubLink()}
+                error={validateGitHubLink() !== ""}
               />
             </div>
           </div>
-          <div className="profile-img">
+          <div className="profile-img-box">
             <div>
-              <div>
-                <img src={showImg} alt="" style={{ width: "200px", height: "200px" }}></img>
-              </div>
-              <input type="file" accept="image/*" onChange={handleImageUrlChange} ref={imgRef} />
+              <label htmlFor="chooseFile" className="image-button-label">
+                <p className="profile-title">프로필 이미지</p>
+                <img src={showImg} alt="" className="profile-img"></img>
+              </label>
             </div>
+            <input
+              id="chooseFile"
+              className="image-button"
+              type="file"
+              accept="image/*"
+              onChange={handleImageUrlChange}
+              ref={imgRef}
+            />
           </div>
         </div>
         <div className="keyword-box">
@@ -323,8 +404,8 @@ function EditProfile({ fetchData, payload }) {
             <Button variant="outlined" sx={{ margin: "10px" }} value="공모전 및 대회" onClick={onChange3}>
               공모전 및 대회
             </Button>
-            <Button variant="outlined" sx={{ margin: "10px" }} value="사이드 프로젝트" onClick={onChange3}>
-              사이드 프로젝트
+            <Button variant="outlined" sx={{ margin: "10px" }} value="개인 팀프로젝트" onClick={onChange3}>
+              개인 팀프로젝트
             </Button>
           </div>
         </div>
@@ -375,15 +456,30 @@ function EditProfile({ fetchData, payload }) {
         <div className="team-lang-box" style={{ justifyContent: "center" }}>
           <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
             <h3>LANGUAGE</h3>
-            <Languages languageValues={memberLang} onLanguageValueChange={handleLanguageValueChange} selectedLanguages={selectedLanguages} setSelectedLanguages={setSelectedLanguages} />
+            <Languages
+              languageValues={memberLang}
+              onLanguageValueChange={handleLanguageValueChange}
+              selectedLanguages={selectedLanguages}
+              setSelectedLanguages={setSelectedLanguages}
+            />
           </Box>
           <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
             <h3>FRAMEWORK & PLATFORM</h3>
-            <Framework frameworkValues={memberFramework} onFrameworkValueChange={handleFrameworkValueChange} selectedFrameworks={selectedFrameworks} setSelectedFrameworks={setSelectedFrameworks} />
+            <Framework
+              frameworkValues={memberFramework}
+              onFrameworkValueChange={handleFrameworkValueChange}
+              selectedFrameworks={selectedFrameworks}
+              setSelectedFrameworks={setSelectedFrameworks}
+            />
           </Box>
           <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
             <h3>DATABASE</h3>
-            <Database databaseValues={memberDB} onDatabaseValueChange={handleDatabaseValueChange} selectedDatabases={selectedDatabases} setSelectedDatabases={setSelectedDatabases} />
+            <Database
+              databaseValues={memberDB}
+              onDatabaseValueChange={handleDatabaseValueChange}
+              selectedDatabases={selectedDatabases}
+              setSelectedDatabases={setSelectedDatabases}
+            />
           </Box>
         </div>
         <Button sx={{ marginTop: "20px" }} variant="outlined" onClick={onChange2}>

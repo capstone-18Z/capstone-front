@@ -8,6 +8,8 @@ import { useState, useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
 import { Pagination } from "@mui/material";
 import axios from "axios";
+import { FaSearch } from "react-icons/fa";
+import { motion } from "framer-motion";
 
 function Members() {
   const navigate = useNavigate();
@@ -74,41 +76,74 @@ function Members() {
   };
 
   console.log(members);
+  const handleKeyDown = (event) => {
+    const key = event.code;
+    switch (key) {
+      case "Enter":
+        searchMember();
+        break;
+      default:
+    }
+  };
 
   return (
     <div>
-      <div className="members-title-box">
-        <h1>한성 메이트</h1>
-        <p className="subtitle">추천 외에 다른 메이트들도 찾아보세요!</p>
+      <div className="contest_search">
+        <p className="contest_search_title">메이트 검색</p>
+        <div className="search-form">
+          <input
+            type="text"
+            placeholder={searchNickname.nickname === "" ? "닉네임으로 검색해보세요. " : searchNickname}
+            className="search_bar"
+            name="nickname"
+            value={searchNickname.nickname}
+            onChange={setSearchNickname}
+            onKeyDown={handleKeyDown}
+          />
+          <button class="search-button" onClick={searchMember}>
+            <FaSearch />
+          </button>
+        </div>
       </div>
-      <form className="search-box">
-        <TextField
-          placeholder="닉네임으로 검색"
-          variant="outlined"
-          size="small"
-          name="nickname"
-          value={searchNickname.nickname}
-          onChange={setSearchNickname}
-        />
-        <Button variant="contained" sx={{ marginLeft: "5px" }} onClick={searchMember}>
-          검색
-        </Button>
-      </form>
       <div className="member-card-container">
-        {members.length > 0 ? (
-          Array.isArray(members) ? (
-            members.map((member) => (
-              <div key={member.id}>
+        {Array.isArray(members) && members.length > 0 ? (
+          members.map((member) => (
+            <motion.div
+              initial={{ opacity: 0.2 }}
+              whileInView={{
+                opacity: 1,
+                transition: { delay: 0.1 },
+              }}
+              whileHover={{
+                scale: 1.12,
+                transition: { type: "spring", stiffness: 400, damping: 10 },
+              }}
+              key={member.id}
+            >
+              <div>
                 <MemberCard payload={member} fetchData={fetchData} />
               </div>
-            ))
-          ) : (
-            <div key={members.id}>
+            </motion.div>
+          ))
+        ) : members && Object.keys(members).length > 0 ? (
+          <motion.div
+            initial={{ opacity: 0.2 }}
+            whileInView={{
+              opacity: 1,
+              transition: { delay: 0.1 },
+            }}
+            whileHover={{
+              scale: 1.12,
+              transition: { type: "spring", stiffness: 400, damping: 10 },
+            }}
+            key={members.id}
+          >
+            <div>
               <MemberCard payload={members} fetchData={fetchData} />
             </div>
-          )
+          </motion.div>
         ) : (
-          <p>No members found.</p>
+          <Alert severity="info">검색결과 0 건</Alert>
         )}
       </div>
       <Pagination

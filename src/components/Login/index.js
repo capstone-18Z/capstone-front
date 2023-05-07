@@ -68,7 +68,7 @@ function Login({ onClose, onSignupClick }) {
           localStorage.setItem("refresh-token", response.data.data.token.refreshToken);
           localStorage.setItem("login-token", response.data.data.token.accessToken);
           localStorage.setItem("nickname", response.data.data.member.nickname);
-          localStorage.setItem("email", response.data.data.member.email);
+          localStorage.setItem("userId", response.data.data.member.id);
           setInterval(onSilentRefresh, 1200000); // 20분 후 refreshtoken 갱신
           onClose();
         }
@@ -120,7 +120,7 @@ function Login({ onClose, onSignupClick }) {
           </Button>
         </div>
         <div className="gosignup-button" onClick={handleSignupClick}>
-          <p>계정이 없으신가요?</p>
+          <p className="text">계정이 없으신가요?</p>
           <Button>회원가입</Button>
         </div>
       </form>

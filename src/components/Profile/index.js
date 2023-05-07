@@ -11,14 +11,15 @@ import {
   Select,
   MenuItem,
   DialogActions,
-  IconButton,
 } from "@mui/material";
+import EmailIcon from "@mui/icons-material/Email";
+import GitHubIcon from "@mui/icons-material/GitHub";
+import SchoolIcon from "@mui/icons-material/School";
+import EmojiEventsIcon from "@mui/icons-material/EmojiEvents";
 import { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import useInput from "../../hooks/useInput";
-
-const imglink = "https://firebasestorage.googleapis.com/v0/b/caps-1edf8.appspot.com/o/langIcon%2F";
 
 function Profile({ payload }) {
   const navigate = useNavigate();
@@ -43,8 +44,9 @@ function Profile({ payload }) {
   };
 
   useEffect(() => {
-    if (location.state?.userId !== localStorage.getItem("userId")) {
+    if (location.state?.userId !== localStorage.getItem("userId") && location.state?.userId !== undefined) {
       console.log("실행");
+      console.log(location.state?.userId);
       getAnotherProfile(location.state?.userId);
     } else {
       return;
@@ -89,7 +91,10 @@ function Profile({ payload }) {
     if (grade !== 0) {
       return (
         <>
-          <h5 className="grade-box">학년: {grade}</h5>
+          <div className="profile-grade-box">
+            <SchoolIcon />
+            <p>{grade}학년</p>
+          </div>
         </>
       );
     }
@@ -99,7 +104,10 @@ function Profile({ payload }) {
     if (git !== null && git !== "") {
       return (
         <>
-          <h5 className="githublink-box">깃허브 링크: {git}</h5>
+          <div className="profile-githublink-box">
+            <GitHubIcon />
+            <p>{git}</p>
+          </div>
         </>
       );
     }
@@ -112,11 +120,10 @@ function Profile({ payload }) {
       memberData.solvedNickname !== null
     ) {
       return (
-        <>
-          <h5 className="bj-nickname">백준 닉네임: {memberData.solvedNickname}</h5>
-          <h5 className="bj-tier">백준 티어: {getRankInfo(memberData.solvedTier)}</h5>
-          <h5 className="bj-solvedcount">백준 푼 문제: {memberData.solvedCount}</h5>
-        </>
+        <div className="bj-box">
+          <EmojiEventsIcon></EmojiEventsIcon>
+          <p>Baekjoon / {getRankInfo(memberData.solvedTier)}</p>
+        </div>
       );
     } else return;
   };
@@ -146,8 +153,11 @@ function Profile({ payload }) {
     <div className="profile-box">
       <div className="profile-top-box">
         <div className="profile-info-box">
-          <h3 className="nickname-box">닉네임: {memberData.nickname}</h3>
-          <h5 className="email-box">이메일: {memberData.email}</h5>
+          <h2 className="profile-nickname-box">{memberData.nickname} 님</h2>
+          <div className="profile-email-box">
+            <EmailIcon />
+            <p>{memberData.email}</p>
+          </div>
           {checkGit(memberData.github)}
           {checkGrade(memberData.grade)}
           {checkSolvedNickname(memberData)}
@@ -158,10 +168,11 @@ function Profile({ payload }) {
       </div>
       <div className="profile-bottom-box">
         <div className="wantteam-box">
-          <h4>원하는 팀</h4>
+          <p>원하는 팀</p>
           {memberData.memberKeywords.length === 0 && <Chip label="미작성" color="secondary" variant="outlined" />}
           {memberData.memberKeywords.map((keyword) => (
             <Chip
+              sx={{ marginRight: "5px" }}
               label={`${keyword.category}/${
                 keyword.field === "1"
                   ? "프론트엔드"
@@ -176,16 +187,28 @@ function Profile({ payload }) {
             />
           ))}
         </div>
-        <div>
-          <h4>잘 다뤄요!</h4>
+        <div className="good-box">
+          <p>잘 다뤄요!</p>
           {[memberData.memberLang, memberData.memberFramework, memberData.memberDB]
             .flatMap((obj) =>
               Object.entries(obj)
                 .filter(([key, value]) => value === 100)
                 .map(([key, value]) => (
-                  <IconButton disabled>
-                    <img src={`${imglink}${key}.png?alt=media`} alt="logo" width={30} style={{ marginRight: "5px" }} />
-                  </IconButton>
+                  <Chip
+                    sx={{ marginRight: "5px" }}
+                    key={key}
+                    label={`${key
+                      .toUpperCase()
+                      .replace("MYSQLL", "MYSQL")
+                      .replace("MARIADBL", "MARIA DB")
+                      .replace("MONGODBL", "MONGO DB")
+                      .replace("SCHEMAL", "SCHEMA")
+                      .replace("TDMAX", "3DMAX")
+                      .replace("CS", "C#")
+                      .replace("CPP", "C++")}`}
+                    color="primary"
+                    variant="outlined"
+                  ></Chip>
                 ))
             )
             .concat(
@@ -194,16 +217,28 @@ function Profile({ payload }) {
               ) && <Chip label="미작성" color="secondary" variant="outlined" />
             )}
         </div>
-        <div>
-          <h4>써본적은 있지만 잘 다루진 못해요</h4>
+        <div className="soso-box">
+          <p>써본적은 있지만 잘 다루진 못해요</p>
           {[memberData.memberLang, memberData.memberFramework, memberData.memberDB]
             .flatMap((obj) =>
               Object.entries(obj)
                 .filter(([key, value]) => value === 50)
                 .map(([key, value]) => (
-                  <IconButton disabled>
-                    <img src={`${imglink}${key}.png?alt=media`} alt="logo" width={30} style={{ marginRight: "5px" }} />
-                  </IconButton>
+                  <Chip
+                    sx={{ marginRight: "5px" }}
+                    key={key}
+                    label={`${key
+                      .toUpperCase()
+                      .replace("MYSQLL", "MYSQL")
+                      .replace("MARIADBL", "MARIA DB")
+                      .replace("MONGODBL", "MONGO DB")
+                      .replace("SCHEMAL", "SCHEMA")
+                      .replace("TDMAX", "3DMAX")
+                      .replace("CS", "C#")
+                      .replace("CPP", "C++")}`}
+                    color="primary"
+                    variant="outlined"
+                  ></Chip>
                 ))
             )
             .concat(
@@ -213,7 +248,7 @@ function Profile({ payload }) {
             )}
         </div>
       </div>
-      <div>
+      <div className="editbutton-box">
         {buttonVisible && (
           <Button
             variant="contained"
@@ -231,8 +266,8 @@ function Profile({ payload }) {
             </Button>
             {myTeams?.data?.length > 0 ? (
               <Dialog open={open} onClose={handleDialogClose}>
-                <DialogTitle>팀 요청하기</DialogTitle>
-                <DialogContentText>요청할 팀을 골라주세요</DialogContentText>
+                <DialogTitle sx={{ width: "300px" }}>팀 요청하기</DialogTitle>
+                <DialogContentText sx={{ padding: "20px" }}>요청할 팀을 골라주세요</DialogContentText>
                 <FormControl sx={{ mt: 2, minWidth: 120 }}>
                   <InputLabel>팀</InputLabel>
                   <Select name="teamId" value={inputs.teamId} onChange={setInputs}>
@@ -248,8 +283,8 @@ function Profile({ payload }) {
               </Dialog>
             ) : (
               <Dialog open={open} onClose={handleDialogClose}>
-                <DialogTitle>팀 요청하기</DialogTitle>
-                <DialogContentText>팀이 없습니다.</DialogContentText>
+                <DialogTitle sx={{ width: "300px" }}>팀 요청하기</DialogTitle>
+                <DialogContentText sx={{ padding: "20px" }}>작성하신 팀이 없습니다.</DialogContentText>
                 <DialogActions>
                   <Button onClick={handleDialogClose}>Close</Button>
                 </DialogActions>
