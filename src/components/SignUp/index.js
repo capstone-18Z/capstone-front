@@ -16,6 +16,10 @@ function SignUp({ onClose, onLoginClick }) {
     nickname: "",
     password: "",
   });
+  const [codeInput, setCodeInput] = useInput({
+    code: "",
+  });
+  const [showCodeInput, setShowCodeInput] = useState(false);
 
   const validateEmail = () => {
     const emailRegex = /\S+@\S+\.\S+/;
@@ -63,12 +67,15 @@ function SignUp({ onClose, onLoginClick }) {
   const checkOverlap = (value) => {
     //e.preventDefault();
     if (value === "email") {
-      axios.get(`${process.env.REACT_APP_API_URL}/member/check_email/${signUpInfo.email}/exists`).then((response) => {
+      axios.post(`${process.env.REACT_APP_API_URL}/member/send-email/${signUpInfo.email}`).then((response) => {
         console.log(response.data);
-        if (response.data === true) {
-          setAlertNum(4);
-        } else {
+        if (response.data.state === 200) {
+          setShowCodeInput(true);
           setAlertNum(3);
+          setAlertMessage(response.data.message);
+        } else if (response.data.state === 100 || response.data.state === 101) {
+          setAlertNum(4);
+          setAlertMessage(response.data.message);
         }
       });
     } else if (value === "nickname") {
@@ -85,6 +92,21 @@ function SignUp({ onClose, onLoginClick }) {
     }
   };
 
+  const checkCode = () => {
+    axios
+      .post(`${process.env.REACT_APP_API_URL}/member/verify-email/${signUpInfo.email}?code=${codeInput.code}`)
+      .then((response) => {
+        console.log(response.data);
+        if (response.data.state === 200) {
+          setAlertNum(7);
+          setAlertMessage(response.data.message);
+        } else if (response.data.state === 100) {
+          setAlertNum(8);
+          setAlertMessage(response.data.message);
+        }
+      });
+  };
+
   useEffect(() => {
     switch (alertNum) {
       case 1:
@@ -94,16 +116,18 @@ function SignUp({ onClose, onLoginClick }) {
         setAlertMessage("회원가입에 실패하였습니다. 입력값을 확인해주세요.");
         break;
       case 3:
-        setAlertMessage("사용 가능한 이메일입니다.");
         break;
       case 4:
-        setAlertMessage("이미 존재하는 이메일입니다. 다른 이메일을 입력해주세요.");
         break;
       case 5:
         setAlertMessage("사용 가능한 닉네임입니다.");
         break;
       case 6:
         setAlertMessage("이미 존재하는 닉네임입니다. 다른 닉네임을 입력해주세요.");
+        break;
+      case 7:
+        break;
+      case 8:
         break;
       default:
         setAlertMessage("");
@@ -124,7 +148,7 @@ function SignUp({ onClose, onLoginClick }) {
       <h1 className="signup-title">회원가입</h1>
       <form>
         <div className="signup-text-box">
-          <div className="signup-text">
+          <div className="signup">
             <TextField
               margin="normal"
               label="이메일"
@@ -135,16 +159,65 @@ function SignUp({ onClose, onLoginClick }) {
               helperText={validateEmail()}
               error={validateEmail() !== ""}
             />
-            <TextField
-              margin="normal"
-              label="닉네임"
-              variant="outlined"
-              value={signUpInfo.nickname}
-              name="nickname"
-              onChange={setSignUpInfo}
-              helperText={validateNickname()}
-              error={validateNickname() !== ""}
-            />
+            <Button
+              onClick={(e) => {
+                checkOverlap("email");
+              }}
+              sx={{
+                padding: "15px",
+                marginTop: "16px",
+              }}
+              disabled={validateEmail() !== ""}
+            >
+              인증번호 받기
+            </Button>
+            {showCodeInput && (
+              <div className="signup-code">
+                <TextField
+                  margin="normal"
+                  label="인증코드"
+                  variant="outlined"
+                  value={codeInput.code}
+                  name="code"
+                  onChange={setCodeInput}
+                />
+                <Button
+                  onClick={(e) => {
+                    checkCode();
+                  }}
+                  sx={{
+                    padding: "15px",
+                    marginTop: "16px",
+                  }}
+                  disabled={validateNickname() !== ""}
+                >
+                  인증
+                </Button>
+              </div>
+            )}
+            <div className="signup-nickname">
+              <TextField
+                margin="normal"
+                label="닉네임"
+                variant="outlined"
+                value={signUpInfo.nickname}
+                name="nickname"
+                onChange={setSignUpInfo}
+                helperText={validateNickname()}
+                error={validateNickname() !== ""}
+              />
+              <Button
+                onClick={(e) => {
+                  checkOverlap("nickname");
+                }}
+                sx={{
+                  padding: "15px",
+                  marginTop: "16px",
+                }}
+              >
+                중복확인
+              </Button>
+            </div>
             <TextField
               label="비밀번호"
               margin="normal"
@@ -156,32 +229,6 @@ function SignUp({ onClose, onLoginClick }) {
               helperText={validatePassword()}
               error={validatePassword() !== ""}
             />
-          </div>
-          <div className="signup-checkbuttons">
-            <Button
-              onClick={(e) => {
-                checkOverlap("email");
-              }}
-              sx={{
-                padding: "15px",
-                marginTop: "16px",
-              }}
-              disabled={validateEmail() !== ""}
-            >
-              중복확인
-            </Button>
-            <Button
-              onClick={(e) => {
-                checkOverlap("nickname");
-              }}
-              sx={{
-                padding: "15px",
-                marginTop: "24px",
-              }}
-              disabled={validateNickname() !== ""}
-            >
-              중복확인
-            </Button>
           </div>
         </div>
         <div>{showAlert()}</div>

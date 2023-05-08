@@ -18,13 +18,12 @@
   display: flex;
   justify-content: center;
 }
+.signup {
+  margin-left: 90px;
+}
 .signup-text {
   text-align: right;
   width: 60%;
-}
-.signup-checkbuttons {
-  width: 20%;
-  text-align: left;
 }
 .login-button,
 .signup-button {
