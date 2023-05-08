@@ -49,7 +49,7 @@ function TeamBuilding() {
 
     const [inputs, setInputs] = useState({
         //프로젝트 제목, 목적 데이터 관리
-        teamname:"",
+        teamName:"",
         title: "",
         category : "",
         field: "",
@@ -63,7 +63,7 @@ function TeamBuilding() {
         console.log(inputs);
     },[inputs.category])
     
-    const {wantTeamMemberCount, teamname,title,category,field,sub ,createDate, updateDate} = inputs;	//비구조화 할당
+    const {wantTeamMemberCount, teamName,title,category,field,sub ,createDate, updateDate} = inputs;	//비구조화 할당
     const onChange = (e) => {
         const {name, value} = e.target;
         const nextInputs = {
@@ -218,8 +218,8 @@ function TeamBuilding() {
                     <TextField                            
                     required
                     label="팀 이름을 입력해주세요"
-                    value={teamname}                    
-                    name="teamname"
+                    value={teamName}                    
+                    name="teamName"
                     variant="outlined"
                     onChange={onChange}
                     style={{ width: '90%' }}

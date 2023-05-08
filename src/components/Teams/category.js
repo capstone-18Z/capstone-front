@@ -87,7 +87,12 @@ function Category({checkCategory,setCheckCategory, checkRule,setCheckRule,checkS
       setCheckSubject([]);
     }   
   }
-
+  useEffect(() => {
+    const categoryTable = document.querySelector('.category-table');
+    if (categoryTable !== null) {
+      categoryTable.style.height = checkCategory.includes("과목 팀프로젝트") ? '660px' : '470px';
+    }
+  }, [checkCategory]);
 
 
   return (
@@ -155,7 +160,7 @@ function Category({checkCategory,setCheckCategory, checkRule,setCheckRule,checkS
           
         </tr>        
         ))}
-        <Button onClick={categoryOnClick} variant="contained" sx={{ width: "200px" }}>필터 적용</Button>
+        <button className='filter-btn' onClick={categoryOnClick} variant="contained" sx={{ width: "200px" }}>필터 적용</button>
       </tbody>
     </table>
     </div>

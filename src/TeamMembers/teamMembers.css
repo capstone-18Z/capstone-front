@@ -1,0 +1,18 @@
+.teamMembers{
+    padding-top: 30px;
+}
+.teamMembers_container{
+    width: 1200px;
+    padding: 30px;
+    border-radius: 30px;
+    border: 1px solid;
+    height: 500px;
+}
+.teamMembers_title > * {
+    margin: 10px;
+}
+.teamMembers_body_top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}

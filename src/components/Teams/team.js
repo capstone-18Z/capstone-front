@@ -8,6 +8,7 @@ import {useNavigate} from "react-router-dom";
 import "./team.css";
 import Category from './category.js';
 import { FaSearch } from 'react-icons/fa'
+import ChatSetting from '../ChatSetting/chatSetting.js';
 
 function Team() {
     const refresh_token = localStorage.getItem("refresh-token");
@@ -158,7 +159,7 @@ function Team() {
                 </div>
         </div>
         <div className='team-body'>  
-        <Button onClick={onClick} variant="contained" sx={{ width: "245px" }}>팀원 모집 하기</Button>
+        <button className='team-make-btn' onClick={onClick}  >팀원 모집 하기</button>
             <div class="team-container">                
                 <Category checkCategory={checkCategory} setCheckCategory={setCheckCategory} checkRule={checkRule}
                     setCheckRule={setCheckRule} checkSubject={checkSubject} setCheckSubject={setCheckSubject} categoryOnClick={categoryOnClick} />
@@ -178,7 +179,8 @@ function Team() {
                 setPage(value);
               }}
             />            
-            </div>            
+            </div>
+            <ChatSetting/>          
         </div>
     );
             

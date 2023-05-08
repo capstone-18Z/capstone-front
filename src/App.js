@@ -1,7 +1,7 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import {useEffect} from "react";
 import axios from "axios";
-import MainPage from "./pages/MainPage";
+import Main from "./Main/main"
 import PostPage from "./pages/PostPage";
 import Header from "./components/Header/header"
 import MyPage from "./components/MyPage/mypage";
@@ -9,6 +9,7 @@ import ProfilePage from "./pages/ProfilePage";
 import ListPage from "./pages/ListPage";
 import "./App.css";
 import { createTheme, ThemeProvider } from '@mui/material';
+import ToTheTop from "./components/TotheTop/tothetop";
 
 const theme = createTheme({
   typography: {
@@ -51,13 +52,14 @@ function App() {
     <div className="App">
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<><Header /><MainPage /></>}></Route>
+          <Route path="/" element={<><Header /><Main /></>}></Route>
           <Route path="/mypage/*" element={<><Header/><MyPage /></>}></Route>
           <Route path="/profile/*" element={<><Header/><ProfilePage/></>}></Route>
           <Route path="/list/*" element={<><Header/><ListPage/></>}></Route>
           <Route path="/post/*" element={<><Header/><PostPage /></>}></Route>          
         </Routes>
       </BrowserRouter>
+      <ToTheTop/>
     </div>
     </ThemeProvider>
   );

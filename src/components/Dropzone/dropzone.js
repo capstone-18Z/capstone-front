@@ -29,7 +29,7 @@ function MyDropzone({uploadedFiles,setUploadedFiles}) {
   return (
     <div className="zone"  {...getRootProps()}>
       <input {...getInputProps()} />
-      <p>{isDragActive ? "프로필 이미지를 드래그 또는 클릭해서 넣으세요!" : "프로필 이미지를 더 드래그 또는 클릭해서 넣으세요!"}</p>
+      <p>{isDragActive ? "팀 이미지를 드래그 또는 클릭해서 넣으세요!" : "팀 이미지를 더 드래그 또는 클릭해서 넣으세요!"}</p>
       <ul>{fileList}</ul>
     </div>
   );

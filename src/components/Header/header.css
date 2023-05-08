@@ -1,60 +1,83 @@
-.original_header {
-  width: 100%;
-  height: 80px;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0px 50px;
+  background-color: #1a73e8; /* 변경된 색상 */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+header h2 {
+  cursor: pointer;
+  font-size: 28px;
+  color: #ffffff; /* 변경된 색상 */
+  font-weight: bold;
+}
+
+nav {
+  display: flex;
+}
+
+nav ul {
+  display: flex;
+  list-style-type: none;
+}
+
+nav ul li {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  position: sticky;
-  top: 0;
-  z-index: 10;
-  background-color: rgb(175, 211, 226);
-  color: rgb(9, 59, 100);
-  font: bold;
-  transition: 0.5s ease-out;
-}
-
-.change_header {
-  width: 100%;
-  height: 80px;
-  display: flex;
-  opacity: 0;
-  align-items: center;
-  justify-content: space-between;
-  position: sticky;
-  top: 0;
-  z-index: 10;
-  background-color: skyblue;
-  color: rgb(9, 59, 100);
-  font: bold;
-  box-shadow: 0px 1px 10px 10px #666;
-  transition: 0.5s ease-out;
-}
-
-header ul > li:hover{
-  color:gray;
-  transition: 0.5s ease-out;
-}
-header ul > li:not(:hover){
-  transition: 0.5s ease-out;
-}
-
-header > h2 {
-  margin-left: 40px;
+  margin-left: 20px;
   cursor: pointer;
 }
 
-header > nav {
-  width: 600px;
-  margin-right: 50px;
+nav ul li div {
+  position: relative;
+  font-size: 16px;
+  color: #ffffff; /* 변경된 색상 */
+  font-weight: 500;
+  padding: 6px 12px;
+  transition: all 0.3s;
 }
 
-header ul {
-  display: flex;
-  justify-content: space-between;
+nav ul li div:hover {
+  background-color: rgba(255, 255, 255, 0.2); /* 변경된 색상 */
+  border-radius: 6px;
 }
 
-header ul > li {
-  display: flex;
-  align-items: center;
-  cursor: pointer;
+nav ul li div::before {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 2px;
+  background-color: #ffffff; /* 변경된 색상 */
+  bottom: 0;
+  left: 0;
+  transition: width 0.3s;
+}
+
+nav ul li div:hover::before {
+  width: 100%;
+}
+
+nav ul li button {
+  font-size: 16px;
+  font-weight: 500;
+  text-transform: none;
+  color: #1a73e8; /* 변경된 색상 */
+  background-color: #ffffff; /* 변경된 색상 */
+  padding: 6px 12px;
+  border-radius: 6px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s;
+}
+
+nav ul li button:hover {
+  background-color: rgba(255, 255, 255, 0.8); /* 변경된 색상 */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }

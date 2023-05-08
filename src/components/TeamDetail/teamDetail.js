@@ -260,15 +260,16 @@ function TeamDetail() {
                     })
                     .then((response) => response.json())
                     .then((obj)=>alert(obj.message))
-                    .then(()=>navigate(`/team`))
+                    .then(()=>navigate(`/list/team`))
                 }}>        
                 삭제하기</button>                   
             </div>  
                 :
                 
                 <div className="teamdetail_bottom">
+                    {login_token!=null ?
                     <details >
-                        
+
                         <summary>팀원 신청 하기</summary>
                         간단한 자기 어필:
                         <TextField sx={{ width: { sm: 650 }, marginBottom: '16px' }} variant="standard" value={input_detail} name="input_detail" onChange={onChange} />
@@ -277,23 +278,17 @@ function TeamDetail() {
                         value={input_field ?? 0} //?? 0 으로 null일때 0 설정 안돌아가지는 않는데 오류가떠서 구글참고해서 고침
                         name="input_field"
                         onChange={onChange}
-                        row>   
+                        row>
                             <FormControlLabel value="1" control={<Radio />} label="프론트엔드" />
                             <FormControlLabel value="2" control={<Radio />} label="백엔드" />
                             <FormControlLabel value="3" control={<Radio />} label="상관없음" />
                         </RadioGroup>
                         <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: '16px' }}>
-                            <Button variant="contained" onClick={Putinputs}>신청 보내기</Button>  
+                            <Button variant="contained" onClick={Putinputs}>신청 보내기</Button>
                         </div>
-                </details>               
+                </details>    : null}               
             </div>
-
-                )}
-
-            <div>
-                <h2>이 팀의 다른 공고</h2>
-            </div>
-            
+                )}            
         </div>
     );
 }

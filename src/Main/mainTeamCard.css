@@ -1,0 +1,36 @@
+.mainTeam-card-wrapper{
+    padding:30px;
+    border-radius: 10px;
+    height: 300px;
+    border: 1px solid #ddd;
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s ease-in-out;
+}
+.mainTeam-card-wrapper:hover {
+      transform: translateY(-10px);
+      box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.5);
+}
+.mainTeam-card-image {
+      height: 160px; /* 이미지 높이 */
+      overflow: hidden; /* 이미지가 카드를 넘어갈 때 자르기 */
+} 
+.mainTeam-card-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+}
+.mainTeam-card-body {
+      height: 50px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+}
+.mainTeam-card-text {
+      width: 340px;
+}
+.icon_image{
+    width: 340px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}

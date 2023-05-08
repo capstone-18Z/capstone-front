@@ -62,7 +62,6 @@ function Header() {
   
     return () => {
       window.removeEventListener('scroll', handleScroll);
-      console.log(scrollPosition)
     };
   }, [scrollPosition]);
 
@@ -73,7 +72,7 @@ function Header() {
           navigate("/");
         }}
       >
-        <Hansung/>
+        <Hansung height={100}/>
       </h2>
       <nav>
         <ul>
@@ -92,7 +91,7 @@ function Header() {
           <li>
             <div
               onClick={(e) => {
-                navigate("/list/team?page=1");
+                navigate("/list/team");
               }}
             >
               팀원 모집
@@ -111,7 +110,7 @@ function Header() {
             {loginCheck ? (
               <div
                 onClick={(e) => {
-                  navigate("/mypage/profile");
+                  navigate(`/mypage/profile/${localStorage.getItem("email")}`);
                 }}
               >
                 마이페이지
