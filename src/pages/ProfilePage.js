@@ -21,7 +21,7 @@ function ProfilePage() {
   return (
     <div>
       <Routes>
-        <Route path="/:email" element={<Profile fetchData={fetchData} payload={payload}/>} />
+        <Route path="/:userid" element={<Profile fetchData={fetchData} payload={payload}/>} />
         <Route path="edit" element={<EditProfile fetchData={fetchData} payload={payload}/>} />
       </Routes>
     </div>

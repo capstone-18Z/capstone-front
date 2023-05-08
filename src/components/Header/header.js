@@ -43,8 +43,9 @@ function Header() {
     setLoginOpen(false);
     localStorage.removeItem("refresh-token");
     localStorage.removeItem("login-token");
-    localStorage.removeItem("email");
+    localStorage.removeItem("userId");
     localStorage.removeItem("nickname");
+    localStorage.removeItem("email");
     navigate("/");
   };
 
@@ -77,7 +78,9 @@ function Header() {
       <nav>
         <ul>
           <li>
-            <div>자유게시판</div>
+            <div onClick={e => {
+              navigate("/list/freepost?page=1");
+            }}>자유게시판</div>
           </li>
           <li>
             <div
@@ -123,7 +126,7 @@ function Header() {
             {loginCheck ? (
               <div
                 onClick={(e) => {
-                  navigate(`/profile/${localStorage.getItem("email")}`);
+                  navigate(`/profile/${localStorage.getItem("userId")}`);
                 }}
               >
                 프로필
