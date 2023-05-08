@@ -69,6 +69,7 @@ function Login({ onClose, onSignupClick }) {
           localStorage.setItem("login-token", response.data.data.token.accessToken);
           localStorage.setItem("nickname", response.data.data.member.nickname);
           localStorage.setItem("userId", response.data.data.member.id);
+          localStorage.setItem("email", response.data.data.member.email);
           setInterval(onSilentRefresh, 1200000); // 20분 후 refreshtoken 갱신
           onClose();
         }

@@ -76,6 +76,7 @@ function Members() {
   };
 
   console.log(members);
+  console.log(payload)
   const handleKeyDown = (event) => {
     const key = event.code;
     switch (key) {
@@ -100,7 +101,7 @@ function Members() {
             onChange={setSearchNickname}
             onKeyDown={handleKeyDown}
           />
-          <button class="search-button" onClick={searchMember}>
+          <button className="search-button" onClick={searchMember}>
             <FaSearch />
           </button>
         </div>

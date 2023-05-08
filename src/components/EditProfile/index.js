@@ -453,7 +453,7 @@ function EditProfile({ fetchData, payload }) {
             />
           </div>
         )}
-        <div className="team-lang-box" style={{ justifyContent: "center" }}>
+        <div className="team-lang-box" style={{ justifyContent: "center", marginTop:"20px" }}>
           <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
             <h3>LANGUAGE</h3>
             <Languages
@@ -463,7 +463,7 @@ function EditProfile({ fetchData, payload }) {
               setSelectedLanguages={setSelectedLanguages}
             />
           </Box>
-          <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+          <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center" , marginTop:"30px"}}>
             <h3>FRAMEWORK & PLATFORM</h3>
             <Framework
               frameworkValues={memberFramework}
@@ -472,7 +472,7 @@ function EditProfile({ fetchData, payload }) {
               setSelectedFrameworks={setSelectedFrameworks}
             />
           </Box>
-          <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+          <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center", marginTop:"30px" }}>
             <h3>DATABASE</h3>
             <Database
               databaseValues={memberDB}

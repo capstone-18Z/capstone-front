@@ -8,7 +8,7 @@
 }
 .card-top-box {
   display: flex;
-  height: 50%;
+  margin-bottom: 20px;
   padding: 5px;
 }
 .top-right-box {

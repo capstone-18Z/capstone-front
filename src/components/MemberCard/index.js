@@ -35,6 +35,7 @@ function MemberCard({ payload, fetchData }) {
           <h3 className="member-card-title">{checkGrade(memberData.grade)}</h3>
         </div>
       </div>
+      <hr></hr>
       <div className="card-bottom-box">
         <div className="member-card-text">
           {memberData.memberKeywords.map(
