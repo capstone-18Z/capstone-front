@@ -9,11 +9,9 @@
 .card-top-box {
   display: flex;
   margin-bottom: 20px;
-  padding: 5px;
 }
 .top-right-box {
   padding: 10px;
-  margin-left: 20px;
 }
 .card-proimg {
   display: flex;
@@ -28,7 +26,7 @@
   color: rgb(130, 130, 130);
 }
 .card-bottom-box {
-  margin: 20px;
+  padding: 8px;
 }
 .member-card-title {
   padding: 3px;

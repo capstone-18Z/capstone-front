@@ -60,7 +60,7 @@ function Members() {
     }
     try {
       const response = await axios.get(
-        `${process.env.REACT_APP_API_URL}/member/search/email/${searchNickname.nickname}`
+        `${process.env.REACT_APP_API_URL}/member/search/nickname/${searchNickname.nickname}`
       );
       console.log(response);
       setSearchParams({ page: 1 }); // 검색 결과 페이징 초기화
