@@ -7,9 +7,12 @@ import Languages from "../TechniqueStack/language";
 import Framework from "../TechniqueStack/framework";
 import Database from "../TechniqueStack/database";
 import axios from "axios";
+import { useMediaQuery } from "@mui/material";
 
 function EditProfile({ fetchData, payload }) {
   const navigate = useNavigate();
+  const isMobile = useMediaQuery("(max-width: 768px)"); // 모바일 디스플레이 크기에 맞게 변경
+
   const [memberData, setMemberData] = useState(payload.data.member);
   const [inputs, setInputs] = useInput({
     solvedNickname: memberData.solvedNickname === "!!No User!!" ? "" : memberData.solvedNickname || "",
@@ -20,12 +23,13 @@ function EditProfile({ fetchData, payload }) {
   });
   const [memberKeywords, setMemberKeywords] = useState([]);
   const [category, setCategory] = useState(memberData.memberKeywords.map((keyword) => keyword.category));
-  const [field, setField] = useState(
-    memberData.memberKeywords
-      .filter((keyword) => keyword.category !== "과목 팀프로젝트")
-      .map((keyword) => keyword.field)
-      .join()
-  );
+  const [field, setField] = useState(() => {
+    const nonProjectCategoryKeyword = memberData.memberKeywords.find(
+      (keyword) => keyword.category !== "과목 팀프로젝트"
+    );
+  
+    return nonProjectCategoryKeyword ? nonProjectCategoryKeyword.field : "";
+  });
   const [fieldToggle, setFieldToggle] = useState(false); // 추가
   const [subject, setSubject] = useState(
     memberData.memberKeywords
@@ -244,16 +248,6 @@ function EditProfile({ fetchData, payload }) {
     }
   }, [memberData.memberKeywords]);
 
-  const validateEmail = () => {
-    const emailRegex = /\S+@\S+\.\S+/;
-    if (inputs.email === "") {
-      return "";
-    } else if (!emailRegex.test(inputs.email)) {
-      return "유효한 이메일 주소를 입력해주세요.";
-    }
-    return "";
-  };
-
   const validateGitHubLink = () => {
     const githubRegex = /^(https?:\/\/)?(www\.)?github\.com\/[a-zA-Z0-9_-]+$/;
     if (inputs.github === "") {
@@ -267,16 +261,14 @@ function EditProfile({ fetchData, payload }) {
   const checkOverlap = (value) => {
     //e.preventDefault();
     if (value === "nickname") {
-      axios
-        .get(`${process.env.REACT_APP_API_URL}/member/check_nickname/${memberData.nickname}/exists`)
-        .then((response) => {
-          console.log(response.data);
-          if (response.data === true) {
-            setAlertNum(2);
-          } else {
-            setAlertNum(1);
-          }
-        });
+      axios.get(`${process.env.REACT_APP_API_URL}/member/check_nickname/${inputs.nickname}/exists`).then((response) => {
+        console.log(response.data);
+        if (response.data === true) {
+          setAlertNum(2);
+        } else {
+          setAlertNum(1);
+        }
+      });
     }
   };
 
@@ -306,11 +298,12 @@ function EditProfile({ fetchData, payload }) {
     <div className="profile-box">
       <form>
         <div className="inline-box">
-          <div>
+          <div className="left-box">
             <div className="nickname-box">
               <div>
                 <InputLabel shrink>닉네임</InputLabel>
                 <TextField
+                  fullWidth={isMobile}
                   size="small"
                   sx={{ marginBottom: "10px" }}
                   placeholder="닉네임을 입력해주세요"
@@ -322,6 +315,7 @@ function EditProfile({ fetchData, payload }) {
                   onClick={(e) => {
                     checkOverlap("nickname");
                   }}
+                  fullWidth={isMobile}
                 >
                   중복확인
                 </Button>
@@ -329,6 +323,7 @@ function EditProfile({ fetchData, payload }) {
               <div>{showAlert()}</div>
               <InputLabel shrink>백준 닉네임</InputLabel>
               <TextField
+                fullWidth={isMobile}
                 size="small"
                 sx={{ marginBottom: "10px" }}
                 placeholder="닉네임을 입력해주세요"
@@ -340,6 +335,7 @@ function EditProfile({ fetchData, payload }) {
             <div className="email-box">
               <InputLabel shrink>이메일</InputLabel>
               <TextField
+                fullWidth={isMobile}
                 size="small"
                 sx={{ marginBottom: "10px" }}
                 placeholder="이메일을 입력해주세요"
@@ -352,7 +348,14 @@ function EditProfile({ fetchData, payload }) {
             <div className="grade-box">
               <InputLabel shrink>학년</InputLabel>
               <FormControl size="small" sx={{ marginBottom: "10px" }}>
-                <Select sx={{ width: "100px" }} name="grade" value={inputs.grade || ""} onChange={setInputs}>
+                <Select
+                  sx={{
+                    width: "100px",
+                  }}
+                  name="grade"
+                  value={inputs.grade || ""}
+                  onChange={setInputs}
+                >
                   <MenuItem value={1}>1학년</MenuItem>
                   <MenuItem value={2}>2학년</MenuItem>
                   <MenuItem value={3}>3학년</MenuItem>
@@ -363,6 +366,7 @@ function EditProfile({ fetchData, payload }) {
             <div className="githublink-box">
               <InputLabel shrink>깃허브 링크</InputLabel>
               <TextField
+                fullWidth={isMobile}
                 size="small"
                 sx={{ marginBottom: "10px" }}
                 placeholder="깃허브 링크를 입력해주세요"
@@ -374,11 +378,11 @@ function EditProfile({ fetchData, payload }) {
               />
             </div>
           </div>
-          <div className="profile-img-box">
+          <div className="profile-edit-img-box">
             <div>
               <label htmlFor="chooseFile" className="image-button-label">
-                <p className="profile-title">프로필 이미지</p>
                 <img src={showImg} alt="" className="profile-img"></img>
+                <div className="overlay">프로필 이미지 변경</div>
               </label>
             </div>
             <input
@@ -453,7 +457,7 @@ function EditProfile({ fetchData, payload }) {
             />
           </div>
         )}
-        <div className="team-lang-box" style={{ justifyContent: "center", marginTop:"20px" }}>
+        <div className="team-lang-box" style={{ justifyContent: "center", marginTop: "20px" }}>
           <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
             <h3>LANGUAGE</h3>
             <Languages
@@ -463,7 +467,7 @@ function EditProfile({ fetchData, payload }) {
               setSelectedLanguages={setSelectedLanguages}
             />
           </Box>
-          <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center" , marginTop:"30px"}}>
+          <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center", marginTop: "30px" }}>
             <h3>FRAMEWORK & PLATFORM</h3>
             <Framework
               frameworkValues={memberFramework}
@@ -472,7 +476,7 @@ function EditProfile({ fetchData, payload }) {
               setSelectedFrameworks={setSelectedFrameworks}
             />
           </Box>
-          <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center", marginTop:"30px" }}>
+          <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center", marginTop: "30px" }}>
             <h3>DATABASE</h3>
             <Database
               databaseValues={memberDB}

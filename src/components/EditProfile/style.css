@@ -1,3 +1,19 @@
+@media (max-width: 768px) {
+  /* 모바일 디스플레이 크기에 맞게 변경 */
+  .inline-box {
+    flex-direction: column;
+  }
+
+  .profile-edit-img-box {
+    order: -1; /* 위로 이동 */
+    margin-bottom: 20px; /* 원하는 여백 조정 */
+  }
+
+  .left-box {
+    order: 1; /* 아래로 이동 */
+    flex-basis: 100%; /* 너비를 100%로 설정 */
+  }
+}
 .profile-box {
   width: 800px;
   margin: 0 auto;
@@ -14,7 +30,10 @@
 .keyword-box {
   text-align: left;
 }
-
+.nickname-text-box {
+  height: auto;
+  display: flex;
+}
 .p-title {
   text-align: left;
   width: 90px;
@@ -23,7 +42,7 @@
   display: flex;
   margin-bottom: 10px;
 }
-.profile-img-box {
+.profile-edit-img-box {
   margin: 0 auto;
 }
 .field-toggle-box,
@@ -34,9 +53,10 @@
 .image-button {
   display: none;
 }
-.profile-img-box {
+.profile-edit-img-box {
   display: flex;
   justify-content: center;
+  position: relative;
 }
 .profile-img {
   width: 200px;
@@ -49,4 +69,28 @@
   text-align: center;
   margin: 5px;
   color: rgb(123, 123, 123);
+}
+.profile-img {
+  transition: filter 0.3s;
+}
+.overlay {
+  position: absolute;
+  top: 20%; /* 원하는 위치로 조정하세요 */
+  left: 50%;
+  transform: translateX(-50%);
+  opacity: 0;
+  transition: opacity 0.3s;
+  color: aliceblue;
+  padding: 10px;
+  border-radius: 5px;
+  pointer-events: none;
+  text-align: center;
+  width: 100%;
+  box-sizing: border-box;
+}
+.profile-edit-img-box:hover .profile-img {
+  filter: brightness(80%);
+}
+.profile-edit-img-box:hover .overlay {
+  opacity: 1;
 }
