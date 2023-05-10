@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { useState } from "react";
 import RadarChart from './radarChart';
 import { Button } from '@mui/material';
+import axios from 'axios';
 
 function RecommendUserList({team}) {
     const [userList, setUserList] = useState(null);
@@ -21,33 +22,23 @@ function RecommendUserList({team}) {
         console.log(obj)});
     }, []);
 
-    function jointeam(Id) {
-        fetch(`${process.env.REACT_APP_API_URL}/${team.teamId}/match-request`,{   
-            method: 'POST',           
-            headers: {
-                'Content-Type': 'application/json',
-                'refresh-token': refresh_token,
-                'login-token': login_token,
-            },
-            body: JSON.stringify({
-                userId: Id,
-            }),
-        }).then((response) => {
-            if (response.ok) {
-              return response.json();              
-            } else {
-              throw new Error('Network response was not ok.');
+    const jointeam = (Id) => {
+        axios
+          .post(`${process.env.REACT_APP_API_URL}/team-to-user/${team.teamId}/match-request`, {
+            userId: Id,
+          })
+          .then((response) => {
+            console.log(response);
+            if (response.data) {
+              alert("요청 완료");
             }
           })
-          .then((data) => {
-            console.log(data);
-            alert(data.message);
-          })
-          .catch((error) => {
-            console.error('There was a problem with the fetch operation:', error);
-            alert(error.message);
-          })
-    }
+          .catch((err) => {
+            console.log(err.response);
+            alert(err.response.data.message);
+          });
+      };
+
    
     return (
         <div>

@@ -236,7 +236,7 @@ function SignUp({ onClose, onLoginClick }) {
           <Button
             variant="contained"
             onClick={onClick}
-            disabled={validateEmail() !== "" || validateNickname() !== "" || validatePassword() !== ""}
+            /*disabled={validateEmail() !== "" || validateNickname() !== "" || validatePassword() !== ""}*/
           >
             회원가입
           </Button>

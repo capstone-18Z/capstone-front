@@ -1,27 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { Select, MenuItem  } from "@mui/material";
 import "./userTeams.css"
+import InvitedTeamList from "../InvitedTeamList/invitedTeamList";
+import AppliedTeamList from "./appliedTeamList";
+import JoinedTeam from "./joinedTeam";
 
 function UserTeams() {
-    const refresh_token = localStorage.getItem("refresh-token");
-    const login_token = localStorage.getItem("login-token");
-
-    const [mypagedata, setMyPageData] = useState();
     const [inputs, setInputs] = useState({
         menu:"소속 팀",
     });
-    const {menu} = inputs;	//비구조화 할당
-
-    useEffect(() => {                 
-        fetch(`${process.env.REACT_APP_API_URL}/mypage`,{     
-            headers: {
-                'refresh-token': refresh_token,
-                'login-token': login_token,
-            } 
-    })
-    .then((response) => response.json())        
-    .then((obj) => {setMyPageData(obj.data); console.log(obj.data)});
-    }, []);
+    const {menu} = inputs;	//비구조화 할당   
 
     const onChange = (e) => {
         const {name, value} = e.target;
@@ -33,10 +21,6 @@ function UserTeams() {
         //객체를 새로운 상태로 쓰겠다. 
         setInputs(nextInputs);
     };
-
-    if (mypagedata === undefined) {
-        return <div>Loading...</div>;
-    }
 
     return (
         <div className="teamMembers">
@@ -51,7 +35,9 @@ function UserTeams() {
                     <hr/>                    
                 </div>
                 <div className='teamMembers_body_top'>
-                    
+                {menu == "소속 팀" ? <div>소속 팀 <JoinedTeam/></div> : null}
+                {menu == "지원한 팀" ? <div>지원한 팀<AppliedTeamList/></div> : null}
+                {menu == "초대된 팀" ? <div>초대된 팀<InvitedTeamList/></div> : null}
                 </div>
             </div>
         </div>

@@ -46,6 +46,9 @@
   .chat-message-mine {
     align-items: flex-end;
   }
+  .chat-message-server{
+    align-items: center;
+  }
   
   .chat-message-content {
     background-color: #f0f0f0;

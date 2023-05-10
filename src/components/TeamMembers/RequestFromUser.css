@@ -1,0 +1,41 @@
+.request-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    border: 2px solid rgb(224, 224, 224);
+    border-radius: 30px;
+    margin-top: 10px;
+    padding: 5px;
+  }
+  
+  .user-image{
+    border-radius: 50%;
+    width: 80px;
+    height: 80px;
+  }
+  .btn-grp {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    margin-left: 400px;
+    height: 40px;
+    width: 200px;
+  }
+  .btn-grp button{
+    margin-right: 10px;
+    width: 50px;
+    border-radius: 30px;
+  }
+  .user-info {
+    margin-left: 10px;
+    width: 500px;
+  }
+  .user-msg{
+    width: 500px;
+    font-size: 20px;
+    padding-left: 50px;
+    padding-right: 50px;
+  }
+  
+  

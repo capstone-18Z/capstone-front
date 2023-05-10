@@ -3,6 +3,8 @@
   padding:30px;
   border-radius: 10px;
   height: 550px;
+  width: 400px;
+  gap: 20px;
 }
 .card-image {
     height: 160px; /* 이미지 높이 */

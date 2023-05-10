@@ -1,20 +1,35 @@
 .side{
-    padding-top: 30px;
-    padding-left: 100px;
+    
+   
     padding-right: 60px;
 }
 .sidebar{
-    width: 300px;
+    width: 250px;
     display: flex;
     margin-bottom: 10px;
-    padding: 20px;
-    border: 1px solid gray;
-    border-radius: 20px;
+   /* background-color: #1a73e8; */
+    background: linear-gradient(to bottom,  #1a73e8, #9abbe7);
     flex-direction: column;
+    height: 100%;
 } 
 .sidebar-item {
-    margin-bottom: 10px;
-    border: 1px solid gray;
-    border-radius: 10px;
-    padding: 5px;
+    color: white;
+    padding-left: 30px;
+    padding-bottom: 15px;
+    width: 300px;
+    font-size: 25px;
+}
+.sidebar-item:hover{
+    background-color: white;
+    color : black   
+}
+
+.name-tag{
+    position: absolute;
+    bottom: 0;
+    color: white;
+    padding-left: 30px;
+    padding-bottom: 15px;
+    width: 300px;
+    font-size: 25px;
 }

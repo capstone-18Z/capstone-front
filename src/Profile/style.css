@@ -1,0 +1,34 @@
+.profile-email-box,
+.profile-githublink-box,
+.profile-grade-box,
+.bj-box {
+  display: flex;
+  padding-top: 10px;
+}
+.profile-email-box > p,
+.profile-githublink-box > p,
+.profile-grade-box > p,
+.bj-box >  p {
+  margin-left: 10px;
+}
+.profile-top-box {
+  display: flex;
+  justify-content: center;
+}
+.profile-info-box,
+.profile-img-box {
+  width: 50%;
+  text-align: left;
+}
+.profile-bottom-box {
+  text-align: left;
+}
+.wantteam-box > p,
+.good-box > p,
+.soso-box > p {
+  margin: 5px;
+}
+.editbutton-box {
+  display: flex;
+  justify-content: right;
+}

@@ -10,7 +10,8 @@ import ListPage from "./pages/ListPage";
 import "./App.css";
 import { createTheme, ThemeProvider } from '@mui/material';
 import ToTheTop from "./components/TotheTop/tothetop";
-
+import Chat from "./components/Chat/chat";
+import ChatSetting from "./components/ChatSetting/chatSetting";
 const theme = createTheme({
   typography: {
     fontFamily: [
@@ -52,11 +53,12 @@ function App() {
     <div className="App">
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<><Header /><Main /></>}></Route>
-          <Route path="/mypage/*" element={<><Header/><MyPage /></>}></Route>
-          <Route path="/profile/*" element={<><Header/><ProfilePage/></>}></Route>
-          <Route path="/list/*" element={<><Header/><ListPage/></>}></Route>
-          <Route path="/post/*" element={<><Header/><PostPage /></>}></Route>          
+          <Route path="/" element={<><ChatSetting/><Header /><Main /></>}></Route>
+          <Route path="/mypage/*" element={<><ChatSetting/><Header/><MyPage /></>}></Route>
+          <Route path="/profile/*" element={<><ChatSetting/><Header/><ProfilePage/></>}></Route>
+          <Route path="/list/*" element={<><ChatSetting/><Header/><ListPage/></>}></Route>
+          <Route path="/post/*" element={<><ChatSetting/><Header/><PostPage /></>}></Route>
+          <Route path="/chat/*" element={<><Chat/></>}></Route>          
         </Routes>
       </BrowserRouter>
       <ToTheTop/>

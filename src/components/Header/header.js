@@ -66,6 +66,13 @@ function Header() {
     };
   }, [scrollPosition]);
 
+  const [showMenu, setShowMenu] = useState(false);
+
+  const toggleMenu = () => {
+    setShowMenu(!showMenu);
+    console.log(showMenu);
+  };
+
   return (
     <header className={scrollPosition < 300 ? "original_header" : "change_header"}>
       <h2
@@ -77,11 +84,6 @@ function Header() {
       </h2>
       <nav>
         <ul>
-          <li>
-            <div onClick={e => {
-              navigate("/list/freepost?page=1");
-            }}>자유게시판</div>
-          </li>
           <li>
             <div
               onClick={(e) => {
@@ -122,20 +124,7 @@ function Header() {
               <div></div>
             )}
           </li>
-          <li>
-            {loginCheck ? (
-              <div
-                onClick={(e) => {
-                  navigate(`/profile/${localStorage.getItem("userId")}`);
-                }}
-              >
-                프로필
-                {/* {localStorage.getItem("nickname")} */}
-              </div>
-            ) : (
-              <div></div>
-            )}
-          </li>
+          
           <li>
             {loginCheck ? (
               <Button variant="contained" onClick={logout}>
@@ -156,6 +145,49 @@ function Header() {
             )}
           </li>
         </ul>
+        <input type="checkbox" id="check_box" />
+          <label for="check_box">
+            <span></span>
+            <span></span>
+            <span></span>
+          </label>
+          <div id="side_menu">
+            <div onClick={(e) => {
+              navigate("/list/members?page=1");
+            }}>유저 찾기</div>
+            <div
+              onClick={(e) => {
+                navigate("/list/team");
+            }}>팀원 모집</div>
+            {loginCheck ? (
+              <div
+                onClick={(e) => {
+                  navigate(`/mypage/profile/${localStorage.getItem("email")}`);
+                }}>마이페이지</div>) : (<div></div>)}
+            <div
+              onClick={(e) => {
+                navigate("/list/contest?page=1");
+              }}>공모전</div>
+            <div>
+            {loginCheck ? (
+              <Button variant="contained" onClick={logout}>
+                로그아웃
+              </Button>
+            ) : (
+              <>
+                <Button variant="contained" onClick={handleLoginOpen}>
+                  로그인/회원가입
+                </Button>
+                <Dialog open={loginOpen} onClose={handleClose}>
+                  <Login onClose={handleClose} onSignupClick={handleSignupOpen} />
+                </Dialog>
+                <Dialog open={signupOpen} onClose={handleClose}>
+                  <SignUp onClose={handleClose} onLoginClick={handleLoginOpen} />
+                </Dialog>
+              </>
+            )}
+            </div>
+          </div>
       </nav>
     </header>
   );

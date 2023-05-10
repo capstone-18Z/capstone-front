@@ -5,23 +5,6 @@ import { useState } from "react";
 import "./main.css";
 
 function Main(){
-
-  const settings = {
-    dots: true,
-    infinite: true,
-    speed: 500,
-    slidesToShow: 2,
-    slidesToScroll: 2,
-    responsive: [
-      {
-        breakpoint: 1400,
-        settings: {
-          slidesToShow: 1,
-          slidesToScroll: 1,
-        },
-      },
-    ],
-  };
     const refresh_token = localStorage.getItem("refresh-token");
     const login_token = localStorage.getItem("login-token");
     
@@ -93,6 +76,7 @@ function Main(){
               <p>
                   이런 개발자는 어떠세요?
               </p>
+              <a href='/list/members?page=1'>유저 찾아보기 </a>
               <div className='main_team'>
                   {memberList && memberList.map(member => (
                           <div key={member.id} className="main_card_team" sx={{ ...cardStyle, ...mediaQueryStyle }}>                    

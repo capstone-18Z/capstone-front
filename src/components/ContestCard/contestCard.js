@@ -17,17 +17,28 @@ export const ContestCard = (contest) => {
         window.open(`${data.contest.url}`, "_blank");
     }}> 
                     <div className="contest-card-image">
-                      <img src={`${data.contest.imgUrl}`} alt={data.contest.imgUrl} key={data.contest.imgUrl} style={{ width: "80%", height: "auto" }} />
+                      <img src={`${data.contest.imgUrl}`} alt={data.contest.imgUrl} key={data.contest.imgUrl} />
+                      <div className="contest-card-day">
+                        {data.contest.dday && <p>{data.contest.dday}</p>}
+                        {data.contest.state && <p>{data.contest.state} </p>}
+                      </div>
                     </div>
                     <div className="contest-card-body">
-                    <h5 className="contest-card-title">제목:{data.contest.title} </h5>
-                    {data.contest.dday && <p className="contest-card-day">{data.contest.dday}</p>}
-                    {data.contest.state && <p className="contest-card-day">{data.contest.state} </p>}
-                    {data.contest.period && <p className="contest-card-text">접수 : {data.contest.period}</p>}
-                    {data.contest.auditDate && <p className="contest-card-text">심사 : {data.contest.auditDate}</p>}
-                    {data.contest.releaseDate && <p className="contest-card-text">발표 : {data.contest.releaseDate}</p>}
-                    <p className="contest-card-text">주최 :{data.contest.host} </p>
-                    <p className="contest-card-text">대상 :{data.contest.target} </p>
+                      <div className="contest-card-title">{data.contest.title} </div>
+                      <div id="contest-hline"></div>
+                      <div id="contest-info">
+                        <div id="contest-period">
+                          {data.contest.period && <p className="contest-card-text">접수 : {data.contest.period}</p>}
+                          {data.contest.auditDate && <p className="contest-card-text">심사 : {data.contest.auditDate}</p>}
+                          {data.contest.releaseDate && <p className="contest-card-text">발표 : {data.contest.releaseDate}</p>}
+                        </div>
+                        <div id="contest-vline"></div>
+                        <div id="contest-person">
+                          <p className="contest-card-text">주최 : {data.contest.host} </p>
+                          <br/>
+                          <p className="contest-card-text">대상 : {data.contest.target} </p>
+                        </div>
+                      </div>
                     </div>
                 
     </div>

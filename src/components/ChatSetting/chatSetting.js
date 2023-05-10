@@ -49,7 +49,7 @@ function ChatSetting(props) {
             if(data.type=="notificationFromChat"){
               const notification = new Notification(data.message);
               notification.onclick = () => {
-                window.open(`/chat?waitingId=${data.waitingId}&teamLeader=${data.teamLeader}&mode=user`, "_blank", "width=450,height=650");
+                window.open(`/chat?waitingId=${data.waitingId}&userId=${localStorage.getItem("userId")}&teamLeader=${data.teamLeader}&nickname=${localStorage.getItem("nickname")}&mode=${data.mode=="team" ? "user" : "team"}`, "_blank", "width=450,height=650");
                 notification.close();
               };
             }
@@ -71,9 +71,7 @@ function ChatSetting(props) {
     }
   }, [socketConnected]);
     return (
-        <div>
-            
-        </div>
+        <></>
     );
 }
 

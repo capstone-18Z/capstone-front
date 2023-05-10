@@ -5,8 +5,8 @@
     width: 1200px;
     padding: 30px;
     border-radius: 30px;
-    border: 1px solid;
-    height: 500px;
+    border: 1px solid rgb(185, 185, 185);
+    height: 600px;
 }
 .teamMembers_title > * {
     margin: 10px;
@@ -15,4 +15,8 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+}
+.memberList-container{
+  
+    height: 385px;
 }

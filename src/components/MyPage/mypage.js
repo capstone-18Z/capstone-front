@@ -5,7 +5,7 @@ import Teams from "./teams";
 import Sidebar from "./sidebar";
 import RecommendList from "./recommendList"
 import InvitedTeamList from "../InvitedTeamList/invitedTeamList";
-import TeamMembers from "../../TeamMembers/teamMembers";
+import TeamMembers from "../TeamMembers/teamMembers";
 import UserTeams from "../UserTeams/userTeams";
 import ProfilePage from "../../pages/ProfilePage";
 

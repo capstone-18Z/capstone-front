@@ -30,9 +30,11 @@ function Sidebar() {
               key={index}              
             >
               <SidebarItem menu={menu} />
+             
             </NavLink>
           );
         })}
+         <div className="name-tag">{localStorage.getItem("nickname")}</div>
       </Menu>
       </div>
     </div>    

@@ -111,7 +111,7 @@ function Contest() {
                 </div>
             </div>           
             
-            <div className="card-container">          
+            <div className="contest-card-container">          
                 {contestList && contestList.map(contest => (
                     <motion.div
                     initial={{ opacity: 0.2 }}
@@ -120,7 +120,7 @@ function Contest() {
                       transition: { delay: 0.1 }
                     }}
                     whileHover={{
-                      scale: 1.12,
+                      scale: 1.05,
                       transition: { type: "spring", stiffness: 400, damping: 10 }
                     }}>
                     <div key={contest.cid} className="card_contest" sx={{ ...cardStyle, ...mediaQueryStyle }}>                    
@@ -130,15 +130,15 @@ function Contest() {
                     ))}
             </div>
             <div className="page">
-            <Pagination page={Number(searchParams.get("page"))} count={page_maxcount} size="large" 
-             onChange={(e, value) => {
-                search === "" ? 
-                window.location.href = `/list/contest?page=${value}`
-                :
-                window.location.href = `/list/contest?search=${search}&page=${value}`
-                ;
-              }}
-            />
+                <Pagination page={Number(searchParams.get("page"))} count={page_maxcount} size="large" 
+                 onChange={(e, value) => {
+                    search === "" ? 
+                    window.location.href = `/list/contest?page=${value}`
+                    :
+                    window.location.href = `/list/contest?search=${search}&page=${value}`
+                    ;
+                  }}
+                />
             </div>
         </div>
     );
