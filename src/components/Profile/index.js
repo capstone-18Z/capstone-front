@@ -11,6 +11,7 @@ import {
   Select,
   MenuItem,
   DialogActions,
+  useMediaQuery
 } from "@mui/material";
 import EmailIcon from "@mui/icons-material/Email";
 import GitHubIcon from "@mui/icons-material/GitHub";
@@ -22,6 +23,7 @@ import axios from "axios";
 import useInput from "../../hooks/useInput";
 
 function Profile({ payload }) {
+  const isMobile = useMediaQuery("(max-width: 768px)"); // 모바일 디스플레이 크기에 맞게 변경
   const navigate = useNavigate();
   const location = useLocation();
   const [memberData, setmemberData] = useState(payload.data.member);
@@ -170,8 +172,9 @@ function Profile({ payload }) {
         <div className="wantteam-box">
           <p>원하는 팀</p>
           {memberData.memberKeywords.length === 0 && <Chip label="미작성" color="secondary" variant="outlined" />}
-          {memberData.memberKeywords.map((keyword) => (
+          {memberData.memberKeywords.map((keyword, index) => (
             <Chip
+              key={index}
               sx={{ marginRight: "5px" }}
               label={`${keyword.category}/${
                 keyword.field === "1"
@@ -272,7 +275,7 @@ function Profile({ payload }) {
                   <InputLabel>팀</InputLabel>
                   <Select name="teamId" value={inputs.teamId} onChange={setInputs}>
                     {myTeams.data.map((team) => {
-                      return <MenuItem value={team.teamId}>{team.title}</MenuItem>;
+                      return <MenuItem key={team.teamId} value={team.teamId}>{team.title}</MenuItem>;
                     })}
                   </Select>
                 </FormControl>
