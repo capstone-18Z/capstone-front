@@ -4,6 +4,9 @@ import { useParams } from 'react-router-dom';
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 import {Button, TextField, Radio,RadioGroup, FormControlLabel} from '@mui/material';
 import { Doughnut } from 'react-chartjs-2';
+import ConstructionIcon from '@mui/icons-material/Construction';
+import QuestionMarkIcon from '@mui/icons-material/QuestionMark';
+import GroupAddIcon from '@mui/icons-material/GroupAdd';
 
 import RecommendUserList from '../RecommendUserList/recommendUserList';
 import "./teamDetail.css"
@@ -200,26 +203,28 @@ function TeamDetail() {
             
             <div className="teamdetail1">
                 <div className="teamdetail_head">
-                    <div className="title"><h1>제목: {teamDetail.title}</h1></div> 
+                    <div className="title"><h1>{teamDetail.title}</h1></div> 
                     <div className="image">
                     {teamDetail.imagePaths.map(filename => (
                       <img src={`${filename}`} alt={filename} key={filename} style={{ width: "80%", height: "auto" }} />
                     ))}    
                     </div>                   
                 </div>
-            <hr/>
+                <div className="teamdetail-title2">
                 {teamDetail.teamKeyword.sub ==null ? 
                 <h3>{teamDetail.teamKeyword.field}의 {teamDetail.teamKeyword.sub}반에서 {teamDetail.teamKeyword.category}로 뽑고 있습니다! </h3>
                 :
                 <h3>{teamDetail.teamKeyword.category}에서 {teamDetail.teamKeyword.field}를 뽑고 있습니다! </h3>
-            }
+            }</div>
                 <div className="teamdetail_summary">
                     <div className="모집유형">
                         <h3>모집유형</h3>
-                        <span>팀 빌딩 목적&emsp; {teamDetail.teamKeyword.category} </span>
-                        <span>모집 역할&emsp; {teamDetail.teamKeyword.field} </span>
-                        <span>모집 인원&emsp; {teamDetail.wantTeamMemberCount} </span>
-                        <h3>요구 능력</h3>
+                        <div className="purpose-title"><ConstructionIcon/><p className="team-text">팀빌딩 목적: {teamDetail.teamKeyword.category}</p> </div>
+                        <div className="field-title"><QuestionMarkIcon/><p className="team-text">모집 분야: {teamDetail.teamKeyword.field}</p></div>
+                        <div className="people-title"><GroupAddIcon/><p className="team-text">모집 인원: {teamDetail.wantTeamMemberCount}</p></div>
+                    </div>
+                    <div className="want-box">
+                        <h3 className="want-title">요구 능력</h3>
                         <div className="요구능력">
                             <div>
                             {filteredLanguage.length === 0 ? null: "프로그래밍 언어"}
@@ -235,22 +240,20 @@ function TeamDetail() {
                             </div>
                         </div>
                     </div>                    
-                    <hr/>
                     <div className="summary">     
-                        <h2>내용</h2>         
-                        <div dangerouslySetInnerHTML={{ __html: teamDetail.detail }} />    
+                        <h2 className="want-title">내용</h2>         
+                        <div className="detail-text" dangerouslySetInnerHTML={{ __html: teamDetail.detail }} />    
                     </div>
                 </div>      
             </div>
-            
             {(updatable?
             <div className="teamdetail_bottom">
-                <button onClick={() =>{ 
+                <Button onClick={() =>{ 
                     navigate(`/post/team/${teamId}/editTeam`)                    
                 }}>        
-                수정하기</button>
+                수정하기</Button>
 
-                <button onClick={() =>{
+                <Button onClick={() =>{
                     fetch(`${process.env.REACT_APP_API_URL}/teams/${teamId}/delete`,{
                         method: 'POST',
                         headers: {
@@ -262,7 +265,7 @@ function TeamDetail() {
                     .then((obj)=>alert(obj.message))
                     .then(()=>navigate(`/list/team`))
                 }}>        
-                삭제하기</button>                   
+                삭제하기</Button>                   
             </div>  
                 :
                 

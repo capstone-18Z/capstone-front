@@ -3,16 +3,63 @@
     margin: 0px auto;
     box-sizing: border-box;
     text-align: center;
+  padding: 50px;
+  margin-top: 30px;
+  border: 1px solid rgb(224, 224, 224);
+  border-radius: 30px;
+}
+.purpose-title,
+.field-title,
+.people-title {
+    display: flex;
+    justify-content: center;
+  padding-top: 10px;
+}
+.want-title {
+    display: flex;
+    justify-content: center;
+}
+.want-box {
+    margin-top: 20px;
+}
+.team-text {
+    margin-left: 10px;
 }
 .teamdetail_summary {
     text-align: left;
     margin-left: 20px
 }
+.teamdetail-title2 {
+    margin: 20px;
+}
 .모집유형 {
     display: flex;
+    text-align: center;
     flex-direction: column;
+    border: 1px solid rgb(224, 224, 224);
+    border-radius: 30px;
+    padding: 10px;
+}
+.want-box {
+    margin-top: 20px;
+    padding: 10px;
+    border: 1px solid rgb(224, 224, 224);
+    border-radius: 30px;
 }
 .요구능력 {
     display: flex;
     text-align: center;
+    padding: 10px;
+}
+.summary {
+    margin-top: 20px;
+    padding: 10px;
+    border: 1px solid rgb(224, 224, 224);
+    border-radius: 30px;
+}
+.detail-text {
+    padding: 10px;
+}
+.teamdetail_bottom {
+    margin: 10px;
 }
