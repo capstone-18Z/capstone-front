@@ -28,17 +28,6 @@ function TeamBuilding() {
     const navigate = useNavigate();
     
     const [keywords, setKeywords] = useState([]);      
-    const handleChange = (event) => {        
-        const isChecked = event.currentTarget.checked;
-        const {name, value} = event.target;
-        if (isChecked) {
-            setKeywords([...keywords, value]);
-        }
-        else {
-            setKeywords(keywords.filter(e => e !== value));
-        }     
-        
-    };
     useEffect(()=>{
         const nextInputs = {
             ...inputs,
@@ -200,7 +189,6 @@ function TeamBuilding() {
         console.log(inputs);
     };
     const subjectList = ["웹프레임워크1","네트워크프로그래밍","안드로이드프로그래밍","고급모바일프로그래밍"]
-    const [selectedDate, setSelectedDate] = useState(null);
     return (
         <div className="teambuildingform">
             <div className="team_form">            
@@ -208,7 +196,7 @@ function TeamBuilding() {
             
             <form onSubmit={PostRequest}>
                 <div className="team_label">
-                <h3>프로젝트 기본 정보를 입력해주세요.</h3>
+                <h3>1. 프로젝트 기본 정보를 입력해주세요.</h3>
                 </div>
                 <div className="team_row">
                 <div className="team_item">
@@ -279,19 +267,7 @@ function TeamBuilding() {
                         <MenuItem value={"상관없음"}>상관없음</MenuItem> 
                     </Select>
                     </div>
-                )}
-                <div className="team_item">
-                    <h3>마감 기간 </h3>
-                    <LocalizationProvider dateAdapter={AdapterDayjs}>
-                    <DemoContainer components={['DatePicker', 'DatePicker']}>
-                        <DatePicker
-                        label="모집 마감 날짜"
-                        value={selectedDate}
-                        onChange={(newValue) => setSelectedDate(newValue)}
-                        />
-                    </DemoContainer>
-                    </LocalizationProvider>             
-                </div>
+                )}                
                
                 <div className="team_item">
                     <h3>모집 인원</h3>
@@ -330,7 +306,7 @@ function TeamBuilding() {
                     </Box>
                 </div> 
                 <div className="team_label">
-                <h3>프로젝트에 대해 소개 시켜주세요.</h3>
+                <h3>2. 프로젝트에 대해 소개 시켜주세요.</h3>
                 </div>
                 <h3>제목</h3>
                 <div className="team_editor">

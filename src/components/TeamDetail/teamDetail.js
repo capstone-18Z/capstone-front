@@ -228,15 +228,15 @@ function TeamDetail() {
                         <div className="요구능력">
                             <div>
                             {filteredLanguage.length === 0 ? null: "프로그래밍 언어"}
-                            {filteredLanguage.length === 0 ? null: <div style={{width:300, height:300}}><Doughnut data={Languagedonut} /></div>  }                       
+                            {filteredLanguage.length === 0 ? null: <div style={{width:290, height:300}}><Doughnut data={Languagedonut} /></div>  }                       
                             </div>
                             <div>
                             {filteredFramework.length === 0 ? null: "프레임워크"}
-                            {filteredFramework.length === 0 ? null: <div style={{width:300, height:300}}><Doughnut data={Frameworkdonut}/></div> }                      
+                            {filteredFramework.length === 0 ? null: <div style={{width:290, height:300}}><Doughnut data={Frameworkdonut}/></div> }                      
                             </div>
                             <div>
                             {filteredDatabase.length === 0 ? null: "데이터베이스"}
-                            {filteredDatabase.length === 0 ? null: <div style={{width:300, height:300}}><Doughnut data={Databasedonut}/></div> }                       
+                            {filteredDatabase.length === 0 ? null: <div style={{width:290, height:300}}><Doughnut data={Databasedonut}/></div> }                       
                             </div>
                         </div>
                     </div>                    
@@ -248,12 +248,12 @@ function TeamDetail() {
             </div>
             {(updatable?
             <div className="teamdetail_bottom">
-                <Button onClick={() =>{ 
+                <button className="teamdetail-btn" onClick={() =>{ 
                     navigate(`/post/team/${teamId}/editTeam`)                    
                 }}>        
-                수정하기</Button>
+                수정하기</button>
 
-                <Button onClick={() =>{
+                <button className="teamdetail-btn"  onClick={() =>{
                     fetch(`${process.env.REACT_APP_API_URL}/teams/${teamId}/delete`,{
                         method: 'POST',
                         headers: {
@@ -265,7 +265,7 @@ function TeamDetail() {
                     .then((obj)=>alert(obj.message))
                     .then(()=>navigate(`/list/team`))
                 }}>        
-                삭제하기</Button>                   
+                삭제하기</button>                   
             </div>  
                 :
                 

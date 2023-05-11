@@ -19,19 +19,7 @@
   }
 
    @media (max-width: 1600px) {
-    .team-make-btn {
-        position: fixed;
-        bottom: 20px; 
-        right: 10px; 
-        width: 60px;
-        height: 60px;
-        border-radius: 50%;
-
-        content: '+';
-    display: block;
-    font-size: 13px;
-    line-height: 45px;
-      }
+    
     .category-table {
         display: none;
     }

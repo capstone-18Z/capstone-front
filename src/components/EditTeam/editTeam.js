@@ -1,7 +1,7 @@
 import "../TeamBuilding/style.css"
 import React, { useEffect ,useState, useRef } from 'react';
 import {useParams, useNavigate} from "react-router-dom";
-import { TextField, Button, Box, Checkbox, Grid ,FormControlLabel, Select, MenuItem  } from "@mui/material";
+import { TextField, Button, Box, Checkbox, Grid ,FormControlLabel, Select, MenuItem, Autocomplete  } from "@mui/material";
 import { Editor as ToastEditor } from '@toast-ui/react-editor';
 import '@toast-ui/editor/dist/toastui-editor.css';
 import '@toast-ui/editor/dist/i18n/ko-kr'
@@ -61,17 +61,7 @@ function EditTeam() {
 
     
     const [keywords, setKeywords] = useState([]);      
-    const handleChange = (event) => {        
-        const isChecked = event.currentTarget.checked;
-        const {name, value} = event.target;
-        if (isChecked) {
-            setKeywords([...keywords, value]);
-        }
-        else {
-            setKeywords(keywords.filter(e => e !== value));
-        }     
-        
-    };
+   
     useEffect(()=>{
         const nextInputs = {
             ...inputs,
@@ -88,6 +78,7 @@ function EditTeam() {
         category : "",
         field: "",
         sub: "",
+        teamName: "",
         wantTeamMemberCount: 0,       
         createDate: today,
         teamKeyword :{
@@ -103,7 +94,7 @@ function EditTeam() {
         }          
     },[inputs.category])
     
-    const {wantTeamMemberCount, title,category,field,sub } = inputs;	//비구조화 할당
+    const {wantTeamMemberCount, title,category,field,sub ,teamName} = inputs;	//비구조화 할당
     const onChange = (e) => {
         const {name, value} = e.target;
         const nextInputs = {
@@ -157,22 +148,6 @@ function EditTeam() {
           console.error(error);
         }
       };
-      /*
-    const onSubmitHandler = (e) => {
-        fetch('${process.env.REACT_APP_API_URL}/teams/new',{
-          method: 'POST',
-          headers: {
-            'refresh-token': refresh_token,
-            'login-token': login_token,
-            'Content-Type' : 'application/json',
-          },          
-            body: JSON.stringify(inputs),
-        })
-        .then((response) => response.json())
-        .then((obj) => console.log(obj));
-      };
-      //변수명 서버랑 똑같이 해야 보내짐
-      */
       
       const editorRef = useRef();
 
@@ -275,40 +250,48 @@ function EditTeam() {
         setSelectedDatabases((prevState) => ({ ...prevState, ...updatedDatabases }));
     }, [teamDatabase]);
 
-    const valuetest= () => {
-    }
+    const onChangeAuto = (e,value) => {
+        const nextInputs = {
+          //spread 문법. 현재 상태의 내용이 이 자리로 온다.
+          ...inputs,
+          field: value,
+        };
+        //객체를 새로운 상태로 쓰겠다.
+        setInputs(nextInputs);
+        console.log(inputs);
+    };
+
+    const subjectList = ["웹프레임워크1","네트워크프로그래밍","안드로이드프로그래밍","고급모바일프로그래밍"]
     
     return (
         <div className="teambuildingform">
             <div className="team_form">            
-            <h1>팀 빌딩 폼</h1>            
+            <h1>새 팀 등록</h1>         
             
-            <form name="team-form" onSubmit={PostRequest}>
-                <h2>프로젝트</h2>
-                
-                <TextField                            
+            <form onSubmit={PostRequest}>
+                <div className="team_label">
+                <h3>1. 프로젝트 기본 정보를 입력해주세요.</h3>
+                </div>
+                <div className="team_row">
+                <div className="team_item">
+                    <label>
+                        <h3>팀 이름</h3>
+                    </label>
+                    <TextField                            
                     required
-                    label="프로젝트 제목"
-                    value={title}                    
-                    name="title"
-                    variant="standard"
+                    label="팀 이름을 입력해주세요"
+                    value={teamName}                    
+                    name="teamName"
+                    variant="outlined"
                     onChange={onChange}
-                />                   
-                
-                <ToastEditor
-                    previewStyle="vertical"
-                    hideModeSwitch={true}
-                    language="ko-KR"
-                    initialEditType="wysiwyg"     
-                    ref={editorRef}
-                    onChange={DetailOnChange}                       
-                />   
-                
-                <MyDropzone uploadedFiles={uploadedFiles} setUploadedFiles={setUploadedFiles}/>
-                
-                <div style={{ display: 'flex' }}>
-                    <h3>팀 빌딩 목적</h3>
-                    <Select name="category" value={category} label="모집 인원 수" onChange={onChange}>
+                    style={{ width: '90%' }}
+                    />   
+                </div>
+                <div className="team_item">
+                    <label>
+                        <h3>팀 빌딩 목적</h3>
+                    </label>                    
+                    <Select style={{ width: '90%' }} name="category" value={category} label="모집 인원 수" onChange={onChange}>
                         <MenuItem value={"개인 팀프로젝트"}>개인 팀프로젝트</MenuItem>
                         <MenuItem value={"공모전 및 대회"}>공모전 및 대회</MenuItem>
                         <MenuItem value={"캡스톤 디자인"}>캡스톤 디자인</MenuItem>
@@ -318,31 +301,41 @@ function EditTeam() {
 
                 
                 {category === "과목 팀프로젝트" ? (
-                <div style={{ display: 'flex' }}>
-                    <h3>과목</h3>
-                    <Select name="field" value={field} label="과목 선택" onChange={onChange}>
-                        <MenuItem value={"웹프레임워크1"}>웹프레임워크1</MenuItem>
-                        <MenuItem value={"네트워크프로그래밍"}>네트워크프로그래밍</MenuItem>
-                        <MenuItem value={"안드로이드프로그래밍"}>안드로이드프로그래밍</MenuItem>
-                        <MenuItem value={"고급모바일프로그래밍"}>고급모바일프로그래밍</MenuItem>                        
-                    </Select>
-                    <h3>분반</h3>
-                    <Select name="sub" value={sub} label="분반 선택" onChange={onChange}>
-                        <MenuItem value={"A"}>A</MenuItem>
-                        <MenuItem value={"B"}>B</MenuItem>
-                        <MenuItem value={"C"}>C</MenuItem>
-                        <MenuItem value={"D"}>D</MenuItem>   
-                        <MenuItem value={"E"}>E</MenuItem>
-                        <MenuItem value={"7"}>7</MenuItem>      
-                        <MenuItem value={"8"}>8</MenuItem>    
-                        <MenuItem value={"N"}>N</MenuItem>   
-                        <MenuItem value={"O"}>O</MenuItem>   
-                    </Select>
-                </div>
+                    <>
+                    <div className="team_item" > 
+                        <label>
+                            <h3>과목</h3>
+                        </label>
+                        <Autocomplete
+                            style={{ width: '90%' }}
+                            disablePortal
+                            id="combo-box-demo"
+                            options={subjectList}
+                            sx={{ width: 300 }}
+                            onChange={onChangeAuto}
+                            name="field"
+                            renderInput={(params) => <TextField {...params} label="과목" />}
+                        />
+                    </div>
+                    <div className="team_item">
+                        <h3>분반</h3>
+                        <Select style={{ width: '90%' }} name="sub" value={sub} label="분반 선택" onChange={onChange}>
+                            <MenuItem value={"A"}>A</MenuItem>
+                            <MenuItem value={"B"}>B</MenuItem>
+                            <MenuItem value={"C"}>C</MenuItem>
+                            <MenuItem value={"D"}>D</MenuItem>   
+                            <MenuItem value={"E"}>E</MenuItem>
+                            <MenuItem value={"7"}>7</MenuItem>      
+                            <MenuItem value={"8"}>8</MenuItem>    
+                            <MenuItem value={"N"}>N</MenuItem>   
+                            <MenuItem value={"O"}>O</MenuItem>   
+                        </Select>
+                    </div>                
+                </>
                 ) : (
-                    <div style={{ display: 'flex' }}>
+                    <div className="team_item">
                     <h3>역할 선택</h3>
-                    <Select name="field" value={field} label="역할 선택" onChange={onChange}>
+                    <Select style={{ width: '90%' }} name="field" value={field} label="역할 선택" onChange={onChange}>
                         <MenuItem value={"프론트엔드"}>프론트엔드</MenuItem>
                         <MenuItem value={"백엔드"}>백엔드</MenuItem>
                         <MenuItem value={"상관없음"}>상관없음</MenuItem> 
@@ -351,9 +344,10 @@ function EditTeam() {
                 )}
                 
                
-                <div style={{ display: 'flex' }}>
+                <div className="team_item">
                     <h3>모집 인원</h3>
                     <Select
+                        style={{ width: '90%' }}
                         name="wantTeamMemberCount"
                         value={wantTeamMemberCount}
                         label="모집 인원 수"
@@ -368,23 +362,55 @@ function EditTeam() {
                     </Select> 
                 </div>
                 
+                </div>
+                <div className="team_label">
+                <h3>요구 사항</h3>
+                </div>
                 <div className="team-lang-box" style={{  justifyContent: 'center' }}>                       
                     <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                         <h3>LANGUAGE</h3>    
-                        <Languages languageValues={teamLanguage}  onLanguageValueChange={handleTeamLanguageChange}  selectedLanguages={selectedLanguages} setSelectedLanguages= {setSelectedLanguages}/>                    
+                        <Languages languageValues={teamLanguage}  onLanguageValueChange={handleTeamLanguageChange}  selectedLanguages={selectedLanguages} setSelectedLanguages= {setSelectedLanguages}/>                     
                     </Box>
                     <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                         <h3>FRAMEWORK & PLATFORM</h3>    
-                        <Framework frameworkValues={teamFramework}  onFrameworkValueChange={handleTeamFrameworkValueChange} selectedFrameworks={selectedFrameworks} setSelectedFrameworks={setSelectedFrameworks} />                    
+                        <Framework frameworkValues={teamFramework}  onFrameworkValueChange={handleTeamFrameworkValueChange} selectedFrameworks={selectedFrameworks} setSelectedFrameworks={setSelectedFrameworks}/>                    
                     </Box>
                     <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                         <h3>DATABASE</h3>    
                         <Database databaseValues={teamDatabase} onDatabaseValueChange={handleTeamDatabaseChange} selectedDatabases={selectedDatabases} setSelectedDatabases={setSelectedDatabases}/>         
                     </Box>
-                </div>  
+                </div> 
+                <div className="team_label">
+                <h3>2. 프로젝트에 대해 소개 시켜주세요.</h3>
+                </div>
+                <h3>제목</h3>
+                <div className="team_editor">
+                    <TextField                            
+                        required
+                        label="글 제목을 입력해주세요"
+                        value={title}                    
+                        name="title"
+                        variant="outlined"
+                        onChange={onChange}
+                        style={{ width: '100%' }}
+                    />
+                </div>
+                <div className="team_editor">
+                    <ToastEditor                    
+                        previewStyle="vertical"
+                        hideModeSwitch={true}
+                        language="ko-KR"
+                        initialEditType="wysiwyg"     
+                        ref={editorRef}
+                        onChange={DetailOnChange}                       
+                    />   
+                </div>
+                <div className="team_editor">
+                    <MyDropzone uploadedFiles={uploadedFiles} setUploadedFiles={setUploadedFiles}/>
+                </div> 
 
                 
-                <div style={{ display: "flex", justifyContent: "flex-end" }}>
+                <div className="team_button" style={{ display: "flex", justifyContent: "flex-end" }}>
                 <Button variant="contained" onClick={() => {
                     //valuetest();
                     testSubmitHandler();   

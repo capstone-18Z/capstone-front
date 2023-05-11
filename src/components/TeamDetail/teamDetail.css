@@ -3,10 +3,10 @@
     margin: 0px auto;
     box-sizing: border-box;
     text-align: center;
-  padding: 50px;
-  margin-top: 30px;
-  border: 1px solid rgb(224, 224, 224);
-  border-radius: 30px;
+    padding: 49px;
+    margin-top: 30px;
+    border: 1px solid rgb(224, 224, 224);
+    border-radius: 30px;
 }
 .purpose-title,
 .field-title,
@@ -27,7 +27,6 @@
 }
 .teamdetail_summary {
     text-align: left;
-    margin-left: 20px
 }
 .teamdetail-title2 {
     margin: 20px;
@@ -42,7 +41,7 @@
 }
 .want-box {
     margin-top: 20px;
-    padding: 10px;
+    padding: 9px;
     border: 1px solid rgb(224, 224, 224);
     border-radius: 30px;
 }
@@ -62,4 +61,19 @@
 }
 .teamdetail_bottom {
     margin: 10px;
+}
+.teamdetail-btn {
+    max-width: 100px;
+    margin-bottom: 10px;
+    width: 100%;
+    padding: 10px 0;
+    background-color: #0662c5;
+    color: #fff;
+    font-size: 16px;
+    margin: 10px;
+    margin-top: 15px;
+    border: none;
+    border-radius: 15px;
+    cursor: pointer;
+    font-family: 'Pretendard-Regular';
 }

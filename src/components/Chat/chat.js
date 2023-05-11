@@ -1,7 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import "./Chat.css";
-import { South } from "@mui/icons-material";
 function Chat() {
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
@@ -13,12 +12,10 @@ function Chat() {
 
   window.scrollTo(0, document.body.scrollHeight);
 
-  const [anotherUser, setAnotherUser] = useState("");
   const [socketConnected, setSocketConnected] = useState(false);
-  const [sendMsg, setSendMsg] = useState(false);
   const [items, setItems] = useState([]);
   const [message, setMessage] = useState("");
-  const webSocketUrl = "ws://1871166.iptime.org:8080/sock";
+  const webSocketUrl = process.env.REACT_APP_SOCK_URL
 
   let ws = useRef(null);
   useEffect(() => {
@@ -59,9 +56,9 @@ function Chat() {
         });
       };
     }
-
+    window.addEventListener("beforeunload", handleBeforeUnload);
     return () => {
-      console.log("clean up");
+      window.removeEventListener("beforeunload", handleBeforeUnload);
       ws.current.close();
     };
   }, []);
@@ -85,14 +82,15 @@ function Chat() {
   const login_token = localStorage.getItem("login-token");
   const handleSendMessage = (message) => {
     if (message != "") {
+      
       if (mode == "team") {
-        console.log(mode);
+        console.log(`${mode}: ${localStorage.getItem("userId")} send to ${userId}`)
         ws.current.send(
           `ROOM:${waitingId}##${userId}##${message}##${nickname}##${mode}`
         );
       }
       if (mode == "user") {
-        console.log(mode);
+        console.log(`${mode}: ${localStorage.getItem("userId")} send to ${teamLeader}`)
         ws.current.send(
           `ROOM:${waitingId}##${teamLeader}##${message}##${nickname}##${mode}`
         );
@@ -112,6 +110,19 @@ function Chat() {
     const pattern = /^(https?:\/\/)?([a-z0-9-]+\.)+[a-z0-9]{2,4}.*$/i;
     return pattern.test(str);
   }
+
+
+
+  const handleBeforeUnload = (e) => {
+    e.preventDefault();
+    ws.current.send(`exitRoom:${waitingId}##${login_token}##${nickname}`);
+    if (ws.current) {
+      ws.current.close();
+    }
+  };
+
+
+
   return (
     <div className="chat-container">
       <div className="chat-window">
@@ -181,5 +192,6 @@ function Chat() {
     </div>
   );
 }
+
 
 export default Chat;

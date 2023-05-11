@@ -9,7 +9,7 @@ function ChatSetting(props) {
     const [socketConnected, setSocketConnected] = useState(false);
   const [sendMsg, setSendMsg] = useState(false);
   const [items, setItems] = useState([]);
-  const webSocketUrl = "ws://1871166.iptime.org:8080/sock";
+  const webSocketUrl = process.env.REACT_APP_SOCK_URL;
   let ws = useRef(null);
   useEffect(() => {
     if (!ws.current) {
@@ -49,7 +49,7 @@ function ChatSetting(props) {
             if(data.type=="notificationFromChat"){
               const notification = new Notification(data.message);
               notification.onclick = () => {
-                window.open(`/chat?waitingId=${data.waitingId}&userId=${localStorage.getItem("userId")}&teamLeader=${data.teamLeader}&nickname=${localStorage.getItem("nickname")}&mode=${data.mode=="team" ? "user" : "team"}`, "_blank", "width=450,height=650");
+                window.open(`/chat?waitingId=${data.waitingId}&userId=${data.userId}&teamLeader=${data.teamLeader}&nickname=${localStorage.getItem("nickname")}&mode=${data.mode=="team" ? "user" : "team"}`, "_blank", "width=450,height=650");
                 notification.close();
               };
             }

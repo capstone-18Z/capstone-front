@@ -3,7 +3,6 @@
   display: grid;
   padding: 20px;
   grid-gap: 20px;
-
 }
 
 .page {
@@ -49,9 +48,8 @@
   font-size: 16px;
   text-transform: uppercase;
   border: none;
-  border-radius: 25px; /* 더 둥글게 변경 */
+  border-radius: 25px; /* 더 둥글게 변경 */ 
   cursor: pointer;
-  transition: background-color 0.3s ease;
   font-family: 'Pretendard-Regular';
 }
 

@@ -164,7 +164,7 @@ function Team() {
                 <Category checkCategory={checkCategory} setCheckCategory={setCheckCategory} checkRule={checkRule}
                     setCheckRule={setCheckRule} checkSubject={checkSubject} setCheckSubject={setCheckSubject} categoryOnClick={categoryOnClick} />
                
-                <div className="card-container" style={{ flex: 1 }}>          
+                <div className="team-card-container" style={{ flex: 1 }}>          
                     {teamList && teamList.map(team => (
                         <div key={team.teamId} className="card_ryu" sx={{ ...cardStyle, ...mediaQueryStyle }}>                    
                             <Card team={team} />

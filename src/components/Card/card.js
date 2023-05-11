@@ -49,14 +49,15 @@ export const Card = (team) => {
                     ))}
                     </div>
                     <hr/>
+                    
+                    <h5 className="card-title">{data.team.title}</h5> 
                     <div className="card-body">
-                    <h5 className="card-text">{data.team.title}</h5> 
-                    <h5 className="card-text">{time()}</h5>
+                    <span className="card-text">{data.team.teamKeyword == null ? "미확인" :`${data.team.teamKeyword.category} / ${data.team.teamKeyword.field}`}
+                    {data.team.teamKeyword.sub=="none" ? null: ` ${data.team.teamKeyword.sub.toUpperCase()}반`} </span>
                     </div>
-                    <div className="card-body">
-                    <h5 className="card-text">{data.team.teamKeyword == null ? "미확인" :`${data.team.teamKeyword.category} / ${data.team.teamKeyword.field}`}
-                    {data.team.teamKeyword.sub=="none" ? null: ` ${data.team.teamKeyword.sub.toUpperCase()}반`} </h5>
-                    <h5 className="card-text">{`${data.team.wantTeamMemberCount}명 모집 `}</h5>
+                    <div className="card-body">                    
+                    <span className="card-text">{`${data.team.wantTeamMemberCount}명 모집 `}</span>
+                    <span className="card-time">{time()}</span>
                     </div>
                     <div className="icon_image">
                     {combinedArr.map(data => (
