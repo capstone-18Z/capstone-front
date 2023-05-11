@@ -295,7 +295,7 @@ function EditProfile({ fetchData, payload }) {
   };
 
   return (
-    <div className="profile-box">
+    <div className="profile-edit-box">
       <form>
         <div className="inline-box">
           <div className="left-box">

@@ -270,8 +270,8 @@ function Profile({ payload }) {
             {myTeams?.data?.length > 0 ? (
               <Dialog open={open} onClose={handleDialogClose}>
                 <DialogTitle sx={{ width: "300px" }}>팀 요청하기</DialogTitle>
-                <DialogContentText sx={{ padding: "20px" }}>요청할 팀을 골라주세요</DialogContentText>
-                <FormControl sx={{ mt: 2, minWidth: 120 }}>
+                <DialogContentText sx={{ paddingLeft: "15px" }}>요청할 팀을 골라주세요</DialogContentText>
+                <FormControl sx={{ mt: 2, minWidth: 120, margin: "10px" }}>
                   <InputLabel>팀</InputLabel>
                   <Select name="teamId" value={inputs.teamId} onChange={setInputs}>
                     {myTeams.data.map((team) => {

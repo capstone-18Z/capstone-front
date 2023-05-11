@@ -7,6 +7,7 @@
   .profile-info-box {
     order: 2;
     padding: 10px;
+    width: auto !important; 
   }
 
   .profile-img-box {
@@ -17,6 +18,19 @@
   .profile-bottom-box {
     padding: 10px;
   }
+  .profile-box {
+    width: 100%; /* 너비를 100%로 설정 */
+    max-width: 500px; /* 최대 너비를 800px로 설정 (선택 사항) */
+  }
+}
+.profile-box {
+  width: 800px;
+  margin: 0 auto;
+  padding: 50px;
+  text-align: center;
+  margin-top: 30px;
+  border: 1px solid rgb(224, 224, 224);
+  border-radius: 30px;
 }
 .profile-email-box,
 .profile-githublink-box,
