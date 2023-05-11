@@ -144,8 +144,8 @@ function TeamBuilding() {
     });
 
     const [teamFramework, setTeamFramework] = useState({
-        react: 0, androidStudio: 0, nodejs: 0, xcode:0,
-        spring:0, unity:0, unrealEngine:0, tdmax: 0,    
+        react: 0, android: 0, node: 0, xcode:0,
+        spring:0, unity:0, unreal:0, tdmax: 0,    
       });
 
     const handleTeamFrameworkValueChange = (teamFramework) => {

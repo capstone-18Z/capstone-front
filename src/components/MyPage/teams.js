@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import MyPageList from "../MyPageList/mypagelist";
 import { Card } from "../Card/card";
 import "./myteamlist.css";
-import RecommendUserList from "../RecommendUserList/recommendUserList";
+
 const Teams = () => {
   const refresh_token = localStorage.getItem("refresh-token");
   const login_token = localStorage.getItem("login-token");
@@ -19,21 +19,19 @@ const Teams = () => {
     .then((obj) => {setMyPageData(obj.data.myAllTeams); console.log(obj)});
     }, []);
 
+    
+
   return (
-    <div className="myteamlist_wrapper">
+    <div className="myteamlist-container">
+     <div className="myteamlist_wrapper">
         {mypagedata && mypagedata.map(myAllTeams =>(  
-          <div className="first-div" key={myAllTeams.teamId}>
-              <div>
-                <Card team={myAllTeams} />                
-              </div>
-              {myAllTeams && myAllTeams.requestList && myAllTeams.requestList.map(request => (
-                <div className="my-page-list-wrapper" key={request.requestId}>
-                  <MyPageList request={request} />
-                </div>
-              ))}                      
+          <div>
+                <Card team={myAllTeams} />                              
           </div>
         ))}
+      </div>    
     </div>
+    
   );
 };
 

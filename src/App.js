@@ -4,6 +4,7 @@ import axios from "axios";
 import Main from "./Main/main"
 import PostPage from "./pages/PostPage";
 import Header from "./components/Header/header"
+import Footer from "./components/Footer/footer"
 import MyPage from "./components/MyPage/mypage";
 import ProfilePage from "./pages/ProfilePage";
 import ListPage from "./pages/ListPage";
@@ -53,7 +54,7 @@ function App() {
     <div className="App">
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<><ChatSetting/><Header /><Main /></>}></Route>
+          <Route path="/" element={<><ChatSetting/><Header /><Main /><Footer/></>}></Route>
           <Route path="/mypage/*" element={<><ChatSetting/><Header/><MyPage /></>}></Route>
           <Route path="/profile/*" element={<><ChatSetting/><Header/><ProfilePage/></>}></Route>
           <Route path="/list/*" element={<><ChatSetting/><Header/><ListPage/></>}></Route>

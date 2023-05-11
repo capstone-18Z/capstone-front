@@ -410,7 +410,7 @@ function EditTeam() {
                 </div> 
 
                 
-                <div className="team_button" style={{ display: "flex", justifyContent: "flex-end" }}>
+                <div style={{ display: "flex", justifyContent: "flex-end" }}>
                 <Button variant="contained" onClick={() => {
                     //valuetest();
                     testSubmitHandler();   

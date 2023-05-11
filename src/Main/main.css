@@ -12,9 +12,9 @@
   font-style: normal;
 }
 
-
 .main_introduce {
   height: 500px;
+  min-height: 500px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -27,6 +27,11 @@
   font-weight: bold;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 }
+
+.main_banner{
+  object-fit: none;
+  height: 500px;
+}
   
 .introduce_first {
   font-family: 'Cafe24Ssurround';
@@ -35,6 +40,7 @@
   text-align: center;
   align-self: center;
   margin: 0;
+  margin-top: 10%;
   animation-name: fadeInUp;
   animation-duration: 0.8s;
   animation-fill-mode: both;

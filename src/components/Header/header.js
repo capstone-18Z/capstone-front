@@ -80,7 +80,7 @@ function Header() {
           navigate("/");
         }}
       >
-        <Hansung height={100}/>
+        <Hansung width={250} height={100} fill="#ffffff"/>
       </h2>
       <nav>
         <ul>

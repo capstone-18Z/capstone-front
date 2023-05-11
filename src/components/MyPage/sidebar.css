@@ -1,27 +1,58 @@
+@font-face {
+    font-family: 'TheJamsil5Bold';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2302_01@1.0/TheJamsil5Bold.woff2') format('woff2');
+    font-weight: 700;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'LINESeedKR-Bd';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_11-01@1.0/LINESeedKR-Bd.woff2') format('woff2');
+    font-weight: 700;
+    font-style: normal;
+}
+
 .side{
-    
-   
     padding-right: 60px;
 }
 .sidebar{
     width: 250px;
     display: flex;
     margin-bottom: 10px;
-   /* background-color: #1a73e8; */
-    background: linear-gradient(to bottom,  #1a73e8, #9abbe7);
+    background-color: #1a73e8;
+    /*background: linear-gradient(to bottom,  #1a73e8, #9abbe7);*/
     flex-direction: column;
     height: 100%;
-} 
+    box-shadow: inset -8px 0px 5px -1px #FFFFFF;
+}
+
+#sidebar_main{
+    display: flex;
+    height: 100px;
+    justify-content: center;
+    align-items: center;
+}
+#sidebar_main p{
+    font-family: 'TheJamsil5Bold';
+    color: white;
+    font-size: 30px;
+}
 .sidebar-item {
+    display: flex;
     color: white;
     padding-left: 30px;
     padding-bottom: 15px;
     width: 300px;
+    height: 50px;
     font-size: 25px;
+    align-items: center;
+}
+.sidebar-item p{
+    font-family: 'LINESeedKR-Bd';
 }
 .sidebar-item:hover{
     background-color: white;
-    color : black   
+    color : black;
 }
 
 .name-tag{
