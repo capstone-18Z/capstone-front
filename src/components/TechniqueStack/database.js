@@ -66,7 +66,7 @@ function Database({ databaseValues, onDatabaseValueChange, selectedDatabases, se
                   {database === 'schemaL' ? 'DB 설계' : null }
             </div>          
             <Slider aria-label="Custom marks"  value ={databaseValues[database]} step={null} 
-                    valueLabelDisplay="auto" marks={marks} onChange={(event) => handleSliderChange(event, database)} sx={{ width: "600px", marginLeft: "50px" }}/>
+                    valueLabelDisplay="auto" marks={marks} onChange={(event) => handleSliderChange(event, database)} sx={{ width: "400px", marginLeft: "30px" }}/>
           </div>
         );
       };

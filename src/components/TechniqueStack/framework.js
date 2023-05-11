@@ -57,13 +57,13 @@ function Framework({ frameworkValues, onFrameworkValueChange ,selectedFrameworks
     
         return (
           <div className='framework_slidebars' key={framework} style={{ display: "flex", alignItems: "center" }}>
-            <div style={{ width: "150px", textAlign: "center" }}>
+            <div style={{ width: "200px", textAlign: "center" }}>
                 <img src={`${imglink}${framework}.png?alt=media`} alt="logo" width={30} height={30} style={{ marginRight: '5px' }}/> 
                 {framework === 'tdmax' ? '3DMAX' : null }         
                 {framework !== 'tdmax' ? framework.toUpperCase() : null}
             </div>          
             <Slider aria-label="Custom marks"  value ={frameworkValues[framework]} step={null} 
-                    valueLabelDisplay="auto" marks={marks} onChange={(event) => handleSliderChange(event, framework)} sx={{ width: "600px", marginLeft: "50px" }}/>
+                    valueLabelDisplay="auto" marks={marks} onChange={(event) => handleSliderChange(event, framework)} sx={{ width: "400px", marginLeft: "30px" }}/>
           </div>
         );
       };

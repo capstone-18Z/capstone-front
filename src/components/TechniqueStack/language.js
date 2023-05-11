@@ -67,7 +67,7 @@ function Languages({ languageValues, onLanguageValueChange, selectedLanguages,se
             </div>
                       
             <Slider  aria-label="Custom marks"  value ={languageValues[language]} step={null} 
-                    valueLabelDisplay="auto" marks={marks} onChange={(event) => handleSliderChange(event, language)} sx={{ width: "600px", marginLeft: "30px" }}/>
+                    valueLabelDisplay="auto" marks={marks} onChange={(event) => handleSliderChange(event, language)} sx={{ width: "400px", marginLeft: "30px" }}/>
           </div>
         );
       };
