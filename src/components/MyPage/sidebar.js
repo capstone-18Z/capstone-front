@@ -1,5 +1,5 @@
 import React from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useLocation} from "react-router-dom";
 import styled from "styled-components";
 import SidebarItem from "./sidebarItem";
 import "./sidebar.css"
@@ -18,18 +18,23 @@ function Sidebar() {
     { name: "팀 관리", path: "/mypage/userTeams"},
     { name: "초대 된 팀", path: "/mypage/invitedTeamList"},
   ];
+  
   return (    
     <div className="side">
       <div className="sidebar">
+        <div id="sidebar_main">
+          <p>마이페이지</p>
+        </div>
       <Menu>
         {menus.map((menu, index) => {
           return (
             <NavLink             
-              style={{color: "gray", textDecoration: "none"}}
+              style={{color: "gray", textDecoration: "none",
+              }}
               to={menu.path}
               key={index}              
             >
-              <SidebarItem menu={menu} />
+              <SidebarItem menu={menu}/>
              
             </NavLink>
           );

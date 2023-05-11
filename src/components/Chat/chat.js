@@ -7,7 +7,7 @@ function Chat() {
   const userId = searchParams.get("userId");
   const waitingId = searchParams.get("waitingId");
   const teamLeader = searchParams.get("teamLeader");
-  const nickname = searchParams.get("nickname");
+  const nickname = localStorage.getItem("nickname");
   const mode = searchParams.get("mode");
 
   window.scrollTo(0, document.body.scrollHeight);
