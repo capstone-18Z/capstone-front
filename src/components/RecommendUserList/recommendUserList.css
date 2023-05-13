@@ -1,0 +1,12 @@
+.recommendUser{
+    margin: 20px;
+}
+.추천유저{
+    display: flex;
+}
+.추천유저_container{
+    padding: 15px;
+    border: 1px solid rgb(150, 150, 150);
+    border-radius: 30px;
+    margin-bottom: 30px;
+}

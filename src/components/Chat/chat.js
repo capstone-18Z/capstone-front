@@ -7,6 +7,7 @@ function Chat() {
   const userId = searchParams.get("userId");
   const waitingId = searchParams.get("waitingId");
   const teamLeader = searchParams.get("teamLeader");
+  //const nickname = searchParams.get("nickname");
   const nickname = localStorage.getItem("nickname");
   const mode = searchParams.get("mode");
 
@@ -15,7 +16,7 @@ function Chat() {
   const [socketConnected, setSocketConnected] = useState(false);
   const [items, setItems] = useState([]);
   const [message, setMessage] = useState("");
-  const webSocketUrl = process.env.REACT_APP_SOCK_URL
+  const webSocketUrl = process.env.REACT_APP_SOCK_URL;
 
   let ws = useRef(null);
   useEffect(() => {
@@ -35,7 +36,7 @@ function Chat() {
       };
       ws.current.onmessage = (evt) => {
         const data = JSON.parse(evt.data);
-        console.log("asdasd", data);
+
         Notification.requestPermission().then(function (permission) {
           if (permission === "granted") {
             // 알림 생성
@@ -46,17 +47,29 @@ function Chat() {
                 notification.close();
               };
             } else if (data.type == "message") {
-              console.log("서버로 부터 : " + data.message);
-              setItems((pre) => [...pre, data.message]);
+             
+              setItems((pre)=>[...pre, data.message]);
             } else if (data.type == "enter") {
-              setItems((pre) => [...pre, data.message]);
-              console.log("items", items);
+              fetch(`${process.env.REACT_APP_API_URL}/chat?roomId=${waitingId}`, {
+                headers: {
+                  "refresh-token": refresh_token,
+                  "login-token": login_token,
+                },
+              })
+                .then((response) => response.json())
+                .then((obj) => {
+                  setItems([...obj.data, data.message]);
+                });
+             
             }
           }
         });
       };
     }
-    window.addEventListener("beforeunload", handleBeforeUnload);
+    
+
+    
+      window.addEventListener("beforeunload", handleBeforeUnload);
     return () => {
       window.removeEventListener("beforeunload", handleBeforeUnload);
       ws.current.close();
@@ -77,25 +90,25 @@ function Chat() {
   useEffect(() => {
     const chatBody = document.querySelector(".chat-body");
     chatBody.scrollTop = chatBody.scrollHeight;
+    console.log("items",items)
   }, [items]);
   const refresh_token = localStorage.getItem("refresh-token");
   const login_token = localStorage.getItem("login-token");
   const handleSendMessage = (message) => {
     if (message != "") {
-      
       if (mode == "team") {
-        console.log(`${mode}: ${localStorage.getItem("userId")} send to ${userId}`)
+        
         ws.current.send(
           `ROOM:${waitingId}##${userId}##${message}##${nickname}##${mode}`
         );
       }
       if (mode == "user") {
-        console.log(`${mode}: ${localStorage.getItem("userId")} send to ${teamLeader}`)
+        
         ws.current.send(
           `ROOM:${waitingId}##${teamLeader}##${message}##${nickname}##${mode}`
         );
       }
-      setItems([...items, "m: " +nickname+" "+ message]);
+      setItems([...items, "m: " + nickname + " " + message]);
     }
   };
   function makeLink(str) {
@@ -111,8 +124,6 @@ function Chat() {
     return pattern.test(str);
   }
 
-
-
   const handleBeforeUnload = (e) => {
     e.preventDefault();
     ws.current.send(`exitRoom:${waitingId}##${login_token}##${nickname}`);
@@ -121,15 +132,13 @@ function Chat() {
     }
   };
 
-
-
   return (
     <div className="chat-container">
       <div className="chat-window">
         <div className="chat-header">Open Chat</div>
         <div className="chat-body">
           {items.map((message, index) => {
-            console.log("data", message.substring(0, 2));
+            
             return (
               <div
                 key={index}
@@ -192,6 +201,5 @@ function Chat() {
     </div>
   );
 }
-
 
 export default Chat;

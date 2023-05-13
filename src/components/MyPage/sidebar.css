@@ -16,11 +16,10 @@
     padding-right: 60px;
 }
 .sidebar{
-    width: 250px;
+    width: 150px;
     display: flex;
     margin-bottom: 10px;
     background-color: #1a73e8;
-    /*background: linear-gradient(to bottom,  #1a73e8, #9abbe7);*/
     flex-direction: column;
     height: 100%;
     box-shadow: inset -8px 0px 5px -1px #FFFFFF;
@@ -28,26 +27,27 @@
 
 #sidebar_main{
     display: flex;
-    height: 100px;
     justify-content: center;
-    align-items: center;
+    height: 100px;
+    
 }
 #sidebar_main p{
     font-family: 'TheJamsil5Bold';
+    justify-self: center;
+    align-self: center;
     color: white;
-    font-size: 30px;
+    font-size: 25px;
 }
 .sidebar-item {
     display: flex;
     color: white;
-    padding-left: 30px;
-    padding-bottom: 15px;
-    width: 300px;
+    width: 150px;
     height: 50px;
     font-size: 25px;
-    align-items: center;
+    justify-content: center;
 }
 .sidebar-item p{
+    align-self: center;
     font-family: 'LINESeedKR-Bd';
 }
 .sidebar-item:hover{
@@ -59,8 +59,6 @@
     position: absolute;
     bottom: 0;
     color: white;
-    padding-left: 30px;
     padding-bottom: 15px;
-    width: 300px;
     font-size: 25px;
 }

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import MyPageList from "../MyPageList/mypagelist";
 import { Card } from "../Card/card";
+import { MyTeamCard } from "../UserTeams/myTeamCard"
 import "./myteamlist.css";
 
 const Teams = () => {
@@ -26,7 +27,7 @@ const Teams = () => {
      <div className="myteamlist_wrapper">
         {mypagedata && mypagedata.map(myAllTeams =>(  
           <div>
-                <Card team={myAllTeams} />                              
+                <MyTeamCard team={myAllTeams} />                              
           </div>
         ))}
       </div>    

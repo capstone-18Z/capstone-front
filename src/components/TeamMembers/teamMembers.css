@@ -7,7 +7,33 @@
     border-radius: 30px;
     border: 1px solid rgb(185, 185, 185);
     height: 600px;
+    overflow: auto;
 }
+.teamMembers_container::-webkit-scrollbar {
+    width: 20px;  /* 스크롤바의 너비 */
+    
+  }
+  .teamMembers_container::-webkit-scrollbar-button:vertical:start:decrement,
+  .teamMembers_container::-webkit-scrollbar-button:vertical:start:increment{
+    display: block;
+    height: 20px;
+  }
+  .teamMembers_container::-webkit-scrollbar-button:vertical:end:decrement{
+    display: block;
+    height: 20px;
+  }
+  .teamMembers_container::-webkit-scrollbar-thumb {
+    height: 10%; /* 스크롤바의 길이 */
+    background: #848484; /* 스크롤바의 색상 */
+    border-radius: 10px;
+    border: 7px solid #FFFFFF;
+  }
+  
+  .teamMembers_container::-webkit-scrollbar-track {
+    background: #FFFFFF;  /*스크롤바 뒷 배경 색상*/
+    
+    border-radius: 10px;
+  }
 .teamMembers_title > * {
     margin: 10px;
 }
@@ -15,6 +41,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    
 }
 .memberList-container{
   

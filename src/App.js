@@ -13,6 +13,8 @@ import { createTheme, ThemeProvider } from '@mui/material';
 import ToTheTop from "./components/TotheTop/tothetop";
 import Chat from "./components/Chat/chat";
 import ChatSetting from "./components/ChatSetting/chatSetting";
+import Find from "./components/Find/find";
+
 const theme = createTheme({
   typography: {
     fontFamily: [
@@ -59,7 +61,8 @@ function App() {
           <Route path="/profile/*" element={<><ChatSetting/><Header/><ProfilePage/></>}></Route>
           <Route path="/list/*" element={<><ChatSetting/><Header/><ListPage/></>}></Route>
           <Route path="/post/*" element={<><ChatSetting/><Header/><PostPage /></>}></Route>
-          <Route path="/chat/*" element={<><Chat/></>}></Route>          
+          <Route path="/find" element={<><ChatSetting/><Header/><Find /></>}></Route>
+          <Route path="/chat/*" element={<><Chat/></>}></Route>
         </Routes>
       </BrowserRouter>
       <ToTheTop/>

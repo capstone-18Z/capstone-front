@@ -1,15 +1,20 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { Button, Dialog } from "@mui/material";
+import { Button, Dialog, Menu, MenuItem } from "@mui/material";
 import { ReactComponent as Hansung } from "../../assets/images/hansungmating.svg";
 import "./header.css";
 import Login from "../Login";
 import SignUp from "../SignUp";
+import FindDropDown from "./FindDropDown";
 
 function Header() {
   const [loginOpen, setLoginOpen] = useState(false);
   const [signupOpen, setSignupOpen] = useState(false);
+
+  const [showDropdown, setShowDropdown] = useState(false);
+
+  
 
   const handleLoginOpen = () => {
     setLoginOpen(true);
@@ -53,16 +58,17 @@ function Header() {
 
   useEffect(() => {
     const handleScroll = () => {
-      const currentScrollPosition = window.scrollY || document.documentElement.scrollTop;
+      const currentScrollPosition =
+        window.scrollY || document.documentElement.scrollTop;
       if (currentScrollPosition !== scrollPosition) {
         setScrollPosition(currentScrollPosition);
       }
     };
-  
-    window.addEventListener('scroll', handleScroll);
-  
+
+    window.addEventListener("scroll", handleScroll);
+
     return () => {
-      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener("scroll", handleScroll);
     };
   }, [scrollPosition]);
 
@@ -74,13 +80,15 @@ function Header() {
   };
 
   return (
-    <header className={scrollPosition < 300 ? "original_header" : "change_header"}>
+    <header
+      className={scrollPosition < 300 ? "original_header" : "change_header"}
+    >
       <h2
         onClick={(e) => {
           navigate("/");
         }}
       >
-        <Hansung width={250} height={100} fill="#ffffff"/>
+        <Hansung width={250} height={100} fill="#ffffff" />
       </h2>
       <nav>
         <ul>
@@ -111,6 +119,10 @@ function Header() {
               공모전
             </div>
           </li>
+          <li>        
+              <div onClick={()=>setShowDropdown(!showDropdown)}>찾기</div>
+                <FindDropDown showDropdown={showDropdown}/>
+          </li>
           <li>
             {loginCheck ? (
               <div
@@ -124,7 +136,7 @@ function Header() {
               <div></div>
             )}
           </li>
-          
+
           <li>
             {loginCheck ? (
               <Button variant="contained" onClick={logout}>
@@ -136,39 +148,61 @@ function Header() {
                   로그인/회원가입
                 </Button>
                 <Dialog open={loginOpen} onClose={handleClose}>
-                  <Login onClose={handleClose} onSignupClick={handleSignupOpen} />
+                  <Login
+                    onClose={handleClose}
+                    onSignupClick={handleSignupOpen}
+                  />
                 </Dialog>
                 <Dialog open={signupOpen} onClose={handleClose}>
-                  <SignUp onClose={handleClose} onLoginClick={handleLoginOpen} />
+                  <SignUp
+                    onClose={handleClose}
+                    onLoginClick={handleLoginOpen}
+                  />
                 </Dialog>
               </>
             )}
           </li>
         </ul>
         <input type="checkbox" id="check_box" />
-          <label for="check_box">
-            <span></span>
-            <span></span>
-            <span></span>
-          </label>
-          <div id="side_menu">
-            <div onClick={(e) => {
+        <label for="check_box">
+          <span></span>
+          <span></span>
+          <span></span>
+        </label>
+        <div id="side_menu">
+          <div
+            onClick={(e) => {
               navigate("/list/members?page=1");
-            }}>유저 찾기</div>
+            }}
+          >
+            유저 찾기
+          </div>
+          <div
+            onClick={(e) => {
+              navigate("/list/team");
+            }}
+          >
+            팀원 모집
+          </div>
+          {loginCheck ? (
             <div
               onClick={(e) => {
-                navigate("/list/team");
-            }}>팀원 모집</div>
-            {loginCheck ? (
-              <div
-                onClick={(e) => {
-                  navigate(`/mypage/profile/${localStorage.getItem("email")}`);
-                }}>마이페이지</div>) : (<div></div>)}
-            <div
-              onClick={(e) => {
-                navigate("/list/contest?page=1");
-              }}>공모전</div>
-            <div>
+                navigate(`/mypage/profile/${localStorage.getItem("email")}`);
+              }}
+            >
+              마이페이지
+            </div>
+          ) : (
+            <div></div>
+          )}
+          <div
+            onClick={(e) => {
+              navigate("/list/contest?page=1");
+            }}
+          >
+            공모전
+          </div>
+          <div>
             {loginCheck ? (
               <Button variant="contained" onClick={logout}>
                 로그아웃
@@ -179,15 +213,21 @@ function Header() {
                   로그인/회원가입
                 </Button>
                 <Dialog open={loginOpen} onClose={handleClose}>
-                  <Login onClose={handleClose} onSignupClick={handleSignupOpen} />
+                  <Login
+                    onClose={handleClose}
+                    onSignupClick={handleSignupOpen}
+                  />
                 </Dialog>
                 <Dialog open={signupOpen} onClose={handleClose}>
-                  <SignUp onClose={handleClose} onLoginClick={handleLoginOpen} />
+                  <SignUp
+                    onClose={handleClose}
+                    onLoginClick={handleLoginOpen}
+                  />
                 </Dialog>
               </>
             )}
-            </div>
           </div>
+        </div>
       </nav>
     </header>
   );

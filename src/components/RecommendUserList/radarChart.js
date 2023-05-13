@@ -125,16 +125,21 @@ function RadarChart({teamdata, memberdata}) {
       };
     return (
       <div style={{ display: "flex" }}>
-        <div style={{width: "500px" }}>
-          {langArr.length===0 ? null:<Bar options={langoptions} data={langdata} />}
+        {langArr.length===0 ? null: 
+        <div style={{width: "400px" , height:"300px"}}>
+          <Bar options={langoptions} data={langdata} />
         </div>
-        <div style={{width: "500px" }}>          
-          {frameworkArr.length===0 ? null:<Bar options={frameworkoptions} data={frameworkdata} />}
+        }
+        {frameworkArr.length===0 ? null: 
+        <div style={{width: "400px" , height:"300px"}}>          
+          <Bar options={frameworkoptions} data={frameworkdata} />
         </div>
-        
-        <div style={{width: "500px" }}>
-          {databaseArr.length===0 ? null:<Bar options={databaseoptions} data={databasedata} />}          
-        </div>        
+        }
+        {databaseArr.length===0 ? null:
+        <div style={{width: "400px" , height:"300px"}}>
+          <Bar options={databaseoptions} data={databasedata} />        
+        </div>
+        }        
       </div>
     );
 }

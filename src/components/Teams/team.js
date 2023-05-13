@@ -6,7 +6,7 @@ import {useSearchParams} from "react-router-dom";
 import { Alert, CircularProgress, TextField, Button, Pagination } from "@mui/material";
 import {useNavigate} from "react-router-dom";
 import "./team.css";
-import Category from './category.js';
+import Category from '../Category/category.js';
 import { FaSearch } from 'react-icons/fa'
 import ChatSetting from '../ChatSetting/chatSetting.js';
 
@@ -93,6 +93,8 @@ function Team() {
       };
     const navigate = useNavigate();
 
+    /*카테고리에 쓰이는 변수 선언 여기서부터 */
+
     const [checkCategory, setCheckCategory] = useState([]);
     const [checkRule, setCheckRule] = useState([]);
     const [checkSubject, setCheckSubject] = useState([]);
@@ -108,6 +110,8 @@ function Team() {
                           checkCategory.includes("공모전 및 대회") ||
                           checkCategory.includes("캡스톤 디자인");
     const combined = [...checkRule, "상관없음"].join(',');
+
+    /*카테고리에 쓰이는 변수 선언 여기까지*/
 
     const categoryOnClick= () =>{  
         fetch(`${process.env.REACT_APP_API_URL}/teams/filter?search=${search}&category=${category}&subject=${subject}&rule=${isSpecialCategory ? combined : rule}&page=1`,{

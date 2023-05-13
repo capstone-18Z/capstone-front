@@ -1,5 +1,6 @@
 import { Button } from "@mui/material";
 import { useEffect, useState } from "react";
+import { MyTeamCard } from "./myTeamCard"
 import { useNavigate } from 'react-router-dom';
 
 function JoinedTeam(){
@@ -47,8 +48,8 @@ function JoinedTeam(){
     return(
         <div>
             {joinedTeams==null ?<div>소속된 팀이 없습니다.</div> : joinedTeams.map(data => (
-                <div key={data.teamId} className="card_ryu"> 
-                    {data.title}에 현재 소속되어 있습니다!
+                <div key={data.teamId} className="card_ryu" style={{marginBottom: "5px", marginTop: "5px"}}> 
+                    <MyTeamCard team={data} />
                     <Button onClick={() => goTeam(data.teamId)}>해당 팀 보러 가기</Button>                    
                     <Button onClick={() => 팀나가기(data.teamId)}>팀나가기</Button>
                 </div>

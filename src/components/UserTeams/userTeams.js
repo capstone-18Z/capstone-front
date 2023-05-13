@@ -4,6 +4,7 @@ import "./userTeams.css"
 import InvitedTeamList from "../InvitedTeamList/invitedTeamList";
 import AppliedTeamList from "./appliedTeamList";
 import JoinedTeam from "./joinedTeam";
+import TeamMembers from "../MyPage/teams"
 
 function UserTeams() {
     const [inputs, setInputs] = useState({
@@ -29,6 +30,7 @@ function UserTeams() {
                     <label>팀 관리</label>                    
                     <Select style={{ width: '25%' }} value={menu} onChange={onChange} name="menu">
                         <MenuItem  value="소속 팀">소속 팀</MenuItem>
+                        <MenuItem  value="생성 팀">생성 팀</MenuItem>
                         <MenuItem  value="지원한 팀">지원한 팀</MenuItem>
                         <MenuItem  value="초대된 팀">초대된 팀</MenuItem>
                     </Select>                   
@@ -36,6 +38,7 @@ function UserTeams() {
                 </div>
                 <div className='teamMembers_body_top'>
                 {menu == "소속 팀" ? <div>소속 팀 <JoinedTeam/></div> : null}
+                {menu == "생성 팀" ? <div>생성 팀 <TeamMembers/></div> : null}
                 {menu == "지원한 팀" ? <div>지원한 팀<AppliedTeamList/></div> : null}
                 {menu == "초대된 팀" ? <div>초대된 팀<InvitedTeamList/></div> : null}
                 </div>

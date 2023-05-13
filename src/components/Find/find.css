@@ -1,0 +1,19 @@
+.find{
+    padding-top: 30px;
+    display: flex;
+    justify-content: center;
+}
+.find_container{
+    width: 1800px;
+    padding: 30px;
+    border-radius: 30px;
+    border: 1px solid rgb(185, 185, 185);
+}
+.find_title > * {
+    margin: 10px;
+}
+.find_body_top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
