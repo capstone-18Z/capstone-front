@@ -3,8 +3,10 @@ import { TextField, Button, Alert } from "@mui/material";
 import { useState } from "react";
 import useInput from "../../hooks/useInput";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 function Login({ onClose, onSignupClick }) {
+  const navigate = useNavigate();
   const handleSignupClick = () => {
     onClose();
     onSignupClick();
@@ -53,30 +55,27 @@ function Login({ onClose, onSignupClick }) {
       });
   };
 
-  const onClick = (e) => {
+  const onClick = async (e) => {
     console.log(userInfo);
-    // 데이터 보내기
-    axios
-      .post(`${process.env.REACT_APP_API_URL}/member/login`, userInfo)
-      .then((response) => {
-        if (response.data) {
-          console.log(response);
-          // accesstoken header에 자동설정 -> post할때 header 구문 추가 안해도됨.
-          axios.defaults.headers.common["login-token"] = response.data.data.token.accessToken;
-          axios.defaults.headers.common["refresh-token"] = response.data.data.token.refreshToken;
-          console.log(axios.defaults.headers.common);
-          localStorage.setItem("refresh-token", response.data.data.token.refreshToken);
-          localStorage.setItem("login-token", response.data.data.token.accessToken);
-          localStorage.setItem("nickname", response.data.data.member.nickname);
-          localStorage.setItem("userId", response.data.data.member.id);
-          localStorage.setItem("email", response.data.data.member.email);
-          setInterval(onSilentRefresh, 1200000); // 20분 후 refreshtoken 갱신
-          onClose();
-        }
-      })
-      .catch((err) => {
-        setAlertMessage(err.response.data.message);
-      });
+    try {
+      const response = await axios.post(`${process.env.REACT_APP_API_URL}/member/login`, userInfo);
+      if (response.data) {
+        console.log(response);
+        // accesstoken header에 자동설정 -> post할때 header 구문 추가 안해도됨.
+        axios.defaults.headers.common["login-token"] = response.data.data.token.accessToken;
+        axios.defaults.headers.common["refresh-token"] = response.data.data.token.refreshToken;
+        console.log(axios.defaults.headers.common);
+        localStorage.setItem("refresh-token", response.data.data.token.refreshToken);
+        localStorage.setItem("login-token", response.data.data.token.accessToken);
+        localStorage.setItem("nickname", response.data.data.member.nickname);
+        localStorage.setItem("userId", response.data.data.member.id);
+        localStorage.setItem("email", response.data.data.member.email);
+        setInterval(onSilentRefresh, 1200000); // 20분 후 refreshtoken 갱신
+        navigate("/");
+      }
+    } catch (err) {
+      setAlertMessage(err.response.data.message);
+    }
   };
 
   const showAlert = () => {
