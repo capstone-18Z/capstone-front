@@ -20,11 +20,11 @@
   }
   .profile-box {
     width: 100%; /* 너비를 100%로 설정 */
-    max-width: 500px; /* 최대 너비를 800px로 설정 (선택 사항) */
+    max-width: 400px; /* 최대 너비를 800px로 설정 (선택 사항) */
   }
 }
 .profile-box {
-  width: 800px;
+  width: 100%;
   margin: 0 auto;
   padding: 50px;
   text-align: center;

@@ -12,6 +12,8 @@
   font-style: normal;
 }
 
+
+
 .main_introduce {
   height: 500px;
   min-height: 500px;
@@ -40,7 +42,7 @@
   text-align: center;
   align-self: center;
   margin: 0;
-  margin-top: 10%;
+  margin-top: 180px;
   animation-name: fadeInUp;
   animation-duration: 0.8s;
   animation-fill-mode: both;
@@ -53,6 +55,7 @@
   text-align: center;
   align-self: center;
   margin: 0;
+  margin-top: 20px;
   animation-name: fadeInUp;
   animation-duration: 0.8s;
   animation-fill-mode: both;

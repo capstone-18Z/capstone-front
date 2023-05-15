@@ -97,4 +97,8 @@
   background-color:transparent;
 }
 
-
+@media screen and (max-width: 510px) {
+  .search-form{
+    width: 300px;
+  }
+}

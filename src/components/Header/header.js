@@ -120,18 +120,30 @@ function Header() {
             </div>
           </li>
           <li>        
-              <div onClick={()=>setShowDropdown(!showDropdown)}>찾기</div>
-                <FindDropDown showDropdown={showDropdown}/>
+          <span 
+            onMouseEnter={() => setShowDropdown(true)}
+            onMouseLeave={()=>setShowDropdown(false)}
+            >
+              <div className="drop-header">찾기</div>
+              <FindDropDown
+                showDropdown={showDropdown}
+                setShowDropdown={setShowDropdown}
+              />
+            </span>
           </li>
           <li>
             {loginCheck ? (
+              <>
               <div
                 onClick={(e) => {
                   navigate(`/mypage/profile/${localStorage.getItem("email")}`);
                 }}
               >
                 마이페이지
+                <span className="notification"></span>
               </div>
+              
+              </>
             ) : (
               <div></div>
             )}
@@ -185,13 +197,18 @@ function Header() {
             팀원 모집
           </div>
           {loginCheck ? (
-            <div
+            
+            <div 
               onClick={(e) => {
                 navigate(`/mypage/profile/${localStorage.getItem("email")}`);
               }}
             >
+              
               마이페이지
+              
             </div>
+            
+            
           ) : (
             <div></div>
           )}

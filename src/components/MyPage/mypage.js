@@ -8,6 +8,7 @@ import InvitedTeamList from "../InvitedTeamList/invitedTeamList";
 import TeamMembers from "../TeamMembers/teamMembers";
 import UserTeams from "../UserTeams/userTeams";
 import ProfilePage from "../../pages/ProfilePage";
+import "./mypage.css"
 
 const Center = styled.div`
   height: 92vh;
@@ -20,7 +21,7 @@ function MyPage() {
         <div> 
          <Center>   
             <Sidebar/>
-            <div>
+            <div id="routes">
                 <Routes>
                     <Route path="/profile/*" element={<ProfilePage/>}></Route>
                     <Route path="/team" element={<Teams/>}></Route>

@@ -77,3 +77,18 @@
     cursor: pointer;
     font-family: 'Pretendard-Regular';
 }
+.팀신청{
+    max-width: 200px;
+    margin-bottom: 10px;
+    width: 100%;
+    padding: 10px 0;
+    background-color: #0662c5;
+    color: #fff;
+    font-size: 16px;
+    margin: 10px;
+    margin-top: 15px;
+    border: none;
+    border-radius: 15px;
+    cursor: pointer;
+    font-family: 'Pretendard-Regular';
+}

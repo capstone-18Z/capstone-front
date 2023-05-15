@@ -7,8 +7,9 @@ import { Doughnut } from 'react-chartjs-2';
 import ConstructionIcon from '@mui/icons-material/Construction';
 import QuestionMarkIcon from '@mui/icons-material/QuestionMark';
 import GroupAddIcon from '@mui/icons-material/GroupAdd';
+import Request from "./request";
+import {Dialog} from '@mui/material';
 
-import RecommendUserList from '../RecommendUserList/recommendUserList';
 import "./teamDetail.css"
 
 ChartJS.register(ArcElement, Tooltip, Legend);
@@ -21,6 +22,15 @@ function TeamDetail() {
     const teamId = params.teamId;
     const navigate = useNavigate();
     const [updatable, setUpdatable] = useState(false);
+
+    const [showRequest,setShowRequest]=useState(false);
+
+    const handleClose = () => {
+        setShowRequest(false);
+    };
+    const showReq=()=>{
+        setShowRequest(true);
+    }
 
     const [teamDetail, setTeamDetail] = useState({
         createDate:"",
@@ -257,32 +267,12 @@ function TeamDetail() {
                     .then(()=>navigate(`/list/team`))
                 }}>        
                 삭제하기</button>                   
-            </div>  
+                </div>
                 :
-                
-                <div className="teamdetail_bottom">
-                    {login_token!=null ?
-                    <details >
-
-                        <summary>팀원 신청 하기</summary>
-                        간단한 자기 어필:
-                        <TextField sx={{ width: { sm: 650 }, marginBottom: '16px' }} variant="standard" value={input_detail} name="input_detail" onChange={onChange} />
-                        <RadioGroup
-                        aria-labelledby="demo-radio-buttons-group-label"
-                        value={input_field ?? 0} //?? 0 으로 null일때 0 설정 안돌아가지는 않는데 오류가떠서 구글참고해서 고침
-                        name="input_field"
-                        onChange={onChange}
-                        row>
-                            <FormControlLabel value="1" control={<Radio />} label="프론트엔드" />
-                            <FormControlLabel value="2" control={<Radio />} label="백엔드" />
-                            <FormControlLabel value="3" control={<Radio />} label="상관없음" />
-                        </RadioGroup>
-                        <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: '16px' }}>
-                            <Button variant="contained" onClick={Putinputs}>신청 보내기</Button>
-                        </div>
-                </details>    : null}               
-            </div>
-                )}            
+                login_token!=null ? <button className="팀신청" onClick={showReq}>팀원 신청</button> : "")}
+                <Dialog open={showRequest} onClose={handleClose}>
+                  <Request teamId={teamId} setShowRequest={setShowRequest}/>
+                </Dialog>
         </div>
     );
 }
