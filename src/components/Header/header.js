@@ -164,7 +164,7 @@ function Header() {
           </li>
         </ul>
         <input type="checkbox" id="check_box" />
-        <label for="check_box">
+        <label htmlFor="check_box">
           <span></span>
           <span></span>
           <span></span>
