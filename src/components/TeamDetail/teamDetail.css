@@ -8,6 +8,7 @@
     border: 1px solid rgb(224, 224, 224);
     border-radius: 30px;
 }
+.team-title,
 .purpose-title,
 .field-title,
 .people-title {
@@ -91,4 +92,26 @@
     border-radius: 15px;
     cursor: pointer;
     font-family: 'Pretendard-Regular';
+}
+
+@media (max-width: 768px) {
+    .teamdetail {
+        margin: 0px auto;
+        box-sizing: border-box;
+        text-align: center;
+        padding: 29px;
+        margin-top: 30px;
+        border: 1px solid rgb(224, 224, 224);
+        border-radius: 30px;
+    }
+    .want-box {
+        margin-top: 20px;
+        border: 1px solid rgb(224, 224, 224);
+        border-radius: 30px;
+    }
+    .요구능력 {
+        display: grid;
+        text-align: center;
+        padding: 0px;
+    }
 }

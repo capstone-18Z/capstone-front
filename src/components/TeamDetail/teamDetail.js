@@ -9,6 +9,7 @@ import QuestionMarkIcon from '@mui/icons-material/QuestionMark';
 import GroupAddIcon from '@mui/icons-material/GroupAdd';
 import Request from "./request";
 import {Dialog} from '@mui/material';
+import BadgeIcon from '@mui/icons-material/Badge';
 
 import "./teamDetail.css"
 
@@ -220,6 +221,7 @@ function TeamDetail() {
                 <div className="teamdetail_summary">
                     <div className="모집유형">
                         <h3>모집유형</h3>
+                        <div className="team-title"><BadgeIcon/><p className="team-text">팀명: {teamDetail.teamName}</p></div>
                         <div className="purpose-title"><ConstructionIcon/><p className="team-text">팀빌딩 목적: {teamDetail.teamKeyword.category}</p> </div>
                         <div className="field-title"><QuestionMarkIcon/><p className="team-text">모집 분야: {teamDetail.teamKeyword.field}</p></div>
                         <div className="people-title"><GroupAddIcon/><p className="team-text">모집 인원: {teamDetail.wantTeamMemberCount}</p></div>

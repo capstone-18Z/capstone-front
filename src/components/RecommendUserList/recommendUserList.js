@@ -47,12 +47,13 @@ function RecommendUserList({team, selectedTeam}) {
             {userList && userList.map(data =>(
               <div className='추천유저_container'>
             <div className='추천유저' key={data.id}> 
-                <div style={{width: "400px", marginBottom: '20px' }}>
-                <MemberCard payload={data}/> 
-                </div>
-                <RadarChart teamdata={team} memberdata={data}/>               
+                <div className='추천유저_내용' >
+                <MemberCard payload={data}/>      
+                </div>           
+                <RadarChart teamdata={team} memberdata={data}/>      
+                         
             </div>
-            <Button variant="contained" sx={{ width: "400px" }} onClick={() => jointeam(data.id)}> {data.nickname}에게 팀원 요청 보내기</Button> 
+            <Button className='recommendUser_btn' variant="contained" onClick={() => jointeam(data.id)}> {data.nickname}에게 팀원 요청 보내기</Button> 
             </div>        
                 ))}
         </div>

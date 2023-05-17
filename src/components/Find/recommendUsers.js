@@ -44,7 +44,7 @@ function RecommendUsers(){
       }
     return(
         <div className="find_container">
-          <div style={{ textAlign: "center", fontSize: "40px" }}>
+          <div className="find_text">
             추천 유저를 찾아보세요!
           </div>
           <div className="find_title">
@@ -65,10 +65,10 @@ function RecommendUsers(){
           </div>
           <div className="find_body_top"></div>
           <div className="findList-container">
-            <h1>
-              {myTeams[selectedTeam].title}팀의 추천 유저
-              리스트입니다.{" "}
-            </h1>
+            <div className="find_text">
+            {myTeams[selectedTeam].title}팀의 추천 유저
+                리스트입니다.{" "}
+            </div>
             <RecommendUserList
               team={myTeams[selectedTeam]}
               selectedTeam={selectedTeam}

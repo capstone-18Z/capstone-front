@@ -15,28 +15,16 @@
   display: flex;
   justify-content: space-between;
 }
-@media (max-width: 1600px){
-  .team-body{
-    padding-left: auto;
-    margin: 30px auto;
-  }
-  .team-card-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(400px, 0.25fr));
-    justify-content: center; /* 수평 중앙 정렬 */
-    align-items: center; /* 수직 중앙 정렬 */
-    padding: 20px;
-    grid-gap: 20px;
-  }
 
-}
 .team-body{
   padding-left: 3vw;
   margin-right: auto;
   margin-left: auto;
   margin-top: 30px;
 }
-
+.mkBtn{
+  display: none;
+}
 .team-make-btn{
   max-width: 250px;
   margin-bottom: 10px;
@@ -54,9 +42,39 @@
   font-family: 'Pretendard-Regular';
 }
 
+
 @font-face {
   font-family: 'Pretendard-Regular';
   src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
   font-weight: 400;
   font-style: normal;
+}
+
+@media  (max-width:1604px) {
+  .team-card-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(400px, 0.25fr));
+    justify-content: center; /* 수평 중앙 정렬 */
+    align-items: center; /* 수직 중앙 정렬 */
+    padding: 0px;
+    grid-gap: 5vw;
+    justify-items: center;
+  }
+  .team-make-btn{
+    display: none;
+  }
+  .mkBtn{
+    display: contents;
+  }
+}
+@media  (max-width:1350px) {
+  .team-card-container {
+    grid-gap: 10vw; 
+  }
+}
+@media  (max-width:1050px) {
+  .team-card-container {
+    grid-gap: 10vw;
+    grid-template-columns: repeat(1, minmax(400px, 0.25fr)); 
+  } 
 }

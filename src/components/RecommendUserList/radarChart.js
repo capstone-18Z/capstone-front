@@ -1,5 +1,6 @@
 import React from 'react';
 import { Bar } from 'react-chartjs-2';
+import "./radarChart.css"
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -126,17 +127,17 @@ function RadarChart({teamdata, memberdata}) {
     return (
       <div style={{ display: "flex" }}>
         {langArr.length===0 ? null: 
-        <div style={{width: "400px" , height:"300px"}}>
+        <div className='radarChart_Bar'>
           <Bar options={langoptions} data={langdata} />
         </div>
         }
         {frameworkArr.length===0 ? null: 
-        <div style={{width: "400px" , height:"300px"}}>          
+        <div className='radarChart_Bar'>   
           <Bar options={frameworkoptions} data={frameworkdata} />
         </div>
         }
         {databaseArr.length===0 ? null:
-        <div style={{width: "400px" , height:"300px"}}>
+        <div className='radarChart_Bar'>
           <Bar options={databaseoptions} data={databasedata} />        
         </div>
         }        

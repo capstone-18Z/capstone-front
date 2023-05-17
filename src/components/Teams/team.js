@@ -9,7 +9,7 @@ import "./team.css";
 import Category from '../Category/category.js';
 import { FaSearch } from 'react-icons/fa'
 import ChatSetting from '../ChatSetting/chatSetting.js';
-
+import MakeTeam from './makeTeamBtn.js';
 function Team() {
     const refresh_token = localStorage.getItem("refresh-token");
     const login_token = localStorage.getItem("login-token");
@@ -183,8 +183,8 @@ function Team() {
                 setPage(value);
               }}
             />            
-            </div>
-            <ChatSetting/>          
+            </div>  
+            <MakeTeam makeTeam={onClick}/>      
         </div>
     );
             

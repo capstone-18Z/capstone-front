@@ -1,0 +1,11 @@
+.radarChart_Bar{
+    width: 400px;
+}
+
+@media (max-width: 768px) {
+    .radarChart_Bar{
+        width: 300px;
+        
+    }
+    
+}

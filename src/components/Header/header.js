@@ -196,6 +196,18 @@ function Header() {
           >
             팀원 모집
           </div>
+          <div>        
+          <span 
+            onMouseEnter={() => setShowDropdown(true)}
+            onMouseLeave={()=>setShowDropdown(false)}
+            >
+              <div className="drop-header">찾기</div>
+              <FindDropDown
+                showDropdown={showDropdown}
+                setShowDropdown={setShowDropdown}
+              />
+            </span>
+          </div>
           {loginCheck ? (
             
             <div 

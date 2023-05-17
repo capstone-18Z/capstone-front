@@ -43,7 +43,7 @@ function RecommendTeams(){
 
     return(
         <div className="find_container">
-            <div style={{ textAlign: "center", fontSize: "40px" }}>
+            <div className="find_text">
                 추천 팀을 찾아보세요!
             </div>
             <div className="find_title">

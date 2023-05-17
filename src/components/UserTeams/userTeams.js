@@ -36,11 +36,12 @@ function UserTeams() {
                     </Select>                   
                     <hr/>                    
                 </div>
-                <div className='teamMembers_body_top'>
-                {menu == "소속 팀" ? <div>소속 팀 <JoinedTeam/></div> : null}
-                {menu == "생성 팀" ? <div>생성 팀 <TeamMembers/></div> : null}
-                {menu == "지원한 팀" ? <div>지원한 팀<AppliedTeamList/></div> : null}
-                {menu == "초대된 팀" ? <div>초대된 팀<InvitedTeamList/></div> : null}
+                <div className='teamMembers_body_top' style={{display: "flex",
+          justifyContent: "center"}}>
+                {menu == "소속 팀" ? <div><JoinedTeam/></div> : null}
+                {menu == "생성 팀" ? <div><TeamMembers/></div> : null}
+                {menu == "지원한 팀" ? <div><AppliedTeamList/></div> : null}
+                {menu == "초대된 팀" ? <div><InvitedTeamList/></div> : null}
                 </div>
             </div>
         </div>
