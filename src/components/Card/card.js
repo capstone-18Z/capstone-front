@@ -6,7 +6,7 @@ import "./card.css"
 export const Card = (team) => {
   const navigate = useNavigate();
   const [data,setData]=useState(team);
-  
+  //류성현 추가
   const serverTime = new Date(data.team.updateDate);
   // 현재 시간을 가져오기
   const currentTime = new Date();
