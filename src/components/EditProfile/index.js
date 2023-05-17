@@ -178,6 +178,8 @@ function EditProfile({ fetchData, payload }) {
     console.log(getAllFormData);
     formData.append("metadata", JSON.stringify(getAllFormData));
     formData.append("file", imgFile);
+    // 닉네임 새로 localStorage에 등록
+    localStorage.setItem("nickname", inputs.nickname);
     //데이터 보내기
     axios
       .post(`${process.env.REACT_APP_API_URL}/member/userForm/update`, formData, {
@@ -457,8 +459,8 @@ function EditProfile({ fetchData, payload }) {
             />
           </div>
         )}
-        <div className="team-lang-box" style={{ justifyContent: "center", marginTop: "20px" }}>
-          <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+        <div className="team-lang-box-inedit" style={{ justifyContent: "center", marginTop: "20px" }}>
+          <div className="lang-select-box" style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
             <h3>LANGUAGE</h3>
             <Languages
               languageValues={memberLang}
@@ -466,8 +468,8 @@ function EditProfile({ fetchData, payload }) {
               selectedLanguages={selectedLanguages}
               setSelectedLanguages={setSelectedLanguages}
             />
-          </Box>
-          <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center", marginTop: "30px" }}>
+          </div>
+          <div className="framework-select-box" sx={{ display: "flex", flexDirection: "column", alignItems: "center", marginTop: "30px" }}>
             <h3>FRAMEWORK & PLATFORM</h3>
             <Framework
               frameworkValues={memberFramework}
@@ -475,8 +477,8 @@ function EditProfile({ fetchData, payload }) {
               selectedFrameworks={selectedFrameworks}
               setSelectedFrameworks={setSelectedFrameworks}
             />
-          </Box>
-          <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center", marginTop: "30px" }}>
+          </div>
+          <div className="database-select-box" sx={{ display: "flex", flexDirection: "column", alignItems: "center", marginTop: "30px" }}>
             <h3>DATABASE</h3>
             <Database
               databaseValues={memberDB}
@@ -484,7 +486,7 @@ function EditProfile({ fetchData, payload }) {
               selectedDatabases={selectedDatabases}
               setSelectedDatabases={setSelectedDatabases}
             />
-          </Box>
+          </div>
         </div>
         <Button sx={{ marginTop: "20px" }} variant="outlined" onClick={onChange2}>
           등록

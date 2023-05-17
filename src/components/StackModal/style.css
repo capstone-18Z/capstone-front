@@ -1,4 +1,11 @@
-
+@media (max-width: 768px) {
+  .stackmodal-box {
+    width: 300px !important;
+  }
+  .stackmodal-title {
+    font-size: 20px;
+  }
+}
 .stackmodal-box {
   width: 800px;
   padding-top: 30px;

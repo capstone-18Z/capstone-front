@@ -23,7 +23,6 @@ import axios from "axios";
 import useInput from "../../hooks/useInput";
 
 function Profile({ payload }) {
-  const isMobile = useMediaQuery("(max-width: 768px)"); // 모바일 디스플레이 크기에 맞게 변경
   const navigate = useNavigate();
   const location = useLocation();
   const [memberData, setmemberData] = useState(payload.data.member);

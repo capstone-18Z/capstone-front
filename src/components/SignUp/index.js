@@ -1,10 +1,11 @@
 import "./style.css";
-import { TextField, Button, Alert } from "@mui/material";
+import { TextField, Button, Alert, useMediaQuery } from "@mui/material";
 import { useEffect, useState } from "react";
 import useInput from "../../hooks/useInput";
 import axios from "axios";
 
 function SignUp({ onClose, onLoginClick }) {
+  const isMobile = useMediaQuery("(max-width: 768px)"); // 모바일 디스플레이 크기에 맞게 변경
   const handleLoginClick = () => {
     onClose();
     onLoginClick();
@@ -163,10 +164,7 @@ function SignUp({ onClose, onLoginClick }) {
               onClick={(e) => {
                 checkOverlap("email");
               }}
-              sx={{
-                padding: "15px",
-                marginTop: "16px",
-              }}
+              sx={!isMobile ? { padding: "15px", marginTop: "16px" } : undefined}
               disabled={validateEmail() !== ""}
             >
               인증번호 받기
@@ -185,10 +183,7 @@ function SignUp({ onClose, onLoginClick }) {
                   onClick={(e) => {
                     checkCode();
                   }}
-                  sx={{
-                    padding: "15px",
-                    marginTop: "16px",
-                  }}
+                  sx={!isMobile ? { padding: "15px", marginTop: "16px" } : undefined}
                   disabled={validateNickname() !== ""}
                 >
                   인증
@@ -210,10 +205,7 @@ function SignUp({ onClose, onLoginClick }) {
                 onClick={(e) => {
                   checkOverlap("nickname");
                 }}
-                sx={{
-                  padding: "15px",
-                  marginTop: "16px",
-                }}
+                sx={!isMobile ? { padding: "15px", marginTop: "16px" } : undefined}
               >
                 중복확인
               </Button>

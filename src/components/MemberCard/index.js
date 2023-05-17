@@ -1,4 +1,5 @@
-import { Avatar, ChiP, Button, IconButton } from "@mui/material";
+import { useRef, useEffect } from "react";
+import { Avatar } from "@mui/material";
 import "./style.css";
 import { useNavigate } from "react-router-dom";
 
@@ -15,6 +16,37 @@ function MemberCard({ payload, fetchData }) {
       return <h4 className="member-card-title">한성대학교</h4>;
     }
   };
+
+  const memberCardRef = useRef(null);
+  const maxImageCount = 8; // 가져올 이미지 개수 제한
+
+  const getImageElements = () => {
+    const imageElements = [];
+
+    // 이미지 요소 가져오기
+    const imageArray = [memberData.memberLang, memberData.memberFramework, memberData.memberDB].flatMap((obj) =>
+      Object.entries(obj)
+        .filter(([key, value]) => value === 100)
+        .map(([key, value]) => ({
+          key,
+          src: `${imglink}${key}.png?alt=media`,
+        }))
+    );
+
+    // 최대 이미지 개수만큼 이미지 요소 생성
+    for (let i = 0; i < Math.min(maxImageCount, imageArray.length); i++) {
+      const { key, src } = imageArray[i];
+      imageElements.push(<img key={key} src={src} alt="logo" width={30} style={{ marginRight: "5px" }} />);
+    }
+
+    // 이미지 개수가 제한을 초과하는 경우 "..." 요소 추가
+    if (imageArray.length > maxImageCount) {
+      imageElements.push(<span key="ellipsis">...</span>);
+    }
+
+    return imageElements;
+  };
+
   return (
     <div
       className="member-card-wrapper"
@@ -53,8 +85,8 @@ function MemberCard({ payload, fetchData }) {
         </div>
       </div>
       <div className="card-bottom-box">
-        <div className="member-card-text">
-          {[memberData.memberLang, memberData.memberFramework, memberData.memberDB].flatMap((obj) =>
+        <div className="member-card-text" ref={memberCardRef}>
+          {/* {[memberData.memberLang, memberData.memberFramework, memberData.memberDB].flatMap((obj) =>
             Object.entries(obj)
               .filter(([key, value]) => value == 100)
               .map(([key, value]) => (
@@ -67,9 +99,10 @@ function MemberCard({ payload, fetchData }) {
                 //   .replace("TDMAX", "3DMAX")
                 //   .replace("CS", "C#")
                 //   .replace("CPP", "C++")} `
-                <img key={key} src={`${imglink}${key}.png?alt=media`} alt="logo" width={30} style={{ marginRight: "5px" }} />
+                <img key={key} src={`${imglink}${key}.png?alt=media`} alt="logo" width={30} style={{ marginRight: "5px" }}   />
               ))
-          )}
+          )} */}
+          {getImageElements()}
         </div>
       </div>
     </div>
