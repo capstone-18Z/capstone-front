@@ -47,29 +47,57 @@ function Chat() {
                 notification.close();
               };
             } else if (data.type == "message") {
-             
-              setItems((pre)=>[...pre, data.message]);
+              setItems((pre) => [...pre, data.message]);
             } else if (data.type == "enter") {
-              fetch(`${process.env.REACT_APP_API_URL}/chat?roomId=${waitingId}`, {
-                headers: {
-                  "refresh-token": refresh_token,
-                  "login-token": login_token,
-                },
-              })
-                .then((response) => response.json())
-                .then((obj) => {
-                  setItems([...obj.data, data.message]);
-                });
-             
+              if (searchParams.get("mode") == "room") {
+                setItems([]);
+                fetch(
+                  `${process.env.REACT_APP_API_URL}/chat/team?roomId=${waitingId}`,
+                  {
+                    headers: {
+                      "refresh-token": refresh_token,
+                      "login-token": login_token,
+                    },
+                  }
+                )
+                  .then((response) => response.json())
+                  .then((obj) => {
+                    console.log("아아", obj.data);
+                    obj.data.map((data) => {
+                      if (data.mode == "chat") {
+                        if (data.from == localStorage.getItem("userId")) {
+                          setItems((pre) => [...pre, "m: " + data.msg]);
+                        } else {
+                          setItems((pre) => [...pre, "a: " + data.msg]);
+                        }
+                      }
+                      if (data.mode == "noti") {
+                        setItems((pre) => [...pre, data.msg]);
+                      }
+                    });
+                  });
+              } else {
+                fetch(
+                  `${process.env.REACT_APP_API_URL}/chat?roomId=${waitingId}`,
+                  {
+                    headers: {
+                      "refresh-token": refresh_token,
+                      "login-token": login_token,
+                    },
+                  }
+                )
+                  .then((response) => response.json())
+                  .then((obj) => {
+                    setItems([...obj.data, data.message]);
+                  });
+              }
             }
           }
         });
       };
     }
-    
 
-    
-      window.addEventListener("beforeunload", handleBeforeUnload);
+    window.addEventListener("beforeunload", handleBeforeUnload);
     return () => {
       window.removeEventListener("beforeunload", handleBeforeUnload);
       ws.current.close();
@@ -90,25 +118,27 @@ function Chat() {
   useEffect(() => {
     const chatBody = document.querySelector(".chat-body");
     chatBody.scrollTop = chatBody.scrollHeight;
-    console.log("items",items)
+    console.log("items", items);
   }, [items]);
   const refresh_token = localStorage.getItem("refresh-token");
   const login_token = localStorage.getItem("login-token");
   const handleSendMessage = (message) => {
     if (message != "") {
       if (mode == "team") {
-        
         ws.current.send(
           `ROOM:${waitingId}##${userId}##${message}##${nickname}##${mode}`
         );
       }
       if (mode == "user") {
-        
         ws.current.send(
           `ROOM:${waitingId}##${teamLeader}##${message}##${nickname}##${mode}`
         );
       }
+      if (mode == "room") {
+        ws.current.send(`TEAM:${waitingId}##${message}##${nickname}##${mode}`);
+      }
       setItems([...items, "m: " + nickname + " " + message]);
+      setMessage("");
     }
   };
   function makeLink(str) {
@@ -138,7 +168,6 @@ function Chat() {
         <div className="chat-header">Open Chat</div>
         <div className="chat-body">
           {items.map((message, index) => {
-            
             return (
               <div
                 key={index}
