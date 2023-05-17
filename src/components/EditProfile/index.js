@@ -399,7 +399,7 @@ function EditProfile({ fetchData, payload }) {
         </div>
         <div className="keyword-box">
           <div className="button-box">
-            <InputLabel shrink>원하는 팀을 골라주세요</InputLabel>
+            <InputLabel shrink sx={{textAlign: "left"}}>원하는 팀을 골라주세요</InputLabel>
             <TextField fullWidth size="small" value={category.map((data) => data)} />
             <Button variant="outlined" sx={{ margin: "10px" }} value="캡스톤 디자인" onClick={onChange3}>
               캡스톤 디자인

@@ -5,6 +5,9 @@
   .stackmodal-title {
     font-size: 20px;
   }
+  .button-box {
+    text-align: center;
+  }
 }
 .stackmodal-box {
   width: 800px;
@@ -25,4 +28,7 @@
 .stack-button-box {
   margin: 10px;
   text-align: right;
+}
+.stackmodal-top-box {
+  margin: 20px;
 }
