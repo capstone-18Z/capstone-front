@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Box, Button, DialogContent, DialogTitle } from "@mui/material";
+import { Box, Button, InputLabel, TextField, FormControl, Select, MenuItem } from "@mui/material";
 import Languages from "../TechniqueStack/language";
 import Framework from "../TechniqueStack/framework";
 import Database from "../TechniqueStack/database";
@@ -16,6 +16,28 @@ function StackModal({ onClose, member }) {
     github: memberData?.github || "",
   });
   const [memberKeywords, setMemberKeywords] = useState([]);
+  const [category, setCategory] = useState(memberData.memberKeywords.map((keyword) => keyword.category));
+  const [field, setField] = useState(() => {
+    const nonProjectCategoryKeyword = memberData.memberKeywords.find(
+      (keyword) => keyword.category !== "과목 팀프로젝트"
+    );
+
+    return nonProjectCategoryKeyword ? nonProjectCategoryKeyword.field : "";
+  });
+  const [fieldToggle, setFieldToggle] = useState(false); // 추가
+  const [subject, setSubject] = useState(
+    memberData.memberKeywords
+      .filter((keyword) => keyword.category === "과목 팀프로젝트")
+      .map((keyword) => keyword.field)
+      .join()
+  );
+  const [sub, setSub] = useState(
+    memberData.memberKeywords
+      .filter((keyword) => keyword.category === "과목 팀프로젝트")
+      .map((keyword) => keyword.sub)
+      .join()
+  );
+  const [subjectToggle, setSubjectToggle] = useState(false);
 
   const [memberLang, setMemberLang] = useState({
     c: memberData?.memberLang?.c || 0, // 옵셔널 체이닝 연산자를 사용하여 null 체크 후 속성에 접근하고, 값이 없으면 0으로 설정
@@ -155,9 +177,112 @@ function StackModal({ onClose, member }) {
       });
   };
 
+  useEffect(() => {
+    const newPurpose = category.map((data) => {
+      if (data === "과목 팀프로젝트") {
+        return { category: data, field: subject, sub: sub };
+      } else {
+        return { category: data, field: field };
+      }
+    });
+    setMemberKeywords(newPurpose);
+  }, [category, subject, sub, field]);
+
+  useEffect(() => {
+    const hasSubjectTeamProject = memberData.memberKeywords.some((keyword) => keyword.category === "과목 팀프로젝트");
+    if (hasSubjectTeamProject) {
+      setSubjectToggle((e) => !e);
+    }
+    const hasOtherKeywords = memberData.memberKeywords.some((keyword) =>
+      ["캡스톤 디자인", "개인 팀프로젝트", "공모전 및 대회"].includes(keyword.category)
+    );
+    if (hasOtherKeywords) {
+      setFieldToggle((e) => !e);
+    }
+  }, [memberData.memberKeywords]);
+
+  const onChange3 = (e) => {
+    const { value } = e.target;
+    const newCategory = category.includes(value) ? category.filter((v) => v !== value) : [...category, value];
+    setCategory(newCategory);
+    if (value === "과목 팀프로젝트") {
+      setSubjectToggle((e) => !e);
+    } else {
+      setFieldToggle(
+        newCategory.includes("캡스톤 디자인") ||
+          newCategory.includes("공모전 및 대회") ||
+          newCategory.includes("개인 팀프로젝트")
+      );
+    }
+  };
+
   return (
     <div className="stackmodal-box">
       <h1 className="stackmodal-title">기술 스택을 설정해 메이트로 등록하세요!</h1>
+      <div className="stackmodal-top-box">
+        <div className="keyword-box">
+          <div className="button-box">
+            <InputLabel shrink sx={{textAlign: "left"}}>원하는 팀을 골라주세요</InputLabel>
+            <TextField fullWidth size="small" value={category.map((data) => data)} />
+            <Button variant="outlined" sx={{ margin: "10px" }} value="캡스톤 디자인" onClick={onChange3}>
+              캡스톤 디자인
+            </Button>
+            <Button variant="outlined" sx={{ margin: "10px" }} value="과목 팀프로젝트" onClick={onChange3}>
+              과목 팀프로젝트
+            </Button>
+            <Button variant="outlined" sx={{ margin: "10px" }} value="공모전 및 대회" onClick={onChange3}>
+              공모전 및 대회
+            </Button>
+            <Button variant="outlined" sx={{ margin: "10px" }} value="개인 팀프로젝트" onClick={onChange3}>
+              개인 팀프로젝트
+            </Button>
+          </div>
+        </div>
+        {fieldToggle && (
+          <div className="field-toggle-box">
+            <InputLabel shrink>개발 포지션을 골라주세요</InputLabel>
+            <FormControl size="small">
+              <Select
+                sx={{ width: "200px" }}
+                name="field"
+                value={field}
+                onChange={(e) => {
+                  setField(e.target.value);
+                  console.log(e.target.value);
+                }}
+              >
+                <MenuItem value={"프론트엔드"}>프론트엔드</MenuItem>
+                <MenuItem value={"백엔드"}>백엔드</MenuItem>
+                <MenuItem value={"상관없음"}>상관없음</MenuItem>
+              </Select>
+            </FormControl>
+          </div>
+        )}
+        {subjectToggle && (
+          <div className="subject-toggle-box">
+            <InputLabel shrink>과목 (수업계획서에 등록된 정확한 과목명을 입력해주세요)</InputLabel>
+            <TextField
+              size="small"
+              placeholder="과목을 입력해주세요"
+              sx={{ marginBottom: "10px" }}
+              value={subject}
+              onChange={(e) => {
+                setSubject(e.target.value);
+              }}
+            />
+            <InputLabel shrink>분반 (수업계획서에 등록된 정확한 분반을 입력해주세요)</InputLabel>
+            <TextField
+              size="small"
+              placeholder="분반을 입력해주세요"
+              sx={{ marginBottom: "10px" }}
+              value={sub}
+              onChange={(e) => {
+                setSub(e.target.value);
+              }}
+            />
+          </div>
+        )}
+      </div>
       <div className="team-lang-box" style={{ justifyContent: "center", marginTop: "20px" }}>
         <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
           <h3>LANGUAGE</h3>
