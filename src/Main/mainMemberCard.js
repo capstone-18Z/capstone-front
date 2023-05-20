@@ -37,7 +37,7 @@ export const MainMemberCard = (member) => {
                   .filter(([key, value]) => value === 100)
                   .map(([key, value]) => (
                     <IconButton disabled>
-                      <img src={`${imglink}${key}.png?alt=media`} alt="logo" width={30} style={{ marginRight: "5px" }} />
+                      <img src={`${imglink}${key}.png?alt=media`} alt="logo" width={20} style={{ marginRight: "5px" }} />
                     </IconButton>
                   ))
               )

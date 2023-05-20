@@ -30,6 +30,12 @@
   background-color: #ffffff;
 }
 
+@media (max-width: 500px) {
+  .card_contest {
+    width: 300px;
+  }
+}
+
 .card_contest:hover{
   color: rgb(40, 98, 185);
 }
