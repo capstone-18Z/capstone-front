@@ -9,7 +9,7 @@ import GroupAddIcon from "@mui/icons-material/GroupAdd";
 import Request from "./request";
 import { Dialog } from "@mui/material";
 import BadgeIcon from "@mui/icons-material/Badge";
-
+import MemberCard from "../MemberCard/index";
 import "./teamDetail.css";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
@@ -23,7 +23,7 @@ function TeamDetail() {
   const [updatable, setUpdatable] = useState(false);
   const [leaderImg, setLeaderImg] = useState("");
   const [showRequest, setShowRequest] = useState(false);
-
+  const [leaderInfo,setLeaderInfo] =useState(null);
   const handleClose = () => {
     setShowRequest(false);
   };
@@ -151,9 +151,10 @@ function TeamDetail() {
             "login-token": login_token,
           },
         }).then((response) => response.json())
-        .then(obj=>{console.log("member",obj);
-       
+        .then(obj=>{console.log("member",obj.memberKeywords);
+        setLeaderInfo(obj);
     setLeaderImg(obj.profileImageUrl)});
+    
       });
   }, []);
 
@@ -416,13 +417,7 @@ function TeamDetail() {
         </Dialog>
       </div>
       <div className="leaderInfo">
-        <img
-            className="leaderInfo-img"
-            src={`${leaderImg}`}
-            alt={leaderImg}
-            key={leaderImg}
-          />
-
+          {leaderInfo!=null ? <MemberCard payload={leaderInfo} fetchData={leaderInfo}/> : null}
       </div>
       </div>
       

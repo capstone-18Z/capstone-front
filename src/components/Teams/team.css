@@ -15,7 +15,11 @@
   display: flex;
   justify-content: space-between;
 }
-
+.card_ryu{
+  width : 100%;
+  display: flex;
+  justify-content: center;
+}
 .team-body{
   padding-left: 3vw;
   margin-right: auto;
