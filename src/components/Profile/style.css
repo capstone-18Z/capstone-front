@@ -1,4 +1,4 @@
-@media (max-width: 768px) {
+@media (max-width: 1024px) {
   .profile-top-box {
     display: flex;
     flex-direction: column;
@@ -20,7 +20,19 @@
   }
   .profile-box {
     width: 100%; /* 너비를 100%로 설정 */
-    max-width: 400px; /* 최대 너비를 800px로 설정 (선택 사항) */
+    max-width: 800px;
+  }
+}
+@media (max-width: 768px) {
+  .profile-box {
+    width: 100%; /* 너비를 100%로 설정 */
+    max-width: 400px;
+  }
+}
+@media (max-width: 399px) {
+  .profile-box {
+    width: 100%; /* 너비를 100%로 설정 */
+    max-width: 350px;
   }
 }
 .profile-box {

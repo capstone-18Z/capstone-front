@@ -42,26 +42,27 @@ export const MainTeamCard = (team) => {
       <div className="mainTeam-card-wrapper" onClick={()   => {
          navigate(`/list/team/${data.team.teamId}`)
       }}> 
-                      <div className="mainTeam-card-image">
-                      {data.team.imagePaths.map(filename => (
-                        <img src={`${filename}`} alt={filename} key={filename} style={{ width: "100%", height: "auto" }} />
-                      ))}
-                      </div>
-                      <hr/>
-                      <div className="mainTeam-card-body">
-                      <h5 className="mainTeam-card-text">{data.team.title}</h5> 
-                      <h5 className="mainTeam-card-text">{time()}</h5>
-                      </div>
-                      <div className="mainTeam-card-body">
-                      <h5 className="mainTeam-card-text">{data.team.teamKeyword == null ? "미확인" :`${data.team.teamKeyword.category} / ${data.team.teamKeyword.field}`}
-                      {data.team.teamKeyword.sub=="none" ? null: ` ${data.team.teamKeyword.sub.toUpperCase()}반`} </h5>
-                      <h5 className="mainTeam-card-text">{`${data.team.wantTeamMemberCount}명 모집 `}</h5>
-                      </div>
-                      <div className="icon_image">
-                      {combinedArr.map(data => (
-                        <img src={`https://firebasestorage.googleapis.com/v0/b/caps-1edf8.appspot.com/o/langIcon%2F${data}.png?alt=media`} alt={data} width={50} height={50} key={data}/>                    
-                      ))}
-                      </div>
+          <div className="mainTeam-card-image">
+            {data.team.imagePaths.map(filename => (
+              <img src={`${filename}`} alt={filename} key={filename} style={{ width: "100%", height: "auto" }} />
+            ))}
+          </div>
+          <div className="mainTeam-card-body">
+            <div className="mainTeam-card-text">{data.team.title}</div> 
+            <div id="contest-hline"></div>
+            <div className="mainTeam-card-text" style={{textAlign: "right", color: "gray"}}>{time()}</div>
+            <div className="mainTeam-card-subbody">
+              <div className="mainTeam-card-text">{data.team.teamKeyword == null ? "미확인" :`${data.team.teamKeyword.category} / ${data.team.teamKeyword.field}`}
+              {data.team.teamKeyword.sub=="none" ? null: ` ${data.team.teamKeyword.sub.toUpperCase()}반`} </div>
+              <div id="contest-vline"></div>
+              <div className="mainTeam-card-text">{`${data.team.wantTeamMemberCount}명 모집 `}</div>
+            </div>
+            <div className="mainTeam_icon_image">
+              {combinedArr.map(data => (
+                <img src={`https://firebasestorage.googleapis.com/v0/b/caps-1edf8.appspot.com/o/langIcon%2F${data}.png?alt=media`} alt={data} width={25} key={data}/>                    
+              ))}
+            </div>
+          </div>
       </div>
     );
   };

@@ -114,10 +114,11 @@ function Contest() {
             <div className="contest-card-container">          
                 {contestList && contestList.map(contest => (
                     <motion.div
-                    initial={{ opacity: 0.2 }}
+                    initial={{ opacity: 0, y: 50 }}
+                    
                     whileInView={{
-                      opacity: 1,
-                      transition: { delay: 0.1 }
+                        opacity: 1, y: 0,
+                        transition: { delay: 0.1 }
                     }}
                     whileHover={{
                       scale: 1.05,
