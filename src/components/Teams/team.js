@@ -170,7 +170,7 @@ function Team() {
                
                 <div className="team-card-container" style={{ flex: 1 }}>          
                     {teamList && teamList.map(team => (
-                        <div key={team.teamId} className="card_ryu" sx={{ ...cardStyle, ...mediaQueryStyle }}>                    
+                        <div key={team.teamId} className="card_ryu">                    
                             <Card team={team} />
                         </div>
                         ))}

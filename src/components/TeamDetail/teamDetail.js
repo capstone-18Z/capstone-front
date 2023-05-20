@@ -9,7 +9,7 @@ import GroupAddIcon from "@mui/icons-material/GroupAdd";
 import Request from "./request";
 import { Dialog } from "@mui/material";
 import BadgeIcon from "@mui/icons-material/Badge";
-
+import MemberCard from "../MemberCard/index";
 import "./teamDetail.css";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
@@ -23,7 +23,7 @@ function TeamDetail() {
   const [updatable, setUpdatable] = useState(false);
   const [leaderImg, setLeaderImg] = useState("");
   const [showRequest, setShowRequest] = useState(false);
-
+  const [leaderInfo,setLeaderInfo] =useState(null);
   const handleClose = () => {
     setShowRequest(false);
   };
@@ -151,9 +151,10 @@ function TeamDetail() {
             "login-token": login_token,
           },
         }).then((response) => response.json())
-        .then(obj=>{console.log("member",obj);
-       
+        .then(obj=>{console.log("member",obj.memberKeywords);
+        setLeaderInfo(obj);
     setLeaderImg(obj.profileImageUrl)});
+    
       });
   }, []);
 
@@ -340,25 +341,25 @@ function TeamDetail() {
                 <div>
                   {filteredLanguage.length === 0 ? null : "프로그래밍 언어"}
                   {filteredLanguage.length === 0 ? null : (
-                    <div style={{ width: 290, height: 300 }}>
+                    
                       <Doughnut data={Languagedonut} />
-                    </div>
+                    
                   )}
                 </div>
                 <div>
                   {filteredFramework.length === 0 ? null : "프레임워크"}
                   {filteredFramework.length === 0 ? null : (
-                    <div style={{ width: 290, height: 300 }}>
+                    
                       <Doughnut data={Frameworkdonut} />
-                    </div>
+                    
                   )}
                 </div>
                 <div>
                   {filteredDatabase.length === 0 ? null : "데이터베이스"}
                   {filteredDatabase.length === 0 ? null : (
-                    <div style={{ width: 290, height: 300 }}>
+                    
                       <Doughnut data={Databasedonut} />
-                    </div>
+                    
                   )}
                 </div>
               </div>
@@ -416,13 +417,7 @@ function TeamDetail() {
         </Dialog>
       </div>
       <div className="leaderInfo">
-        <img
-            className="leaderInfo-img"
-            src={`${leaderImg}`}
-            alt={leaderImg}
-            key={leaderImg}
-          />
-
+          {leaderInfo!=null ? <MemberCard payload={leaderInfo} fetchData={leaderInfo}/> : null}
       </div>
       </div>
       
