@@ -3,7 +3,7 @@
   padding:30px;
   border-radius: 10px;
   height: 550px;
-  width: 400px;
+  width: 100%;
   gap: 20px;
 }
 .card-title{
