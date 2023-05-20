@@ -341,25 +341,25 @@ function TeamDetail() {
                 <div>
                   {filteredLanguage.length === 0 ? null : "프로그래밍 언어"}
                   {filteredLanguage.length === 0 ? null : (
-                    <div style={{ width: 290, height: 300 }}>
+                    
                       <Doughnut data={Languagedonut} />
-                    </div>
+                    
                   )}
                 </div>
                 <div>
                   {filteredFramework.length === 0 ? null : "프레임워크"}
                   {filteredFramework.length === 0 ? null : (
-                    <div style={{ width: 290, height: 300 }}>
+                    
                       <Doughnut data={Frameworkdonut} />
-                    </div>
+                    
                   )}
                 </div>
                 <div>
                   {filteredDatabase.length === 0 ? null : "데이터베이스"}
                   {filteredDatabase.length === 0 ? null : (
-                    <div style={{ width: 290, height: 300 }}>
+                    
                       <Doughnut data={Databasedonut} />
-                    </div>
+                    
                   )}
                 </div>
               </div>

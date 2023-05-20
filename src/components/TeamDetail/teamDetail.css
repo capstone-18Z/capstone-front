@@ -2,6 +2,10 @@
     display: flex;
     flex-direction: column;
     width: 100%;
+    transition: 0.3ms;
+    animation-name: fadeInUp;
+  animation-duration: 0.8s;
+  animation-fill-mode: both;
 }
 .teamDetail-top{
     position: relative;
@@ -32,12 +36,18 @@
     justify-content: center;
 }
 .leaderInfo{
+   
+    height: 30px;
     border-radius: 30px;
     margin-top: 130px;
     margin-left: 5px;
     position: sticky;
     top: 10px;
     margin-left: 3%;
+}
+.leaderInfo:hover{
+    transform: scale(1.12);
+    transition: transform 0.3s cubic-bezier(0.2, 0, 0.13, 1);
 }
 .leaderInfo-img{
     position: relative;
@@ -103,8 +113,10 @@
     border-radius: 30px;
 }
 .요구능력 {
-    display: flex;
+    display: grid;
     text-align: center;
+    grid-template-columns: 33% 33% 33%;
+    justify-content: center;
     padding: 10px;
 }
 .summary {
@@ -169,6 +181,7 @@
     .요구능력 {
         display: grid;
         text-align: center;
+        grid-template-columns: 50% 50%;
         padding: 0px;
     }
     .detail-container{
