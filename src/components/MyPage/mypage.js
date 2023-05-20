@@ -11,7 +11,7 @@ import UserTeams from "../UserTeams/userTeams";
 import ProfilePage from "../../pages/ProfilePage";
 import FloatingButton from "./floatingButton";
 import "./mypage.css"
-
+import ChatSetting from "../ChatSetting/chatSetting"
 const Center = styled.div`
   height: 92vh;
   display: flex;
@@ -25,12 +25,12 @@ function MyPage() {
             {isSidebarVisible && <FloatingButton/>}
             <div id="routes">
                 <Routes>
-                    <Route path="/profile/*" element={<ProfilePage/>}></Route>
-                    <Route path="/team" element={<Teams/>}></Route>
-                    <Route path="/recommend" element={<RecommendList/>}></Route>
-                    <Route path="/invitedTeamList" element={<InvitedTeamList/>}></Route>
-                    <Route path="/teamMembers" element={<TeamMembers/>}></Route>UserTeams
-                    <Route path="/userTeams" element={<UserTeams/>}></Route>
+                    <Route path="/profile/*" element={<><ChatSetting/><ProfilePage/></>}></Route>
+                    <Route path="/team" element={<><ChatSetting/><Teams/></>}></Route>
+                    <Route path="/recommend" element={<><ChatSetting/><RecommendList/></>}></Route>
+                    <Route path="/invitedTeamList" element={<><ChatSetting/><InvitedTeamList/></>}></Route>
+                    <Route path="/teamMembers" element={<><ChatSetting/><TeamMembers/></>}></Route>UserTeams
+                    <Route path="/userTeams" element={<><ChatSetting/><UserTeams/></>}></Route>
                 </Routes>
             </div>   
         </div>

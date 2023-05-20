@@ -1,7 +1,7 @@
 import {useNavigate} from "react-router-dom";
 import { useState } from "react";
 import "./card.css"
-
+//sk
 
 export const Card = (team) => {
   const navigate = useNavigate();
