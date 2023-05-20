@@ -124,7 +124,7 @@ function TeamMembers() {
   }
 
   return (
-    <div className="teamMembers">
+    <div className="tm">
       <div className="teamMembers_container">
         <div className="teamMembers_title">
           <label>팀별</label>
@@ -145,7 +145,7 @@ function TeamMembers() {
         <div className="teamMembers_body_top">
           <h2>팀 구성원</h2>
           <Select
-            style={{ width: "25%" }}
+            style={{ width: "50%" }}
             value={menu}
             onChange={onChange}
             name="menu"

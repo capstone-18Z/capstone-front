@@ -1,15 +1,12 @@
-.teamMembers{
+.tm{
     padding-top: 30px;
-    display: flex;
-    width: 100%;
-    justify-content: center;
+    width: 90%;
 }
 .teamMembers_container{
     width: 90%;
     padding: 30px;
     border-radius: 30px;
     border: 1px solid rgb(185, 185, 185);
-    height: 600px;
     overflow: auto;
 }
 .teamMembers_container::-webkit-scrollbar {
@@ -51,5 +48,13 @@
     grid-template-columns: 45% 45%;
     grid-gap: 20px;
     justify-content: center;
-    height: 385px;
+}
+
+@media  (max-width:768px) {
+  .tm {
+    width: 100%;
+  }
+  .memberList-container{  
+    grid-template-columns: 100% ;
+  }
 }

@@ -50,8 +50,7 @@ function RecommendUserList({team, selectedTeam}) {
                 <div className='추천유저_내용' >
                 <MemberCard payload={data}/>      
                 </div>           
-                <RadarChart teamdata={team} memberdata={data}/>      
-                         
+                <RadarChart teamdata={team} memberdata={data}/>
             </div>
             <Button className='recommendUser_btn' variant="contained" onClick={() => jointeam(data.id)}> {data.nickname}에게 팀원 요청 보내기</Button> 
             </div>        

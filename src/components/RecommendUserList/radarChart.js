@@ -125,7 +125,7 @@ function RadarChart({teamdata, memberdata}) {
         ],
       };
     return (
-      <div style={{ display: "flex" }}>
+      <div className='radarChart'>
         {langArr.length===0 ? null: 
         <div className='radarChart_Bar'>
           <Bar options={langoptions} data={langdata} />

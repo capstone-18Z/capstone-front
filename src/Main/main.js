@@ -10,6 +10,7 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Banner1 from "../assets/images/HansungMatingBanner.png";
+import BannerM from "../assets/images/HansungMatingBannerM.png"
 import "./main.css";
 import StackModal from "../components/StackModal/index";
 import axios from "axios";
@@ -83,12 +84,12 @@ function Main() {
 
   const settings = {
     arrows: true,
-    dots: true,
+    dots: false,
     infinite: true,
     speed: 500,
     slidesToShow: 1,
     slidesToScroll: 1,
-    autoplay: true,
+    autoplay: false,
     autoplaySpeed: 3000,
     pauseOnHover: true,
     fade: true,
@@ -116,6 +117,10 @@ function Main() {
 
     .slick-slide {
       padding-right: 20px;
+    }
+
+    .slick-prev:before, .slick-next:before {
+      color: #444444;
     }
   `;
 
@@ -167,7 +172,7 @@ function Main() {
             <p className="introduce_first">한성 메이팅</p>
             <p className="introduce_second">나만의 맞춤형 팀 빌딩 서비스</p>
           </div>
-          <img src={Banner1} className="main_banner" />
+          <img src={isSmallMobile ? BannerM : Banner1} className="main_banner" />
         </Slider>
       </div>
       <div className="main_body">
