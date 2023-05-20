@@ -1,6 +1,7 @@
 import { MenuItem, Select } from "@mui/material";
 import { useEffect, useState } from "react";
 import { Card } from "../Card/card";
+import "./rcTeams.css";
 
 function RecommendTeams(){
     const refresh_token = localStorage.getItem("refresh-token");
@@ -61,14 +62,13 @@ function RecommendTeams(){
             </Select>
             <hr />
           </div>
-            <div className="findList-container">
+            <div className="find-container">
             <h1>추천 팀</h1>
+            <div className="find-team">
             {recommendTeam.length !== 0 && recommendTeam.map((data) => (
-              <div>
-                <Card team={data} key={data.id} />                
-              </div>
+                <Card team={data} key={data.id} />
             ))}
-            
+            </div>            
             </div>
         </div>
     );

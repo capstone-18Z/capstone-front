@@ -1,7 +1,8 @@
 import {useNavigate} from "react-router-dom";
 import { useState } from "react";
 import "./card.css"
-//sk
+import { useRef } from "react";
+
 
 export const Card = (team) => {
   const navigate = useNavigate();
@@ -39,33 +40,63 @@ export const Card = (team) => {
   const dbArr = Object.keys(team.team.teamDatabase).filter(key => key !== 'id' && team.team.teamDatabase[key] !== 0);
   
   const combinedArr = langArr.concat(frameworkArr, dbArr);  
+  
+  const imglink = "https://firebasestorage.googleapis.com/v0/b/caps-1edf8.appspot.com/o/langIcon%2F";
+
+  const memberCardRef = useRef(null);
+  const maxImageCount = 7; // 가져올 이미지 개수 제한
+
+  const getImageElements = () => {
+    const imageElements = [];
+
+    // 이미지 요소 가져오기
+    const imageArray = [team.team.teamLanguage, team.team.teamFramework, team.team.teamDatabase].flatMap((obj) =>
+      Object.entries(obj)
+      .filter(([key, value]) => key !== "id" && value >= 25)
+        .map(([key, value]) => ({
+          key,
+          src: `${imglink}${key}.png?alt=media`,
+        }))
+    );
+
+    // 최대 이미지 개수만큼 이미지 요소 생성
+    for (let i = 0; i < Math.min(maxImageCount, imageArray.length); i++) {
+      const { key, src } = imageArray[i];
+      imageElements.push(<img key={key} src={src} alt="logo" width={30} style={{ marginRight: "5px" }} />);
+    }
+
+    // 이미지 개수가 제한을 초과하는 경우 "..." 요소 추가
+    if (imageArray.length > maxImageCount) {
+      imageElements.push(<span key="ellipsis">...</span>);
+    }
+
+    return imageElements;
+  };
   return (
     <div className="card-wrapper" onClick={()   => {
-       navigate(`/list/team/${data.team.teamId}`)
+       navigate(`/list/team/${team.team.teamId}`)
     }}> 
                     <div className="card-image">
-                    {data.team.imagePaths.map(filename => (
+                    {team.team.imagePaths.map(filename => (
                       <img src={`${filename}`} alt={filename} key={filename} style={{ width: "100%", height: "auto" }} />
                     ))}
                     </div>
                     
                     <div className="card-contents">
                       <div className="card-title">
-                      <h5>{data.team.title} </h5>
+                      <h5>{team.team.title} </h5>
                     </div>
                     <div className="card-body">
-                    <span className="card-text">{data.team.teamKeyword == null ? "미확인" :`#${data.team.teamKeyword.category} / ${data.team.teamKeyword.field}`}
-                    {data.team.teamKeyword.sub=="none" ? null: ` ${data.team.teamKeyword.sub.toUpperCase()}반`} </span>
+                    <span className="card-text">{team.team.teamKeyword == null ? "미확인" :`#${team.team.teamKeyword.category} / ${team.team.teamKeyword.field}`}
+                    {team.team.teamKeyword.sub=="none" ? null: ` ${team.team.teamKeyword.sub.toUpperCase()}반`} </span>
                     </div>
                     <div className="card-body">                    
-                    <span className="card-text">{`${data.team.wantTeamMemberCount}명 모집 `}</span>
+                    <span className="card-text">{`${team.team.wantTeamMemberCount}명 모집 `}</span>
                     <span className="card-time">{time()}</span>
                     
-                    </div>
-                    <div className="card-icon-image">
-                    {combinedArr.map(data => (
-                      <img src={`https://firebasestorage.googleapis.com/v0/b/caps-1edf8.appspot.com/o/langIcon%2F${data}.png?alt=media`} alt={data} width={50} height={50} key={data}/>                    
-                    ))}
+                    </div>                   
+                    <div className="member-card-text" ref={memberCardRef}>         
+                    {getImageElements()}
                     </div>
                     </div>
                     

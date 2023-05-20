@@ -7,6 +7,7 @@ import "./header.css";
 import Login from "../Login";
 import SignUp from "../SignUp";
 import FindDropDown from "./FindDropDown";
+import { useMediaQuery } from "react-responsive";
 
 function Header() {
   const [loginOpen, setLoginOpen] = useState(false);
@@ -14,7 +15,8 @@ function Header() {
 
   const [showDropdown, setShowDropdown] = useState(false);
 
-  
+  const isTablet = useMediaQuery({ maxWidth: 1000 });
+  const isSmallMobile = useMediaQuery({ maxWidth: 500 });
 
   const handleLoginOpen = () => {
     setLoginOpen(true);
@@ -88,7 +90,7 @@ function Header() {
           navigate("/");
         }}
       >
-        <Hansung width={250} height={100} fill="#ffffff" />
+        <Hansung width={isSmallMobile ? 150 : 250} height={isSmallMobile ? 70 : 100} fill="#ffffff" />
       </h2>
       <nav>
         <ul>
@@ -197,16 +199,13 @@ function Header() {
             팀원 모집
           </div>
           <div>        
-          <span 
-            onMouseEnter={() => setShowDropdown(true)}
-            onMouseLeave={()=>setShowDropdown(false)}
-            >
-              <div className="drop-header">찾기</div>
-              <FindDropDown
-                showDropdown={showDropdown}
-                setShowDropdown={setShowDropdown}
-              />
-            </span>
+          찾기
+            <div className="drop-item-inner" onClick={()=>{
+                    navigate("/find")
+                }}>팀 추천</div>
+                <div className="drop-item-inner" onClick={()=>{
+                    navigate("/find")
+                }}>유저 추천</div>
           </div>
           {loginCheck ? (
             
