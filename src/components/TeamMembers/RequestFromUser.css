@@ -1,17 +1,24 @@
 .request-container {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     justify-content: flex-start;
     align-items: center;
     border: 2px solid rgb(224, 224, 224);
     border-radius: 30px;
     margin-top: 10px;
     padding: 15px;
+    height: 100%;
+  }
+  .user-nickname{
+    display: flex;
+    font-style: bold;
+    font-size: 25px;
   }
   .member-role{
-    display: flex;
-    width:100px;
+    
+    margin-right: 20px;
     align-items: center;
+    justify-content: center;
   }
   .user-image{
     border-radius: 50%;
@@ -31,9 +38,45 @@
     width: 50px;
     border-radius: 30px;
   }
+  .request-top{
+    display: flex;
+    width: 100%;
+    flex-direction:row-reverse;
+    padding-right: 0px;
+    font-size: 15px;
+  }
+  
+  .delete-member{
+    color: white;
+    background-color: rgb(244, 117, 117);
+    padding: 5px;
+    border-radius: 20px;
+  }
+  .delete-member:hover{
+    background-color: rgb(238, 59, 59);
+  }
   .user-info {
+    display: grid;
+    grid-template-columns: 50% 50%;
     margin-left: 10px;
-    width: 500px;
+    width: 80%;
+    background-color: rgb(221, 221, 221);
+    border-radius: 30px;
+    height: 100px;
+    padding: 20px;
+    margin-top: 10px;
+  }
+  .user-keywords{
+    color: rgb(144, 144, 144);
+  }
+  .user-grade{
+    display: flex;
+    justify-content: center;
+  }
+  .user-email{
+    display: flex;
+    justify-content: left;
+    padding-left: 40px;
   }
   .user-msg{
     width: 500px;

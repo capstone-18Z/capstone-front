@@ -13,28 +13,39 @@ function Member({ memberInfo }) {
   }
   return (
     <div className="member">
+        
       <div className="request-container">
-      
-        <img className="user-image" src={memberInfo.profileImageUrl} />
-        <div className="user-info">
-          <div className="user-email">email : {memberInfo.email}</div>
-          <div className="user-nickname">nickname : {memberInfo.nickname}</div>
-          <div className="user-grade">{memberInfo.grade}학년</div>
+        <div className="request-top">
+      {userId == memberInfo.id ? <div style={{height : "2em"}}></div>
+           :  
+           <div className="delete-member">
+            delete
+            </div>
+        }
         </div>
-        {userId == memberInfo.id ? (
+        <img className="user-image" src={memberInfo.profileImageUrl} />
+        <div className="user-nickname">{userId == memberInfo.id ? (
           <>
             <div className="member-role">
-              <img src={CrownImg} width={40} />
+              <img src={CrownImg} width={30} />
             </div>
           </>
         ) : (
           <>
             <div className="member-role">
-              <img src={human} width={25} />
+              <img src={human} width={20} />
             </div>
-            <GroupRemoveIcon onClick={deleteMember} style={{ position: "relative", color: "red" ,top :"-32px"}} />
+            
           </>
-        )}
+        )}{memberInfo.nickname}</div>
+        
+        <div className="user-info">
+          <div className="user-email">email : {memberInfo.email}</div>
+          
+          <div className="user-grade">{memberInfo.grade}학년</div>
+          <div className="user-keywords">#sdfsdf/sdf</div>
+        </div>
+        
         
       </div>
     </div>
