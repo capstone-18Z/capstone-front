@@ -60,8 +60,7 @@ function Header() {
 
   useEffect(() => {
     const handleScroll = () => {
-      const currentScrollPosition =
-        window.scrollY || document.documentElement.scrollTop;
+      const currentScrollPosition = window.scrollY || document.documentElement.scrollTop;
       if (currentScrollPosition !== scrollPosition) {
         setScrollPosition(currentScrollPosition);
       }
@@ -82,9 +81,7 @@ function Header() {
   };
 
   return (
-    <header
-      className={scrollPosition < 300 ? "original_header" : "change_header"}
-    >
+    <header className={scrollPosition < 300 ? "original_header" : "change_header"}>
       <h2
         onClick={(e) => {
           navigate("/");
@@ -121,30 +118,23 @@ function Header() {
               공모전
             </div>
           </li>
-          <li>        
-          <span 
-            onMouseEnter={() => setShowDropdown(true)}
-            onMouseLeave={()=>setShowDropdown(false)}
-            >
+          <li>
+            <span onMouseEnter={() => setShowDropdown(true)} onMouseLeave={() => setShowDropdown(false)}>
               <div className="drop-header">찾기</div>
-              <FindDropDown
-                showDropdown={showDropdown}
-                setShowDropdown={setShowDropdown}
-              />
+              <FindDropDown showDropdown={showDropdown} setShowDropdown={setShowDropdown} />
             </span>
           </li>
           <li>
             {loginCheck ? (
               <>
-              <div
-                onClick={(e) => {
-                  navigate(`/mypage/profile/${localStorage.getItem("email")}`);
-                }}
-              >
-                마이페이지
-                <span className="notification"></span>
-              </div>
-              
+                <div
+                  onClick={(e) => {
+                    navigate(`/mypage/profile/${localStorage.getItem("email")}`);
+                  }}
+                >
+                  마이페이지
+                  <span className="notification"></span>
+                </div>
               </>
             ) : (
               <div></div>
@@ -162,16 +152,10 @@ function Header() {
                   로그인/회원가입
                 </Button>
                 <Dialog open={loginOpen} onClose={handleClose}>
-                  <Login
-                    onClose={handleClose}
-                    onSignupClick={handleSignupOpen}
-                  />
+                  <Login onClose={handleClose} onSignupClick={handleSignupOpen} />
                 </Dialog>
                 <Dialog open={signupOpen} onClose={handleClose}>
-                  <SignUp
-                    onClose={handleClose}
-                    onLoginClick={handleLoginOpen}
-                  />
+                  <SignUp onClose={handleClose} onLoginClick={handleLoginOpen} />
                 </Dialog>
               </>
             )}
@@ -198,28 +182,33 @@ function Header() {
           >
             팀원 모집
           </div>
-          <div>        
-          찾기
-            <div className="drop-item-inner" onClick={()=>{
-                    navigate("/find")
-                }}>팀 추천</div>
-                <div className="drop-item-inner" onClick={()=>{
-                    navigate("/find")
-                }}>유저 추천</div>
+          <div>
+            찾기
+            <div
+              className="drop-item-inner"
+              onClick={() => {
+                navigate("/find/recommend/team");
+              }}
+            >
+              팀 추천
+            </div>
+            <div
+              className="drop-item-inner"
+              onClick={() => {
+                navigate("/find/recommend/user");
+              }}
+            >
+              유저 추천
+            </div>
           </div>
           {loginCheck ? (
-            
-            <div 
+            <div
               onClick={(e) => {
                 navigate(`/mypage/profile/${localStorage.getItem("email")}`);
               }}
             >
-              
               마이페이지
-              
             </div>
-            
-            
           ) : (
             <div></div>
           )}
@@ -241,16 +230,10 @@ function Header() {
                   로그인/회원가입
                 </Button>
                 <Dialog open={loginOpen} onClose={handleClose}>
-                  <Login
-                    onClose={handleClose}
-                    onSignupClick={handleSignupOpen}
-                  />
+                  <Login onClose={handleClose} onSignupClick={handleSignupOpen} />
                 </Dialog>
                 <Dialog open={signupOpen} onClose={handleClose}>
-                  <SignUp
-                    onClose={handleClose}
-                    onLoginClick={handleLoginOpen}
-                  />
+                  <SignUp onClose={handleClose} onLoginClick={handleLoginOpen} />
                 </Dialog>
               </>
             )}
