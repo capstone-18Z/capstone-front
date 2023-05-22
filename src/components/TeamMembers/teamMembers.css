@@ -3,7 +3,7 @@
     width: 90%;
 }
 .teamMembers_container{
-    width: 100%;
+    width: 90%;
     padding: 30px;
     border-radius: 30px;
     border: 1px solid rgb(185, 185, 185);
@@ -46,7 +46,8 @@
 .memberList-container{
     display: grid;
     grid-template-columns: 45% 45%;
-    grid-gap: 20px;
+    margin-top: 20px;
+    grid-gap: 30px;
     justify-content: center;
 }
 

@@ -25,18 +25,35 @@ function RequestSendToUser({requestInfo,requestListSendToUser,setRequestListSend
             });
     }
     return(
-        <div className="request-container">
-            <img className="user-image" src={userInfo.profileImageUrl}/>
-            <div className="user-info">
-                    <div className="user-email">email : {userInfo.email}</div>
-                    <div className="user-nickname">nickname : {userInfo.nickname}</div>
-                    <div className="user-grade">{userInfo.grade}학년</div>
+      <div className="member-container">
+      <div className="request-top">
+       
+      </div>
+      <img className="user-image" src={userInfo.profileImageUrl} />
+      <div className="user-nickname">
+        {userInfo.nickname}
+      </div>
+
+      <div className="user-info">
+        <div className="grid-50-50">
+          <div className="user-email">Email : {userInfo.email}</div>
+          <div className="user-grade">{userInfo.grade}학년</div>
+        </div>
+        <div className="user-keywords">
+          {userInfo.memberKeywords.map((keyword) => (
+            <div className="user-keyword">
+              {`${keyword.category}/${keyword.field}${
+                keyword.sub == "none" ? "" : "(" + keyword.sub + ")"
+              }`}
             </div>
-            <div className="btn-grp">
+          ))}
+        </div>
+      </div>
+      <div className="btn-grp">
                 <button onClick={deleteRequest}>취소</button>
                 
             </div>
-        </div>
+    </div>
     );
 }
 export default RequestSendToUser;

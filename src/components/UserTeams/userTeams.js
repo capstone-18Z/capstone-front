@@ -30,7 +30,7 @@ function UserTeams() {
                     <Select className='userTeams_select' value={menu} onChange={onChange} name="menu">
                         <MenuItem  value="소속 팀">소속 팀</MenuItem>
                         <MenuItem  value="지원한 팀">지원한 팀</MenuItem>
-                        <MenuItem  value="초대된 팀">초대된 팀</MenuItem>
+                        <MenuItem  value="초대장">초대장</MenuItem>
                     </Select>                   
                     <hr/>                    
                 </div>
@@ -38,7 +38,7 @@ function UserTeams() {
           justifyContent: "center"}}>
                 {menu == "소속 팀" ? <div><JoinedTeam/></div> : null}
                 {menu == "지원한 팀" ? <div><AppliedTeamList/></div> : null}
-                {menu == "초대된 팀" ? <div><InvitedTeamList/></div> : null}
+                {menu == "초대장" ? <div><InvitedTeamList/></div> : null}
                 </div>
             </div>
         </div>

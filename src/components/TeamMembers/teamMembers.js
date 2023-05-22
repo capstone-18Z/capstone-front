@@ -67,7 +67,7 @@ function TeamMembers() {
           });
 
         console.log("팀원 가져오기");
-      } else if (menu == "지원한 팀원") {
+      } else if (menu == "지원한 유저") {
         console.log("menu", menu);
         fetch(
           `${process.env.REACT_APP_API_URL}/user-to-team/allRequestFromUser?teamId=${mypagedata.myAllTeams[selectedTeam].teamId}`,
@@ -151,7 +151,7 @@ function TeamMembers() {
             name="menu"
           >
             <MenuItem value="소속된 팀원">소속된 팀원</MenuItem>
-            <MenuItem value="지원한 팀원">지원한 팀원</MenuItem>
+            <MenuItem value="지원한 유저">지원한 유저</MenuItem>
             <MenuItem value="초대한 팀원">초대한 팀원</MenuItem>
           </Select>
         </div>
@@ -159,7 +159,7 @@ function TeamMembers() {
           {memberList!=null && menu == "소속된 팀원"
             ? memberList.map((memberInfo) => <Member memberInfo={memberInfo} />)
             : null}
-          {requestListFromUser!=null  && menu == "지원한 팀원"
+          {requestListFromUser!=null  && menu == "지원한 유저"
             ? requestListFromUser.map((requestInfo,index) => <RequestFromUser requestInfo={requestInfo} requestListFromUser={requestListFromUser} setRequestListFromUser={setRequestListFromUser}/>)
             : null}
           {requestListSendToUser!=null && menu == "초대한 팀원"

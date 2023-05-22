@@ -10,6 +10,7 @@ import Category from '../Category/category.js';
 import { FaSearch } from 'react-icons/fa'
 import ChatSetting from '../ChatSetting/chatSetting.js';
 import MakeTeam from './makeTeamBtn.js';
+import {motion} from "framer-motion"
 function Team() {
     const refresh_token = localStorage.getItem("refresh-token");
     const login_token = localStorage.getItem("login-token");
@@ -140,6 +141,8 @@ function Team() {
     }
 
     return (
+        
+
         <div className='team_list'>
             <div className="members-title-box">
         
@@ -170,9 +173,22 @@ function Team() {
                
                 <div className="team-card-container" style={{ flex: 1 }}>          
                     {teamList && teamList.map(team => (
+                        <motion.div
+                        initial={{ opacity: 0, y: 50 }}
+    
+                        whileInView={{
+                            opacity: 1, y: 0,
+                            transition: { delay: 0.1 }
+                        }}
+                        whileHover={{
+                          scale: 1.05,
+                          transition: { type: "spring", stiffness: 400, damping: 10 }
+                        }}> 
                         <div key={team.teamId} className="card_ryu">                    
                             <Card team={team} />
                         </div>
+                        </motion.div>
+
                         ))}
                 </div>
             </div>
@@ -186,6 +202,7 @@ function Team() {
             </div>  
             <MakeTeam makeTeam={onClick}/>      
         </div>
+       
     );
             
 }
