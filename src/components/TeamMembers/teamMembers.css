@@ -55,6 +55,9 @@
   .tm {
     width: 100%;
   }
+  .teamMembers_container {
+    width: 100%;
+  }
   .memberList-container{  
     grid-template-columns: 100% ;
   }
