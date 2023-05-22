@@ -1,12 +1,14 @@
 import React from "react";
-import { useState } from "react";
-import { Routes, Route, useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { Routes, Route, useNavigate, useLocation } from "react-router-dom";
 import "./find.css";
 import RecommendUsers from "./recommendUsers";
 import RecommendTeams from "./recommendTeams";
 
 function Find() {
   const navigate = useNavigate();
+  const location = useLocation();
+  //console.log(location.state);
   const [selectedTeamBtn, setSelectedTeamBtn] = useState(true);
   const [selectedUserBtn, setSelectedUserBtn] = useState(false);
   const clickTeam = () => {
@@ -19,6 +21,13 @@ function Find() {
     setSelectedUserBtn(true);
     navigate("/find/recommend/user");
   };
+
+  useEffect(() => {
+    if (location.state !== null) {
+      setSelectedTeamBtn(location.state?.team);
+      setSelectedUserBtn(location.state?.user);
+    }
+  }, [location.state]);
 
   return (
     <>
