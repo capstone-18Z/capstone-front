@@ -1,7 +1,7 @@
 @media (max-width: 768px) {
   /* 모바일 디스플레이 크기에 맞게 변경 */
   .profile-edit-box {
-    width: 400px !important;
+    width: 350px !important;
   }
   .inline-box {
     flex-direction: column;
@@ -19,20 +19,12 @@
   .profile-edit-box {
     width: 100%; /* 너비를 100%로 설정 */
     max-width: 700px; /* 최대 너비를 800px로 설정 (선택 사항) */
-  }
-  /* .team-lang-box-inedit {
-    width: 380px !important;
-  } */
-  /* .lang-select-box,
-  .framework-select-box,
-  .database-select-box {
-    width: 300px !important;
-  } */
+  } 
 }
 .profile-edit-box {
   width: 800px;
   margin: 0 auto;
-  padding: 50px;
+  padding: 30px;
   text-align: center;
   margin-top: 30px;
   border: 1px solid rgb(224, 224, 224);

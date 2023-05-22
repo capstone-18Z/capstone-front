@@ -73,6 +73,10 @@
 
   .introduce_first {
     margin-top: 50px;
+    font-size: 37px;
+  }
+  .introduce_second {
+    font-size: 37px;
   }
 }
 
