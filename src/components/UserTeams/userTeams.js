@@ -27,7 +27,7 @@ function UserTeams() {
             <div className='teamMembers_container'>
                 <div className='teamMembers_title'>
                     <label>팀 관리</label>                    
-                    <Select style={{ width: '25%' }} value={menu} onChange={onChange} name="menu">
+                    <Select className='userTeams_select' value={menu} onChange={onChange} name="menu">
                         <MenuItem  value="소속 팀">소속 팀</MenuItem>
                         <MenuItem  value="지원한 팀">지원한 팀</MenuItem>
                         <MenuItem  value="초대된 팀">초대된 팀</MenuItem>
