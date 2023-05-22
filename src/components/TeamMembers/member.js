@@ -8,45 +8,49 @@ import human from "../../assets/images/human.png";
 function Member({ memberInfo }) {
   const userId = localStorage.getItem("userId");
   console.log(memberInfo);
-  const deleteMember=()=>{
-    alert("asdasd")
-  }
+  const deleteMember = () => {
+    alert("asdasd");
+  };
   return (
     <div className="member">
-        
       <div className="request-container">
         <div className="request-top">
-      {userId == memberInfo.id ? <div style={{height : "2em"}}></div>
-           :  
-           <div className="delete-member">
-            delete
-            </div>
-        }
+          {userId == memberInfo.id ? (
+            <div style={{ height: "2em" }}></div>
+          ) : (
+            <div className="delete-member">delete</div>
+          )}
         </div>
         <img className="user-image" src={memberInfo.profileImageUrl} />
-        <div className="user-nickname">{userId == memberInfo.id ? (
-          <>
-            <div className="member-role">
-              <img src={CrownImg} width={30} />
-            </div>
-          </>
-        ) : (
-          <>
-            <div className="member-role">
-              <img src={human} width={20} />
-            </div>
-            
-          </>
-        )}{memberInfo.nickname}</div>
-        
+        <div className="user-nickname">
+          {userId == memberInfo.id ? (
+            <>
+              <div className="member-role">
+                <img src={CrownImg} width={30} />
+              </div>
+            </>
+          ) : (
+            <>
+              <div className="member-role">
+                <img src={human} width={20} />
+              </div>
+            </>
+          )}
+          {memberInfo.nickname}
+        </div>
+
         <div className="user-info">
           <div className="user-email">email : {memberInfo.email}</div>
-          
+
           <div className="user-grade">{memberInfo.grade}학년</div>
-          <div className="user-keywords">#sdfsdf/sdf</div>
+          <div className="user-keywords">
+            {memberInfo.memberKeywords.map((keyword) => 
+              <div className="user-keyword">
+                {`${keyword.category}/${keyword.field}${keyword.sub == "none" ? "" : "(" + keyword.sub + ")"}`}
+              </div>
+            )}
+          </div>
         </div>
-        
-        
       </div>
     </div>
   );
