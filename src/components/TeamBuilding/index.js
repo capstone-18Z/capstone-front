@@ -26,7 +26,8 @@ function TeamBuilding() {
     const today = new Date();
     
     const navigate = useNavigate();
-    
+    window.scrollTo(0, 0);    
+
     const [keywords, setKeywords] = useState([]);      
     useEffect(()=>{
         const nextInputs = {
@@ -46,6 +47,14 @@ function TeamBuilding() {
         wantTeamMemberCount: 0,       
         createDate: today,
     });
+
+    const check = () => {
+        if(inputs.teamName==="" || inputs.title==="" || inputs.category==="" || inputs.field==="" || inputs.wantTeamMemberCount==0){
+            return "false";
+        }
+        else 
+            return "";
+    }
 
     useEffect(()=>{        
         setInputs({...inputs, sub:"none"});           
@@ -311,7 +320,7 @@ function TeamBuilding() {
                 <h3>제목</h3>
                 <div className="team_editor">
                     <TextField                            
-                        required
+                       required 
                         label="글 제목을 입력해주세요"
                         value={title}                    
                         name="title"
@@ -338,9 +347,11 @@ function TeamBuilding() {
                 <Button variant="contained" onClick={() => {
                     navigate('/list/team');
                 }}>취소</Button>
-                <Button variant="contained" onClick={() => {
+                <Button variant="contained" 
+                disabled={check()!== ""}
+                onClick={() => {
                     //valuetest();
-                    testSubmitHandler();   
+                    testSubmitHandler();                    
                 }}>등록하기</Button>
                 </div>
             </form>
