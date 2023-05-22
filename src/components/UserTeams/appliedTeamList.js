@@ -1,32 +1,32 @@
-import { Button } from '@mui/material';
-import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { MyTeamCard } from './myTeamCard';
+import { Button } from "@mui/material";
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { MyTeamCard } from "./myTeamCard";
 
 function AppliedTeamList() {
-    const [appliedTeamsList, setAppliedTeamsList] = useState(null);
-    const navigate = useNavigate();
+  const [appliedTeamsList, setAppliedTeamsList] = useState(null);
+  const navigate = useNavigate();
 
-    const refresh_token = localStorage.getItem("refresh-token");
-    const login_token = localStorage.getItem("login-token");
-    useEffect(() => {           
-        fetch(`${process.env.REACT_APP_API_URL}/user-to-team/all-my-request`,{                    
-                headers: {
-                    'refresh-token': refresh_token,
-                    'login-token': login_token,
-                } 
-        })
-        .then((response) => response.json())        
-        .then((obj) => {setAppliedTeamsList(obj.data);
-        console.log(obj)});
-    }, []);
+  const refresh_token = localStorage.getItem("refresh-token");
+  const login_token = localStorage.getItem("login-token");
+  useEffect(() => {
+    fetch(`${process.env.REACT_APP_API_URL}/user-to-team/all-my-request`, {
+      headers: {
+        "refresh-token": refresh_token,
+        "login-token": login_token,
+      },
+    })
+      .then((response) => response.json())
+      .then((obj) => {
+        setAppliedTeamsList(obj.data);
+        console.log(obj);
+      });
+  }, []);
 
-    const 채팅=()=>{
-
-    }
-    const goTeam = (link) => {
-      navigate(`/list/team/${link}`);
-  }
+  const 채팅 = () => {};
+  const goTeam = (link) => {
+    navigate(`/list/team/${link}`);
+  };
 
   function isUrl(str) {
     const pattern = /^(https?:\/\/)?([a-z0-9-]+\.)+[a-z0-9]{2,4}.*$/i;
@@ -40,24 +40,27 @@ function AppliedTeamList() {
       (match) => `<a href="${match}" target="_blank">${match}</a>`
     );
   }
-    
 
-   
-   
-    return (      
-        <div>
-            {appliedTeamsList==null ?<div>지원한 팀이 없습니다.</div> : appliedTeamsList.map(data => (
-                <div key={data.info.teamId} className="joined-team-card-ryu" > 
-                <MyTeamCard team={data.info} />                    
-               <div className="joinedTeam-card-bottom">
-                  <p>수락 대기중</p>
-                 <button className="chatBtn" onClick={() => 채팅()}>채팅</button>
-                 <button className="exitBtn" >취소</button>
-                 </div>
+  return (
+    <div>
+      {appliedTeamsList == null ? (
+        <div>지원한 팀이 없습니다.</div>
+      ) : (
+        appliedTeamsList.map((data) => (
+          <div key={data.info.teamId} className="joined-team-card-ryu">
+            <MyTeamCard team={data.info} />
+            <div className="joinedTeam-card-bottom">
+              <p>수락 대기중</p>
+              <button className="chatBtn" onClick={() => 채팅()}>
+                채팅
+              </button>
+              <button className="exitBtn">취소</button>
             </div>
-        ))}
-        </div>
-    );
+          </div>
+        ))
+      )}
+    </div>
+  );
 }
 
 export default AppliedTeamList;
