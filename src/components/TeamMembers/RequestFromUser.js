@@ -8,6 +8,7 @@ function RequestFromUser({
   const matchId = requestInfo.id;
   const userInfo = requestInfo.info;
   const userMsg = requestInfo.message;
+  const userField=requestInfo.field;
   const refresh_token = localStorage.getItem("refresh-token");
   const login_token = localStorage.getItem("login-token");
   const approveRequest = () => {
@@ -48,15 +49,20 @@ function RequestFromUser({
   };
   return (
     <div className="request-container">
-      <img className="user-image" src={userInfo.profileImageUrl} />
-      <div className="user-info">
-        <div className="user-email">email : {userInfo.email}</div>
-        <div className="user-nickname">nickname : {userInfo.nickname}</div>
-        <div className="user-grade">{userInfo.grade}학년</div>
+      <div className="re-user-field"><h3>{userField}</h3></div>
+      <img className="re-user-image" src={userInfo.profileImageUrl} />
+      <div className="re-user-info">
+        <div className="re-user-nickname">{userInfo.nickname}</div>
+        <hr style={{ marginTop: "10px", marginBottom: "5px" }} />
+        <div className="flex js-between  pd-right">
+          <div className="re-user-email">Email : {userInfo.email}</div>
+          <div className="re-user-grade">{userInfo.grade}학년</div>
+        </div>
+        <div className="user-msg">"{userMsg}"</div>
       </div>
-      <div className="user-msg">"{userMsg}"</div>
       <div className="btn-grp">
         <button
+         className="re-user-chat-btn"
           onClick={() => {
             const chatWindow = window.open(
               `/chat?userId=${userInfo.id}&waitingId=${matchId}&nickname=${userInfo.nickname}&mode=team`,
@@ -85,8 +91,8 @@ function RequestFromUser({
         >
           채팅
         </button>
-        <button onClick={approveRequest}>수락</button>
-        <button onClick={refuseRequest}>거절</button>
+        <button class="re-user-approve-btn" onClick={approveRequest}>수락</button>
+        <button class="re-user-refuse-btn"onClick={refuseRequest}>거절</button>
       </div>
     </div>
   );

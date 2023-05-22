@@ -13,7 +13,7 @@ function Member({ memberInfo }) {
   };
   return (
     <div className="member">
-      <div className="request-container">
+      <div className="member-container">
         <div className="request-top">
           {userId == memberInfo.id ? (
             <div style={{ height: "2em" }}></div>
@@ -40,15 +40,18 @@ function Member({ memberInfo }) {
         </div>
 
         <div className="user-info">
-          <div className="user-email">email : {memberInfo.email}</div>
-
-          <div className="user-grade">{memberInfo.grade}학년</div>
+          <div className="grid-50-50">
+            <div className="user-email">email : {memberInfo.email}</div>
+            <div className="user-grade">{memberInfo.grade}학년</div>
+          </div>
           <div className="user-keywords">
-            {memberInfo.memberKeywords.map((keyword) => 
+            {memberInfo.memberKeywords.map((keyword) => (
               <div className="user-keyword">
-                {`${keyword.category}/${keyword.field}${keyword.sub == "none" ? "" : "(" + keyword.sub + ")"}`}
+                {`${keyword.category}/${keyword.field}${
+                  keyword.sub == "none" ? "" : "(" + keyword.sub + ")"
+                }`}
               </div>
-            )}
+            ))}
           </div>
         </div>
       </div>
