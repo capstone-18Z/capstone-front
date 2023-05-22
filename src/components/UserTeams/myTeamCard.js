@@ -46,7 +46,7 @@ export const MyTeamCard = (team) => {
           </h5>
         </div>
         <div className="myTeam-card-count">
-        <div className="myTeam-card-text font-small right"><Chip sx={{padding : "auto",height : "25px"}} icon={<PersonIcon fontSize="small"/>} label={data.team.currentTeamMemberCount}/></div>
+        <div className="myTeam-card-text font-small right mg-top-5px"><Chip sx={{padding : "auto",height : "25px"}} icon={<PersonIcon fontSize="small"/>} label={data.team.currentTeamMemberCount}/></div>
         </div>
       </div>
     </div>

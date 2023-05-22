@@ -47,7 +47,7 @@
   .user-email{
     display: flex;
     justify-content: left;
-    padding-left: 40px;
+    padding-left: 10px;
   }.user-nickname{
     display: flex;
     font-style: bold;

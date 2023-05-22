@@ -41,7 +41,7 @@ function Member({ memberInfo }) {
 
         <div className="user-info">
           <div className="grid-50-50">
-            <div className="user-email">email : {memberInfo.email}</div>
+            <div className="user-email">Email : {memberInfo.email}</div>
             <div className="user-grade">{memberInfo.grade}학년</div>
           </div>
           <div className="user-keywords">
