@@ -1,29 +1,40 @@
 import React from "react";
 import { useState } from "react";
+import { Routes, Route, useNavigate } from "react-router-dom";
 import "./find.css";
 import RecommendUsers from "./recommendUsers";
 import RecommendTeams from "./recommendTeams";
 
 function Find() {
-  const [selectedTeamBtn,setSelectedTeamBtn]=useState(true);
-  const [selectedUserBtn,setSelectedUserBtn]=useState(false);
-  const clickTeam=()=>{
+  const navigate = useNavigate();
+  const [selectedTeamBtn, setSelectedTeamBtn] = useState(true);
+  const [selectedUserBtn, setSelectedUserBtn] = useState(false);
+  const clickTeam = () => {
     setSelectedTeamBtn(true);
     setSelectedUserBtn(false);
-  }
-  const clickUser=()=>{
+    navigate("/find/recommend/team");
+  };
+  const clickUser = () => {
     setSelectedTeamBtn(false);
     setSelectedUserBtn(true);
-  }
+    navigate("/find/recommend/user");
+  };
 
   return (
     <>
       <div className="rc-group">
-        <div className={selectedTeamBtn?"rc-team selected" : "rc-team shadow"} onClick={clickTeam}>팀 추천</div>
-        <div className={selectedUserBtn?"rc-user selected" : "rc-user shadow"} onClick={clickUser}>유저 추천</div>
+        <div className={selectedTeamBtn ? "rc-team selected" : "rc-team shadow"} onClick={clickTeam}>
+          팀 추천
+        </div>
+        <div className={selectedUserBtn ? "rc-user selected" : "rc-user shadow"} onClick={clickUser}>
+          유저 추천
+        </div>
       </div>
       <div className="find">
-        {selectedUserBtn ? <RecommendUsers/> : <RecommendTeams/>}
+        <Routes>
+          <Route path="team" element={<RecommendTeams />}></Route>
+          <Route path="user" element={<RecommendUsers />}></Route>
+        </Routes>
       </div>
     </>
   );
