@@ -31,3 +31,12 @@
   margin-top: 16px;
   gap: 20px;
 }
+@media (max-width: 768px) {
+  .team_form {  
+    padding: 10px;
+    width: 350px;
+  }
+  .team_item{
+    width: 100%; 
+  }
+}
