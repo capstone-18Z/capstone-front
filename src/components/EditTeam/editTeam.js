@@ -24,6 +24,14 @@ function EditTeam() {
 
     const [update,setUpdate] = useState(false);
 
+    const check = () => {
+        if(inputs.teamName==="" || inputs.title==="" || inputs.category==="" || inputs.field==="" || inputs.wantTeamMemberCount==0){
+            return "false";
+        }
+        else 
+            return "";
+    }
+
     //서버에 값 받기
     useEffect(() => {                       
         fetch(`${process.env.REACT_APP_API_URL}/teams/${teamId}`,{     
@@ -411,7 +419,9 @@ function EditTeam() {
 
                 
                 <div style={{ display: "flex", justifyContent: "flex-end" }}>
-                <Button variant="contained" onClick={() => {
+                <Button variant="contained" 
+                disabled={check()!== ""}
+                onClick={() => {
                     //valuetest();
                     testSubmitHandler();   
                 }}>등록하기</Button>

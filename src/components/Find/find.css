@@ -1,3 +1,10 @@
+@font-face {
+    font-family: 'TheJamsil5Bold';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2302_01@1.0/TheJamsil5Bold.woff2') format('woff2');
+    font-weight: 700;
+    font-style: normal;
+}
+
 .find{
     padding-top: 30px;
     display: flex;
@@ -7,10 +14,13 @@
 .find_container{
     width: 1800px;
     padding: 30px;
+    margin-left: 10px;
+    margin-right: 10px;
     border-radius: 30px;
     border: 1px solid rgb(185, 185, 185);
 }
 .find_text{
+    font-family: 'TheJamsil5Bold';
     text-align: center;
     font-size: 40px;
 }

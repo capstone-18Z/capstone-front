@@ -59,9 +59,9 @@ function App() {
           <Route path="/" element={<><ChatSetting/><Header /><Main /><Footer/></>}></Route>
           <Route path="/mypage/*" element={<><ChatSetting/><Header/><MyPage /></>}></Route>
           <Route path="/profile/*" element={<><ChatSetting/><Header/><ProfilePage/></>}></Route>
-          <Route path="/list/*" element={<><ChatSetting/><Header/><ListPage/></>}></Route>
+          <Route path="/list/*" element={<><ChatSetting/><Header/><ListPage/><Footer/></>}></Route>
           <Route path="/post/*" element={<><ChatSetting/><Header/><PostPage /></>}></Route>
-          <Route path="/find/*" element={<><ChatSetting/><Header/><FindPage /></>}></Route>
+          <Route path="/find/*" element={<><ChatSetting/><Header/><FindPage /><Footer/></>}></Route>
           <Route path="/chat/*" element={<><Chat/></>}></Route>
         </Routes>
       </BrowserRouter>
