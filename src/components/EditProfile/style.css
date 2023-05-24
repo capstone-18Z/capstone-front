@@ -102,3 +102,8 @@
 .profile-edit-img-box:hover .overlay {
   opacity: 1;
 }
+.button-box button.selected {
+  background-color:deepskyblue;
+  border-color:deepskyblue;
+  color: #fff;
+}
