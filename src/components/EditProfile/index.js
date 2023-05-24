@@ -1,4 +1,14 @@
-import { TextField, Button, Select, MenuItem, Box, FormControl, InputLabel, Alert } from "@mui/material";
+import {
+  TextField,
+  Button,
+  Select,
+  MenuItem,
+  Box,
+  FormControl,
+  InputLabel,
+  Alert,
+  FormHelperText,
+} from "@mui/material";
 import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import "./style.css";
@@ -49,6 +59,7 @@ function EditProfile({ fetchData, payload }) {
   const imgRef = useRef();
   const [alertNum, setAlertNum] = useState(0);
   const [alertMessage, setAlertMessage] = useState("");
+  const [alertMessage2, setAlertMessage2] = useState("");
   const [memberLang, setMemberLang] = useState({
     c: memberData.memberLang.c,
     cpp: memberData.memberLang.cpp,
@@ -191,7 +202,7 @@ function EditProfile({ fetchData, payload }) {
         if (response.data) {
           alert("등록 완료");
           fetchData();
-          navigate(`/profile/${localStorage.getItem("email")}`);
+          navigate(`/mypage/profile/${localStorage.getItem("email")}`);
         }
       })
       .catch((err) => {
@@ -294,6 +305,38 @@ function EditProfile({ fetchData, payload }) {
     } else if (alertNum === 1) {
       return <Alert severity="success">{alertMessage}</Alert>;
     } else return;
+  };
+
+  const checkKeywordEmpty = () => {
+    if (memberKeywords.length === 0) {
+      return "하나 이상의 팀 키워드를 등록해주세요";
+    } else {
+      return "";
+    }
+  };
+
+  const checkFieldEmpty = () => {
+    if (field === "") {
+      return "개발 포지션을 골라주세요";
+    } else {
+      return "";
+    }
+  };
+
+  const checkSubjectEmpty = () => {
+    if (subject === "") {
+      return "과목 이름을 입력해주세요";
+    } else {
+      return "";
+    }
+  };
+
+  const checkSubEmpty = () => {
+    if (sub === "") {
+      return "분반을 입력해주세요";
+    } else {
+      return "";
+    }
   };
 
   return (
@@ -400,9 +443,15 @@ function EditProfile({ fetchData, payload }) {
         <div className="keyword-box">
           <div className="button-box">
             <InputLabel shrink sx={{ textAlign: "left" }}>
-              원하는 팀을 골라주세요
+              원하는 팀 키워드를 골라주세요
             </InputLabel>
-            <TextField fullWidth size="small" value={category.map((data) => data)} />
+            <TextField
+              fullWidth
+              size="small"
+              value={category.map((data) => data)}
+              error={checkKeywordEmpty() !== ""}
+              helperText={checkKeywordEmpty()}
+            />
             <Button
               className={category.includes("캡스톤 디자인") ? "selected" : ""}
               variant="outlined"
@@ -444,7 +493,7 @@ function EditProfile({ fetchData, payload }) {
         {fieldToggle && (
           <div className="field-toggle-box">
             <InputLabel shrink>개발 포지션을 골라주세요</InputLabel>
-            <FormControl size="small">
+            <FormControl size="small" error={checkFieldEmpty() !== ""}>
               <Select
                 sx={{ width: "200px" }}
                 name="field"
@@ -458,6 +507,7 @@ function EditProfile({ fetchData, payload }) {
                 <MenuItem value={"백엔드"}>백엔드</MenuItem>
                 <MenuItem value={"상관없음"}>상관없음</MenuItem>
               </Select>
+              <FormHelperText>{checkFieldEmpty()}</FormHelperText>
             </FormControl>
           </div>
         )}
@@ -472,6 +522,8 @@ function EditProfile({ fetchData, payload }) {
               onChange={(e) => {
                 setSubject(e.target.value);
               }}
+              helperText={checkSubjectEmpty()}
+              error={checkSubjectEmpty() !== ""}
             />
             <InputLabel shrink>분반 (수업계획서에 등록된 정확한 분반을 입력해주세요)</InputLabel>
             <TextField
@@ -482,6 +534,8 @@ function EditProfile({ fetchData, payload }) {
               onChange={(e) => {
                 setSub(e.target.value);
               }}
+              helperText={checkSubEmpty()}
+              error={checkSubEmpty() !== ""}
             />
           </div>
         )}
@@ -520,7 +574,17 @@ function EditProfile({ fetchData, payload }) {
             />
           </div>
         </div>
-        <Button sx={{ marginTop: "20px" }} variant="outlined" onClick={onChange2}>
+        <Button
+          sx={{ marginTop: "20px" }}
+          variant="outlined"
+          onClick={onChange2}
+          disabled={
+            (fieldToggle && checkFieldEmpty() !== "") ||
+            (subjectToggle && checkSubEmpty() !== "") ||
+            (subjectToggle && checkSubjectEmpty() !== "") ||
+            checkKeywordEmpty() !== ""
+          }
+        >
           등록
         </Button>
       </form>

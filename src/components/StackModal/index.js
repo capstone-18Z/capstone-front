@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Box, Button, InputLabel, TextField, FormControl, Select, MenuItem } from "@mui/material";
+import { Box, Button, InputLabel, TextField, FormControl, Select, MenuItem, FormHelperText } from "@mui/material";
 import Languages from "../TechniqueStack/language";
 import Framework from "../TechniqueStack/framework";
 import Database from "../TechniqueStack/database";
@@ -216,6 +216,38 @@ function StackModal({ onClose, member }) {
     }
   };
 
+  const checkKeywordEmpty = () => {
+    if (memberKeywords.length === 0) {
+      return "하나 이상의 팀 키워드를 등록해주세요";
+    } else {
+      return "";
+    }
+  };
+
+  const checkFieldEmpty = () => {
+    if (field === "") {
+      return "개발 포지션을 골라주세요";
+    } else {
+      return "";
+    }
+  };
+
+  const checkSubjectEmpty = () => {
+    if (subject === "") {
+      return "과목 이름을 입력해주세요";
+    } else {
+      return "";
+    }
+  };
+
+  const checkSubEmpty = () => {
+    if (sub === "") {
+      return "분반을 입력해주세요";
+    } else {
+      return "";
+    }
+  };
+
   return (
     <div className="stackmodal-box">
       <h1 className="stackmodal-title">기술 스택을 설정해 메이트로 등록하세요!</h1>
@@ -223,9 +255,15 @@ function StackModal({ onClose, member }) {
         <div className="keyword-box">
           <div className="button-box">
             <InputLabel shrink sx={{ textAlign: "left" }}>
-              원하는 팀을 골라주세요
+              원하는 팀 키워드를 골라주세요
             </InputLabel>
-            <TextField fullWidth size="small" value={category.map((data) => data)} />
+            <TextField
+              fullWidth
+              size="small"
+              value={category.map((data) => data)}
+              error={checkKeywordEmpty() !== ""}
+              helperText={checkKeywordEmpty()}
+            />
             <Button
               className={category.includes("캡스톤 디자인") ? "selected" : ""}
               variant="outlined"
@@ -267,7 +305,7 @@ function StackModal({ onClose, member }) {
         {fieldToggle && (
           <div className="field-toggle-box">
             <InputLabel shrink>개발 포지션을 골라주세요</InputLabel>
-            <FormControl size="small">
+            <FormControl size="small" error={checkFieldEmpty() !== ""}>
               <Select
                 sx={{ width: "200px" }}
                 name="field"
@@ -281,6 +319,7 @@ function StackModal({ onClose, member }) {
                 <MenuItem value={"백엔드"}>백엔드</MenuItem>
                 <MenuItem value={"상관없음"}>상관없음</MenuItem>
               </Select>
+              <FormHelperText>{checkFieldEmpty()}</FormHelperText>
             </FormControl>
           </div>
         )}
@@ -295,6 +334,8 @@ function StackModal({ onClose, member }) {
               onChange={(e) => {
                 setSubject(e.target.value);
               }}
+              helperText={checkSubjectEmpty()}
+              error={checkSubjectEmpty() !== ""}
             />
             <InputLabel shrink>분반 (수업계획서에 등록된 정확한 분반을 입력해주세요)</InputLabel>
             <TextField
@@ -305,6 +346,8 @@ function StackModal({ onClose, member }) {
               onChange={(e) => {
                 setSub(e.target.value);
               }}
+              helperText={checkSubEmpty()}
+              error={checkSubEmpty() !== ""}
             />
           </div>
         )}
@@ -340,7 +383,17 @@ function StackModal({ onClose, member }) {
       </div>
       <div className="stack-button-box">
         <Button onClick={onClose}>Close</Button>
-        <Button onClick={onClick}>등록</Button>
+        <Button
+          onClick={onClick}
+          disabled={
+            (fieldToggle && checkFieldEmpty() !== "") ||
+            (subjectToggle && checkSubEmpty() !== "") ||
+            (subjectToggle && checkSubjectEmpty() !== "") ||
+            checkKeywordEmpty() !== ""
+          }
+        >
+          등록
+        </Button>
       </div>
     </div>
   );
