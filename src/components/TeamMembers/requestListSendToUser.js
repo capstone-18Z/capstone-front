@@ -9,6 +9,9 @@ function RequestSendToUser({
   const userInfo = requestInfo.info;
   const refresh_token = localStorage.getItem("refresh-token");
   const login_token = localStorage.getItem("login-token");
+  const 채팅=(waitingId,userId)=>{
+    window.open(`/chat?waitingId=${waitingId}&userId=${userId}&mode=team`, "_blank", "width=450,height=650");
+  }
   const deleteRequest = () => {
     fetch(`${process.env.REACT_APP_API_URL}/team-to-user/${matchId}/delete`, {
       method: "post",
@@ -49,7 +52,7 @@ function RequestSendToUser({
         </div>
       </div>
       <div className="btn-grp">
-        <button>채팅</button>
+        <button onClick={()=>채팅(matchId,userInfo.id)}>채팅</button>
         <button onClick={deleteRequest}>취소</button>
       </div>
     </div>
