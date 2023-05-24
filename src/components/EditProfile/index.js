@@ -27,7 +27,7 @@ function EditProfile({ fetchData, payload }) {
     const nonProjectCategoryKeyword = memberData.memberKeywords.find(
       (keyword) => keyword.category !== "과목 팀프로젝트"
     );
-  
+
     return nonProjectCategoryKeyword ? nonProjectCategoryKeyword.field : "";
   });
   const [fieldToggle, setFieldToggle] = useState(false); // 추가
@@ -399,18 +399,44 @@ function EditProfile({ fetchData, payload }) {
         </div>
         <div className="keyword-box">
           <div className="button-box">
-            <InputLabel shrink sx={{textAlign: "left"}}>원하는 팀을 골라주세요</InputLabel>
+            <InputLabel shrink sx={{ textAlign: "left" }}>
+              원하는 팀을 골라주세요
+            </InputLabel>
             <TextField fullWidth size="small" value={category.map((data) => data)} />
-            <Button variant="outlined" sx={{ margin: "10px" }} value="캡스톤 디자인" onClick={onChange3}>
+            <Button
+              className={category.includes("캡스톤 디자인") ? "selected" : ""}
+              variant="outlined"
+              sx={{ margin: "10px" }}
+              value="캡스톤 디자인"
+              onClick={onChange3}
+            >
               캡스톤 디자인
             </Button>
-            <Button variant="outlined" sx={{ margin: "10px" }} value="과목 팀프로젝트" onClick={onChange3}>
+            <Button
+              className={category.includes("과목 팀프로젝트") ? "selected" : ""}
+              variant="outlined"
+              sx={{ margin: "10px" }}
+              value="과목 팀프로젝트"
+              onClick={onChange3}
+            >
               과목 팀프로젝트
             </Button>
-            <Button variant="outlined" sx={{ margin: "10px" }} value="공모전 및 대회" onClick={onChange3}>
+            <Button
+              className={category.includes("공모전 및 대회") ? "selected" : ""}
+              variant="outlined"
+              sx={{ margin: "10px" }}
+              value="공모전 및 대회"
+              onClick={onChange3}
+            >
               공모전 및 대회
             </Button>
-            <Button variant="outlined" sx={{ margin: "10px" }} value="개인 팀프로젝트" onClick={onChange3}>
+            <Button
+              className={category.includes("개인 팀프로젝트") ? "selected" : ""}
+              variant="outlined"
+              sx={{ margin: "10px" }}
+              value="개인 팀프로젝트"
+              onClick={onChange3}
+            >
               개인 팀프로젝트
             </Button>
           </div>
@@ -469,7 +495,10 @@ function EditProfile({ fetchData, payload }) {
               setSelectedLanguages={setSelectedLanguages}
             />
           </div>
-          <div className="framework-select-box" sx={{ display: "flex", flexDirection: "column", alignItems: "center", marginTop: "30px" }}>
+          <div
+            className="framework-select-box"
+            sx={{ display: "flex", flexDirection: "column", alignItems: "center", marginTop: "30px" }}
+          >
             <h3>FRAMEWORK & PLATFORM</h3>
             <Framework
               frameworkValues={memberFramework}
@@ -478,7 +507,10 @@ function EditProfile({ fetchData, payload }) {
               setSelectedFrameworks={setSelectedFrameworks}
             />
           </div>
-          <div className="database-select-box" sx={{ display: "flex", flexDirection: "column", alignItems: "center", marginTop: "30px" }}>
+          <div
+            className="database-select-box"
+            sx={{ display: "flex", flexDirection: "column", alignItems: "center", marginTop: "30px" }}
+          >
             <h3>DATABASE</h3>
             <Database
               databaseValues={memberDB}
