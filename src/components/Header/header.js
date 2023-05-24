@@ -133,7 +133,7 @@ function Header() {
                   }}
                 >
                   마이페이지
-                  <span className="notification"></span>
+                 
                 </div>
               </>
             ) : (

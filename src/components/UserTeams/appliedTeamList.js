@@ -23,7 +23,31 @@ function AppliedTeamList() {
       });
   }, []);
 
-  const 채팅 = () => {};
+  const 채팅 = (teamLeader,waitingId)=>{
+    const chatWindow = window.open(
+      `/chat?teamLeader=${teamLeader}&waitingId=${waitingId}&mode=user`,
+      "",
+      "width=450,height=650"
+    );
+
+    chatWindow.addEventListener("load", () => {
+      const style = document.createElement("style");
+      style.innerHTML = `
+      /* 원하는 스타일 추가 */
+      body {
+        background-color: #f2f2f2;
+      }
+      /* 스크롤바 숨기기 */
+      ::-webkit-scrollbar {
+        display: none;
+      }
+    `;
+      chatWindow.document.head.appendChild(style);
+
+      // 오른쪽으로 100px 이동하고 아래로 200px 이동
+      chatWindow.moveTo(100, 200);
+    });
+  }
   const goTeam = (link) => {
     navigate(`/list/team/${link}`);
   };
@@ -51,7 +75,7 @@ function AppliedTeamList() {
             <MyTeamCard team={data.info} />
             <div className="joinedTeam-card-bottom">
               <p>수락 대기중</p>
-              <button className="chatBtn" onClick={() => 채팅()}>
+              <button className="chatBtn" onClick={() => 채팅(data.info.teamLeader,data.id)}>
                 채팅
               </button>
               <button className="exitBtn">취소</button>

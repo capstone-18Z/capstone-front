@@ -217,12 +217,3 @@ nav ul li button:hover {
   }
 }
 
-.notification{
-  border-radius: 50%;
-  position: absolute;
-  top: -6px;
-  right: -2px;
-  width: 12px;
-  height: 12px;
-  background-image:  linear-gradient(#f7bf04, #efec8a);
-}

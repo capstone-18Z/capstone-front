@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import { useRef } from "react";
 import { useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
-import 'react-toastify/dist/ReactToastify.css';
+import "react-toastify/dist/ReactToastify.css";
 function ChatSetting(props) {
   const login_token = localStorage.getItem("login-token");
   const [socketConnected, setSocketConnected] = useState(false);
@@ -12,6 +12,7 @@ function ChatSetting(props) {
   const webSocketUrl = process.env.REACT_APP_SOCK_URL;
   let ws = useRef(null);
   useEffect(() => {
+    console.log("currnet", ws.current);
     if (!ws.current) {
       ws.current = new WebSocket(webSocketUrl);
       ws.current.onopen = () => {
@@ -30,37 +31,40 @@ function ChatSetting(props) {
         const data = JSON.parse(evt.data);
         console.log(data);
         if (data.type == "notificationFromChat") {
-          
-          toast.success(data.message,{ 
-            position : toast.POSITION.TOP_RIGHT,
-            autoClose:3000,
-            onClick:()=>{
-              window.open(`/chat?waitingId=${data.waitingId}&userId=${data.userId}&teamLeader=${data.teamLeader}&nickname=${localStorage.getItem("nickname")}&mode=${data.mode=="team" ? "user" : "team"}`, "_blank", "width=450,height=650");
-            }
+          toast.success(data.message, {
+            position: toast.POSITION.TOP_RIGHT,
+            autoClose: 3000,
+            onClick: () => {
+              window.open(
+                `/chat?waitingId=${data.waitingId}&userId=${
+                  data.userId
+                }&teamLeader=${data.teamLeader}&nickname=${localStorage.getItem(
+                  "nickname"
+                )}&mode=${data.mode == "team" ? "user" : "team"}`,
+                "_blank",
+                "width=450,height=650"
+              );
+            },
           });
-          
         }
         if (data.type == "notification") {
-          
-          toast.success(data.message,{ 
-            position : toast.POSITION.TOP_RIGHT,
-            autoClose:3000,
-            onClick:()=>{
+          toast.success(data.message, {
+            position: toast.POSITION.TOP_RIGHT,
+            autoClose: 3000,
+            onClick: () => {
               window.location.href = "http://localhost:3000/mypage/team";
-            }
+            },
           });
         }
         if (data.type == "message") {
-          
-          toast.success(data.message,{ 
-            position : toast.POSITION.TOP_RIGHT,
-            autoClose:3000,
-            onClick:()=>{
+          toast.success(data.message, {
+            position: toast.POSITION.TOP_RIGHT,
+            autoClose: 3000,
+            onClick: () => {
               window.location.href = "http://localhost:3000/chat";
-            }
+            },
           });
         }
-       
       };
     }
 
@@ -76,9 +80,11 @@ function ChatSetting(props) {
       setSendMsg(true);
     }
   }, [socketConnected]);
-  return <>
-    <ToastContainer/>
-  </>;
+  return (
+    <>
+      <ToastContainer />
+    </>
+  );
 }
 
 export default ChatSetting;

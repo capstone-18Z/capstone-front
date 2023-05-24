@@ -3,13 +3,31 @@ import GroupIcon from "@mui/icons-material/Group";
 import GroupRemoveIcon from "@mui/icons-material/GroupRemove";
 import SearchIcon from "@mui/icons-material/Search";
 import "./member.css";
+import PersonRemoveIcon from '@mui/icons-material/PersonRemove';
+import DeleteIcon from '@mui/icons-material/Delete';
 import CrownImg from "../../assets/images/crown.png";
 import human from "../../assets/images/human.png";
-function Member({ memberInfo }) {
+function Member({ memberInfo,teamId,memberList,setMemberList }) {
   const userId = localStorage.getItem("userId");
-  console.log(memberInfo);
-  const deleteMember = () => {
-    alert("asdasd");
+  const refresh_token = localStorage.getItem("refresh-token");
+  const login_token = localStorage.getItem("login-token");
+  console.log("memberInfo",memberInfo);
+  console.log("teamId",teamId)
+  const deleteMember = (teamId) => {
+    fetch(`${process.env.REACT_APP_API_URL}/teams/deleteMember?teamId=${teamId}&userId=${memberInfo.id}`,{
+      method : "post",
+      headers: {
+        "refresh-token": refresh_token,
+        "login-token": login_token, //헤더로 로그인 토큰 넣어야 삭제됨
+      },
+    }).then(res => res.json()).
+    then(obj=>{
+      setMemberList(memberList.filter(data=>{
+        return memberInfo.id != data.id}
+      ))
+    })
+      
+    
   };
   return (
     <div className="member">
@@ -18,7 +36,8 @@ function Member({ memberInfo }) {
           {userId == memberInfo.id ? (
             <div style={{ height: "2em" }}></div>
           ) : (
-            <div className="delete-member">delete</div>
+            // <div className="delete-member">delete</div>
+            <PersonRemoveIcon onClick={()=>deleteMember(teamId)}/>
           )}
         </div>
         <img className="user-image" src={memberInfo.profileImageUrl} />
