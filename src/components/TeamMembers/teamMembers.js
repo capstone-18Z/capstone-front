@@ -157,7 +157,7 @@ function TeamMembers() {
         </div>
         <div className="memberList-container">
           {memberList!=null && menu == "소속된 팀원"
-            ? memberList.map((memberInfo) => <Member memberInfo={memberInfo} />)
+            ? memberList.map((memberInfo) => <Member memberInfo={memberInfo} memberList={memberList} setMemberList={setMemberList} teamId={mypagedata.myAllTeams[selectedTeam].teamId}/>)
             : null}
           {requestListFromUser!=null  && menu == "지원한 유저"
             ? requestListFromUser.map((requestInfo,index) => <RequestFromUser requestInfo={requestInfo} requestListFromUser={requestListFromUser} setRequestListFromUser={setRequestListFromUser}/>)
