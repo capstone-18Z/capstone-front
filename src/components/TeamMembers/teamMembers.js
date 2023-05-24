@@ -28,6 +28,7 @@ function TeamMembers() {
       .then((response) => response.json())
       .then((obj) => {
         setMyPageData(obj.data);
+        console.log(obj);
         fetch(
           `${process.env.REACT_APP_API_URL}/teams/getMembersFromMyTeam?teamId=${obj.data.myAllTeams[selectedTeam].teamId}`,
           {
@@ -124,8 +125,10 @@ function TeamMembers() {
   }
 
   return (
-    <div className="tm">
+    <div className="tm">      
       <div className="teamMembers_container">
+      {mypagedata!=null && mypagedata.myAllTeams.length==0 ? "현재 팀이 없습니다! 팀만들러가기" :
+        <>
         <div className="teamMembers_title">
           <label>팀별</label>
           <Select
@@ -141,8 +144,8 @@ function TeamMembers() {
             ))}
           </Select>
           <hr />
-        </div>
-        <div className="teamMembers_body_top">
+        </div>        
+        <div className="teamMembers_body_top">        
           <h2>팀 구성원</h2>
           <Select
             style={{ width: "50%" }}
@@ -155,19 +158,22 @@ function TeamMembers() {
             <MenuItem value="초대한 유저">초대한 유저</MenuItem>
           </Select>
         </div>
-        <div className="memberList-container">
-          {memberList!=null && menu == "소속된 팀원"
-            ? memberList.map((memberInfo) => <Member memberInfo={memberInfo} memberList={memberList} setMemberList={setMemberList} teamId={mypagedata.myAllTeams[selectedTeam].teamId}/>)
-            : null}
-          {requestListFromUser!=null  && menu == "지원한 유저"
-            ? requestListFromUser.map((requestInfo,index) => <RequestFromUser requestInfo={requestInfo} requestListFromUser={requestListFromUser} setRequestListFromUser={setRequestListFromUser}/>)
-            : null}
-          {requestListSendToUser!=null && menu == "초대한 유저"
-            ? requestListSendToUser.map((requestInfo,index) => <RequestSendToUser requestInfo={requestInfo} requestListSendToUser={requestListSendToUser} setRequestListSendToUser={setRequestListSendToUser}/>)
-            : null}
-        </div>
+        
+        <div className="memberList-container">  
+            {memberList!=null && menu == "소속된 팀원"
+              ? memberList.map((memberInfo) => <Member memberInfo={memberInfo} memberList={memberList} setMemberList={setMemberList} teamId={mypagedata.myAllTeams[selectedTeam].teamId}/>)
+              : null}
+            {requestListFromUser!=null  && menu == "지원한 유저"
+              ? requestListFromUser.map((requestInfo,index) => <RequestFromUser requestInfo={requestInfo} requestListFromUser={requestListFromUser} setRequestListFromUser={setRequestListFromUser}/>)
+              : null}
+            {requestListSendToUser!=null && menu == "초대한 유저"
+              ? requestListSendToUser.map((requestInfo,index) => <RequestSendToUser requestInfo={requestInfo} requestListSendToUser={requestListSendToUser} setRequestListSendToUser={setRequestListSendToUser}/>)
+              : null}
+        </div>        
         {mypagedata.myAllTeams == null ? "현재 팀이 없습니다." : null}
-      </div>
+        </>
+      }
+      </div>   
     </div>
   );
 }

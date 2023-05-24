@@ -29,15 +29,9 @@ function RecommendUserList({team, selectedTeam}) {
           .post(`${process.env.REACT_APP_API_URL}/team-to-user/${team.teamId}/match-request`, {
             userId: Id,
           })
-          .then((response) => {
+          .then((response) => {            
             console.log(response);
-            if (response.data) {
-              alert("요청 완료");
-            }
-          })
-          .catch((err) => {
-            console.log(err.response);
-            alert(err.response.data.message);
+            alert(response.data.message);
           });
       };
 
