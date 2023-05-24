@@ -26,8 +26,6 @@ function TeamBuilding() {
     const today = new Date();
     
     const navigate = useNavigate();
-    window.scrollTo(0, 0);    
-
     const [keywords, setKeywords] = useState([]);      
     useEffect(()=>{
         const nextInputs = {

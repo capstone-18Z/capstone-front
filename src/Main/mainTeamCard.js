@@ -43,6 +43,7 @@ export const MainTeamCard = (team) => {
          navigate(`/list/team/${data.team.teamId}`)
       }}> 
           <div className="mainTeam-card-image">
+          {team.team.imagePaths.length==0 ? <img src={`https://www.hansung.ac.kr/sites/hansung/images/sub/college_pic_4.jpg`} /> : null}
             {data.team.imagePaths.map(filename => (
               <img src={`${filename}`} alt={filename} key={filename} style={{ width: "100%", height: "auto" }} />
             ))}

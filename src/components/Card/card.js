@@ -77,9 +77,11 @@ export const Card = (team) => {
        navigate(`/list/team/${team.team.teamId}`)
     }}> 
                     <div className="card-image">
-                    {team.team.imagePaths.map(filename => (
-                      <img src={`${filename}`} alt={filename} key={filename} style={{ width: "100%", height: "auto" }} />
-                    ))}
+                      {team.team.imagePaths.length==0 ? <img src={`https://www.hansung.ac.kr/sites/hansung/images/sub/college_pic_4.jpg`} /> : null}
+                      {team.team.imagePaths.map(filename => (
+                        <img src={`${filename}`} alt={filename} key={filename} style={{ width: "100%", height: "auto" }} />
+                      ))}
+                    
                     </div>
                     
                     <div className="card-contents">

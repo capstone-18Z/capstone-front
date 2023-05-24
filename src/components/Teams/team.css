@@ -59,11 +59,10 @@
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(400px, 0.25fr));
     justify-content: center; /* 수평 중앙 정렬 */
-    align-items: center; /* 수직 중앙 정렬 */
     padding: 0px;
     grid-gap: 5vw;
-    justify-items: center;
   }
+
   .team-make-btn{
     display: none;
   }
