@@ -120,7 +120,7 @@ function Header() {
           </li>
           <li>
             <span onMouseEnter={() => setShowDropdown(true)} onMouseLeave={() => setShowDropdown(false)}>
-              <div className="drop-header">찾기</div>
+              <div className="drop-header">추천</div>
               <FindDropDown showDropdown={showDropdown} setShowDropdown={setShowDropdown} />
             </span>
           </li>

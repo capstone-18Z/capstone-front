@@ -42,6 +42,7 @@ function TeamBuilding() {
         category : "",
         field: "",
         sub: "none",
+        teamURL:"",
         wantTeamMemberCount: 0,       
         createDate: today,
     });
@@ -59,7 +60,7 @@ function TeamBuilding() {
         console.log(inputs);
     },[inputs.category])
     
-    const {wantTeamMemberCount, teamName,title,category,field,sub ,createDate, updateDate} = inputs;	//비구조화 할당
+    const {wantTeamMemberCount, teamName,title,category,field,sub ,teamURL,createDate, updateDate} = inputs;	//비구조화 할당
     const onChange = (e) => {
         const {name, value} = e.target;
         const nextInputs = {
@@ -293,7 +294,19 @@ function TeamBuilding() {
                         <MenuItem value={5}>5</MenuItem>
                     </Select> 
                 </div>
+                <div className="team-url">
+                <h3>팀 주소</h3>
                 
+                <TextField                            
+                    required
+                    label="팀원과 프로젝트를 진행할 공간의 url을 입력해주세요"
+                    value={teamURL}                    
+                    name="teamURL"
+                    variant="outlined"
+                    onChange={onChange}
+                    style={{width : '95%',marginTop:'10px'}}
+                    />   
+                    </div>
                 </div>
                 <div className="team_label">
                 <h3>요구 사항</h3>

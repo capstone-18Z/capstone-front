@@ -4,7 +4,9 @@ import "./teamMembers.css";
 import Member from "./member";
 import RequestFromUser from "./RequestFromUser";
 import RequestSendToUser from "./requestListSendToUser";
+import {useNavigate} from "react-router-dom";
 function TeamMembers() {
+  const navigate=useNavigate();
   const refresh_token = localStorage.getItem("refresh-token");
   const login_token = localStorage.getItem("login-token");
   const [memberList, setMemberList] = useState(null);
@@ -127,7 +129,7 @@ function TeamMembers() {
   return (
     <div className="tm">      
       <div className="teamMembers_container">
-      {mypagedata!=null && mypagedata.myAllTeams.length==0 ? "현재 팀이 없습니다! 팀만들러가기" :
+      {mypagedata!=null && mypagedata.myAllTeams.length==0 ? <div className="no-teams">현재 팀이 없습니다! <div onClick={()=>navigate("/post/team")}>팀 만들기</div></div> :
         <>
         <div className="teamMembers_title">
           <label>팀별</label>
