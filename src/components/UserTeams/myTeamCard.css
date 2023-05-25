@@ -39,6 +39,9 @@
   .myTeam-card-text {
       margin-left: 5px;
       margin-right: 5px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
   }
   
   .myTeam-card-text-keyword {
@@ -60,8 +63,9 @@
       gap: 8px;
   }
   .myTeam-card-title{
-        margin-top: 1px;
-        height: 21px;
+      margin-top: 5px;
+      height: 21px;
+      margin-bottom: 10px;
   }
   .myTeam-card-info{
         height: 100%;
