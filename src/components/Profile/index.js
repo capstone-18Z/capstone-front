@@ -204,7 +204,7 @@ function Profile({ payload }) {
                       .replace("MYSQLL", "MYSQL")
                       .replace("MARIADBL", "MARIA DB")
                       .replace("MONGODBL", "MONGO DB")
-                      .replace("SCHEMAL", "SCHEMA")
+                      .replace("SCHEMAL", "DB 설계")
                       .replace("TDMAX", "3DMAX")
                       .replace("CS", "C#")
                       .replace("CPP", "C++")}`}
@@ -234,7 +234,7 @@ function Profile({ payload }) {
                       .replace("MYSQLL", "MYSQL")
                       .replace("MARIADBL", "MARIA DB")
                       .replace("MONGODBL", "MONGO DB")
-                      .replace("SCHEMAL", "SCHEMA")
+                      .replace("SCHEMAL", "DB 설계")
                       .replace("TDMAX", "3DMAX")
                       .replace("CS", "C#")
                       .replace("CPP", "C++")}`}

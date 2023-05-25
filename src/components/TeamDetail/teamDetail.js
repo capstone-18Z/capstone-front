@@ -129,7 +129,7 @@ function TeamDetail() {
         .replace("MYSQLL", "MYSQL")
         .replace("MARIADBL", "MARIA DB")
         .replace("MONGODBL", "MONGO DB")
-        .replace("SCHEMAL", "SCHEMA")
+        .replace("SCHEMAL", "DB 설계")
     );
   const Databasedata2 = filteredDatabase.map((item) => item[1]);
 

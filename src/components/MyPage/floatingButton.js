@@ -36,7 +36,7 @@ function FloatingButton() {
   ];
   
   return (
-      <div className="box box1">
+      <div className={`box ${isOpen1 ? 'click' : ''}`}>
         <div className="menu" ref={menuRef}>
           <div className={`menu-round-box ${isOpen1 ? 'open' : ''}`}>
             <ul>

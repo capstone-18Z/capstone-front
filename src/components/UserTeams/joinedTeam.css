@@ -67,6 +67,11 @@
     grid-gap:20px;
     max-height: 580px;
   }
+  @media (max-width: 1800px) {
+    .joined-team-container {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
   @media (max-width: 768px) {
     .joined-team-container {
       grid-template-columns: repeat(1, 1fr);

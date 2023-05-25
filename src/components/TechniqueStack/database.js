@@ -78,7 +78,7 @@ function Database({ databaseValues, onDatabaseValueChange, selectedDatabases, se
                 {data.map(data => (
                     <Button className={selectedDatabases[data] ? "selected" : ""} key={data} variant="outlined" onClick={() => toggleDatabase(data)} style={{ margin: '8px' }}>
                       <img src={`${imglink}${data}.png?alt=media`} alt="logo" width={30} height={30} style={{ marginRight: '5px' }}/>
-                    {data.toUpperCase().replace('MYSQLL', 'MYSQL').replace('MARIADBL','MARIA DB').replace('MONGODBL','MONGO DB').replace('SCHEMAL','SCHEMA')}
+                    {data.toUpperCase().replace('MYSQLL', 'MYSQL').replace('MARIADBL','MARIA DB').replace('MONGODBL','MONGO DB').replace('SCHEMAL','DB 설계')}
                     </Button>
                 ))}
             </div>
