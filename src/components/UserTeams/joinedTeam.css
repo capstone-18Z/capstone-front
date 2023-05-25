@@ -4,7 +4,6 @@
     border-radius: 5px;
     padding: 15px;
     margin-bottom: 10px;
-    height: 177px;
     position: relative;
     padding-top: 10px;
   }
@@ -89,4 +88,27 @@
       scale: 0.75;
       margin-top: -30px;
   }
+  
+  }
+  @media (max-width: 401px){
+    .joined-team-card-ryu{
+      width: 300px;
+      height: 300px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .joinedTeam-btn-group{
+      display: flex;
+    }
+    .joinedTeam-card-bottom{
+      display: flex;
+      flex-direction: column;
+    }
+    .exitBtn{
+      right: 30px;
+    }
+    .chatBtn{
+      right: 105px;
+    }
   }

@@ -72,8 +72,10 @@ function JoinedTeam(){
                         __html: makeLink(data.teamURL),
                       }}
                     /> : <span className="teamURL">{data.teamURL}</span>}
+                    <div className="joinedTeam-btn-group">
                      <button className="chatBtn" onClick={() => 채팅(data)}>채팅</button>
                      <button className="exitBtn" onClick={() => 팀나가기(data.teamId)}>팀나가기</button>
+                     </div>
                      </div>
                 </div>
             ))}

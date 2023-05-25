@@ -36,7 +36,7 @@ function UserTeams() {
                 </div>
                 <div className='teamMembers_body_top' style={{display: "flex",
           justifyContent: "center"}}>
-                {menu == "소속 팀" ? <div><JoinedTeam/></div> : null}
+                {menu == "소속 팀" ? <JoinedTeam/> : null}
                 {menu == "지원한 팀" ? <div><AppliedTeamList/></div> : null}
                 {menu == "초대장" ? <div><InvitedTeamList/></div> : null}
                 </div>
