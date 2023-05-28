@@ -37,63 +37,49 @@ function Chat() {
       ws.current.onmessage = (evt) => {
         const data = JSON.parse(evt.data);
 
-        Notification.requestPermission().then(function (permission) {
-          if (permission === "granted") {
-            // 알림 생성
-            if (data.type == "notification") {
-              const notification = new Notification(data.message);
-              notification.onclick = () => {
-                window.location.href = "http://localhost:3000/mypage/team";
-                notification.close();
-              };
-            } else if (data.type == "message") {
-              setItems((pre) => [...pre, data.message]);
-            } else if (data.type == "enter") {
-              if (searchParams.get("mode") == "room") {
-                setItems([]);
-                fetch(
-                  `${process.env.REACT_APP_API_URL}/chat/team?roomId=${waitingId}`,
-                  {
-                    headers: {
-                      "refresh-token": refresh_token,
-                      "login-token": login_token,
-                    },
-                  }
-                )
-                  .then((response) => response.json())
-                  .then((obj) => {
-                    console.log("아아", obj.data);
-                    obj.data.map((data) => {
-                      if (data.mode == "chat") {
-                        if (data.from == localStorage.getItem("userId")) {
-                          setItems((pre) => [...pre, "m: " + data.msg]);
-                        } else {
-                          setItems((pre) => [...pre, "a: " + data.msg]);
-                        }
-                      }
-                      if (data.mode == "noti") {
-                        setItems((pre) => [...pre, data.msg]);
-                      }
-                    });
-                  });
-              } else {
-                fetch(
-                  `${process.env.REACT_APP_API_URL}/chat?roomId=${waitingId}`,
-                  {
-                    headers: {
-                      "refresh-token": refresh_token,
-                      "login-token": login_token,
-                    },
-                  }
-                )
-                  .then((response) => response.json())
-                  .then((obj) => {
-                    setItems([...obj.data, data.message]);
-                  });
+        if (data.type == "message") {
+          setItems((pre) => [...pre, data.message]);
+        } else if (data.type == "enter") {
+          if (searchParams.get("mode") == "room") {
+            setItems([]);
+            fetch(
+              `${process.env.REACT_APP_API_URL}/chat/team?roomId=${waitingId}`,
+              {
+                headers: {
+                  "refresh-token": refresh_token,
+                  "login-token": login_token,
+                },
               }
-            }
+            )
+              .then((response) => response.json())
+              .then((obj) => {
+                console.log("아아", obj.data);
+                obj.data.map((data) => {
+                  if (data.mode == "chat") {
+                    if (data.from == localStorage.getItem("userId")) {
+                      setItems((pre) => [...pre, "m: " + data.msg]);
+                    } else {
+                      setItems((pre) => [...pre, "a: " + data.msg]);
+                    }
+                  }
+                  if (data.mode == "noti") {
+                    setItems((pre) => [...pre, data.msg]);
+                  }
+                });
+              });
+          } else {
+            fetch(`${process.env.REACT_APP_API_URL}/chat?roomId=${waitingId}`, {
+              headers: {
+                "refresh-token": refresh_token,
+                "login-token": login_token,
+              },
+            })
+              .then((response) => response.json())
+              .then((obj) => {
+                setItems([...obj.data, data.message]);
+              });
           }
-        });
+        }
       };
     }
 
