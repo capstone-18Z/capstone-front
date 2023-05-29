@@ -125,6 +125,7 @@
 }
 .detail-text {
     padding: 10px;
+    word-break:break-all;
 }
 .teamdetail_bottom {
     margin: 10px;
