@@ -73,7 +73,7 @@ export const Card = (team) => {
     return imageElements;
   };
   return (
-    <div className="card-wrapper" onClick={()   => {
+    <div className={ team.team.wantTeamMemberCount!==0 ? 'card-wrapper' : 'card-wrapper-closed' } onClick={()   => {
        navigate(`/list/team/${team.team.teamId}`)
     }}> 
                     <div className="card-image">

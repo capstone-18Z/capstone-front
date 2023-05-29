@@ -405,13 +405,14 @@ function TeamDetail() {
               삭제하기
             </button>
           </div>
-        ) : login_token != null ? (
+        ) : teamDetail.wantTeamMemberCount == 0 ? (<p>이 공고는 마감되었습니다!</p>) : (
+          login_token != null ? (
           <button className="팀신청" onClick={showReq}>
             팀원 신청
           </button>
         ) : (
           ""
-        )}
+        ))}
         <Dialog open={showRequest} onClose={handleClose}>
           <Request teamId={teamId} setShowRequest={setShowRequest} />
         </Dialog>
