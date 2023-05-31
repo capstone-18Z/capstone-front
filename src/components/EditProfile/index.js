@@ -18,6 +18,8 @@ import Framework from "../TechniqueStack/framework";
 import Database from "../TechniqueStack/database";
 import axios from "axios";
 import { useMediaQuery } from "@mui/material";
+import Swal from "sweetalert2";
+import "../../myAlert.css";
 
 function EditProfile({ fetchData, payload }) {
   const navigate = useNavigate();
@@ -200,14 +202,31 @@ function EditProfile({ fetchData, payload }) {
       })
       .then((response) => {
         if (response.data) {
-          alert("등록 완료");
-          fetchData();
-          navigate(`/mypage/profile/${localStorage.getItem("email")}`);
+          Swal.fire({
+            title: "등록 완료",
+            icon: "success",
+            customClass: {
+              icon: 'my-custom-icon-class',
+              actions: 'my-custom-actions-class',
+            },
+          }).then((result) => {
+            if (result.isConfirmed) {
+              fetchData();
+              navigate(`/mypage/profile/${localStorage.getItem("email")}`);
+            }
+          });
         }
       })
       .catch((err) => {
         console.log(err.response);
-        alert("등록 실패");
+        Swal.fire({
+          title: "등록 실패",
+          icon: "error",
+          customClass: {
+            icon: 'my-custom-icon-class',
+            actions: 'my-custom-actions-class',
+          },
+        });
       });
     /* key 확인하기 */
     for (let key of formData.keys()) {

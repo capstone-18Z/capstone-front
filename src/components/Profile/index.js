@@ -11,7 +11,7 @@ import {
   Select,
   MenuItem,
   DialogActions,
-  useMediaQuery
+  useMediaQuery,
 } from "@mui/material";
 import EmailIcon from "@mui/icons-material/Email";
 import GitHubIcon from "@mui/icons-material/GitHub";
@@ -22,7 +22,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import useInput from "../../hooks/useInput";
 import Swal from "sweetalert2";
-import "../../myAlert.css"
+import "../../myAlert.css";
 
 function Profile({ payload }) {
   const navigate = useNavigate();
@@ -81,26 +81,38 @@ function Profile({ payload }) {
       })
       .then((response) => {
         if (response.data) {
-          Swal.fire({
-            title: response.data.message,      
-            icon: 'success',
-            customClass: {
-              icon: 'my-custom-icon-class',
-              actions: 'my-custom-actions-class',
-            },
-          })
+          handleDialogClose();
+          if (response.data.message === "이미 신청한 유저 입니다.") {
+            Swal.fire({
+              title: response.data.message,
+              icon: "error",
+              customClass: {
+                icon: "my-custom-icon-class",
+                actions: "my-custom-actions-class",
+              },
+            });
+          } else {
+            Swal.fire({
+              title: response.data.message,
+              icon: "success",
+              customClass: {
+                icon: "my-custom-icon-class",
+                actions: "my-custom-actions-class",
+              },
+            });
+          }
         }
       })
       .catch((err) => {
         console.log(err.response);
         Swal.fire({
-          title: err.response.data.message,      
-          icon: 'warning',
+          title: err.response.data.message,
+          icon: "warning",
           customClass: {
-            icon: 'my-custom-icon-class',
-            actions: 'my-custom-actions-class',
+            icon: "my-custom-icon-class",
+            actions: "my-custom-actions-class",
           },
-        })
+        });
       });
   };
 
@@ -290,7 +302,11 @@ function Profile({ payload }) {
                   <InputLabel>팀</InputLabel>
                   <Select name="teamId" value={inputs.teamId} onChange={setInputs}>
                     {myTeams.data.map((team) => {
-                      return <MenuItem key={team.teamId} value={team.teamId}>{team.title}</MenuItem>;
+                      return (
+                        <MenuItem key={team.teamId} value={team.teamId}>
+                          {team.title}
+                        </MenuItem>
+                      );
                     })}
                   </Select>
                 </FormControl>
