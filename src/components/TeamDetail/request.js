@@ -7,6 +7,7 @@ import {
 } from "@mui/material";
 
 import { useState } from "react";
+import Swal from "sweetalert2";
 
 function Request({ teamId, setShowRequest }) {
   const login_token = localStorage.getItem("login-token");
@@ -45,7 +46,20 @@ function Request({ teamId, setShowRequest }) {
       .then((response) => response.json())
       .then((obj) => {
         setShowRequest(false);
-        alert(obj.message);
+        console.log(obj);
+        if(obj.message=="매칭 신청을 완료했습니다."){
+          Swal.fire({
+            title: obj.message,      
+            icon: 'success',
+          })
+        }
+        else{
+          Swal.fire({
+            title: obj.message,      
+            icon: 'warning',
+          })
+        }
+        
       });
   };
 

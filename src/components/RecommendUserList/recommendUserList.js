@@ -5,6 +5,7 @@ import { Button } from '@mui/material';
 import axios from 'axios';
 import MemberCard from '../MemberCard';
 import "./recommendUserList.css"
+import Swal from "sweetalert2";
 
 function RecommendUserList({team, selectedTeam}) {
     const [userList, setUserList] = useState(null);
@@ -31,7 +32,10 @@ function RecommendUserList({team, selectedTeam}) {
           })
           .then((response) => {            
             console.log(response);
-            alert(response.data.message);
+            Swal.fire({
+              title: response.data.message,      
+              icon: 'success',
+            })
           });
       };
 

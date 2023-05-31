@@ -119,10 +119,14 @@ function Header() {
             </div>
           </li>
           <li>
+            {loginCheck ? (
             <span onMouseEnter={() => setShowDropdown(true)} onMouseLeave={() => setShowDropdown(false)}>
               <div className="drop-header">추천</div>
               <FindDropDown showDropdown={showDropdown} setShowDropdown={setShowDropdown} />
             </span>
+             ) : (
+              null
+            )}
           </li>
           <li>
             {loginCheck ? (
@@ -137,7 +141,7 @@ function Header() {
                 </div>
               </>
             ) : (
-              <div></div>
+              null
             )}
           </li>
 
@@ -182,6 +186,7 @@ function Header() {
           >
             팀원 모집
           </div>
+          {loginCheck ? (
           <div>
             찾기
             <div
@@ -211,6 +216,9 @@ function Header() {
               유저 추천
             </div>
           </div>
+           ) : (
+            <div></div>
+          )}
           {loginCheck ? (
             <div
               onClick={(e) => {

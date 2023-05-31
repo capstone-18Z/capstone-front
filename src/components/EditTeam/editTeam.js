@@ -10,6 +10,7 @@ import axios from 'axios';
 import Languages from "../TechniqueStack/language";
 import Framework from "../TechniqueStack/framework";
 import Database from "../TechniqueStack/database";
+import Swal from "sweetalert2";
 
 function EditTeam() {
     //로그인 토큰 저장
@@ -151,7 +152,10 @@ function EditTeam() {
           });
           console.log(newinputs);
           console.log(response.data);
-          alert(response.data.message);
+          Swal.fire({
+            title: response.data.message,      
+            icon: 'warning',
+          })
           navigate(`/list/team/${teamId}`)
         } catch (error) {
           console.error(error);

@@ -21,6 +21,7 @@ import { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import useInput from "../../hooks/useInput";
+import Swal from "sweetalert2";
 
 function Profile({ payload }) {
   const navigate = useNavigate();
@@ -79,12 +80,18 @@ function Profile({ payload }) {
       })
       .then((response) => {
         if (response.data) {
-          alert(response.data.message);
+          Swal.fire({
+            title: response.data.message,      
+            icon: 'success',
+          })
         }
       })
       .catch((err) => {
         console.log(err.response);
-        alert(err.response.data.message);
+        Swal.fire({
+          title: err.response.data.message,      
+          icon: 'warning',
+        })
       });
   };
 

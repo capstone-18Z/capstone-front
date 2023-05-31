@@ -3,6 +3,8 @@ import { useEffect, useState } from "react";
 import { MyTeamCard } from "./myTeamCard"
 import { useNavigate } from 'react-router-dom';
 import "./joinedTeam.css"
+import Swal from "sweetalert2";
+
 function JoinedTeam(){
   const refresh_token = localStorage.getItem("refresh-token");
   const login_token = localStorage.getItem("login-token");
@@ -35,7 +37,10 @@ function JoinedTeam(){
             .then((response) => response.json())
             .then((obj) => {
               console.log(obj);
-              alert(obj.message);
+              Swal.fire({
+                title: obj.message,
+                icon: 'success',
+              })
               setJoinedTeams(joinedTeams.filter(data=>{
                 return data.teamId!=teamId
             }))

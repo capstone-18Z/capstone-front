@@ -5,6 +5,8 @@ import { Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { MyTeamCard } from "../UserTeams/myTeamCard";
 import "./invitedTeamList.css";
+import Swal from "sweetalert2";
+
 function InvitedTeamList() {
   const [invitedTeamList, setInvitedTeamList] = useState(null);
   const navigate = useNavigate();
@@ -46,7 +48,10 @@ function InvitedTeamList() {
               return data.matchId != matchId;
             })
           );
-          alert("신청을 수락했습니다.")
+          Swal.fire({
+            title: "신청을 수락했습니다.",      
+            icon: 'success',
+          })
         });
     }
   };
@@ -67,7 +72,10 @@ function InvitedTeamList() {
               return data.matchId != matchId;
             })
           );
-          alert("신청을 거절했습니다.")
+          Swal.fire({
+            title: "신청을 거절했습니다.",      
+            icon: 'error',
+          })
         });
     }
   };

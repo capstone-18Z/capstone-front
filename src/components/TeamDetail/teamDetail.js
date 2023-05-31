@@ -11,6 +11,7 @@ import { Dialog } from "@mui/material";
 import BadgeIcon from "@mui/icons-material/Badge";
 import MemberCard from "../MemberCard/index";
 import "./teamDetail.css";
+import Swal from "sweetalert2";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
@@ -84,7 +85,11 @@ function TeamDetail() {
       }),
     })
       .then((response) => response.json())
-      .then((obj) => alert(obj.message));
+      .then((obj) => 
+      Swal.fire({
+        title: obj.message,
+        icon: 'success',
+      }));
   };
   const test = () => {
     console.log(uppercasedData);
@@ -134,7 +139,8 @@ function TeamDetail() {
   const Databasedata2 = filteredDatabase.map((item) => item[1]);
 
   useEffect(() => {
-    window.scrollTo(0, 0); 
+    window.scrollTo(0, 0);
+    var check=-1;
     fetch(`${process.env.REACT_APP_API_URL}/teams/${teamId}`, {
       headers: {
         "refresh-token": refresh_token,
@@ -143,6 +149,7 @@ function TeamDetail() {
     })
       .then((response) => response.json())
       .then((obj) => {
+        check=obj.data.wantTeamMemberCount;
         setTeamDetail(obj.data);
         setUpdatable(obj.updatable);
         fetch(`${process.env.REACT_APP_API_URL}/member/search/uid/${obj.data.teamLeader}`, {
@@ -153,8 +160,16 @@ function TeamDetail() {
         }).then((response) => response.json())
         .then(obj=>{console.log("member",obj.memberKeywords);
         setLeaderInfo(obj);
-    setLeaderImg(obj.profileImageUrl)});
-    
+        setLeaderImg(obj.profileImageUrl)})
+        .then(() => {
+          if(check==0){
+            Swal.fire({
+              title: '이미 마감된 공고입니다',
+              text: '다른 공고를 찾아보세요',
+              icon: 'warning',
+            })
+          }
+        });    
       });
   }, []);
 
@@ -255,6 +270,8 @@ function TeamDetail() {
       },
     ],
   };
+  
+  
 
   return (
     <div className="teamDetail-container">
@@ -387,19 +404,37 @@ function TeamDetail() {
             <button
               className="teamdetail-btn"
               onClick={() => {
-                fetch(
-                  `${process.env.REACT_APP_API_URL}/teams/${teamId}/delete`,
-                  {
-                    method: "POST",
-                    headers: {
-                      "refresh-token": refresh_token,
-                      "login-token": login_token, //헤더로 로그인 토큰 넣어야 삭제됨
-                    },
-                  }
-                )
-                  .then((response) => response.json())
-                  .then((obj) => alert(obj.message))
-                  .then(() => navigate(`/list/team`));
+                Swal.fire({
+                  title: '정말로 삭제 하시겠습니까?',
+                  text: '다시 되돌릴 수 없습니다. 신중하세요.',
+                  icon: 'warning',
+                  
+                  showCancelButton: true, // cancel버튼 보이기. 기본은 원래 없음
+                  confirmButtonColor: '#3085d6', // confrim 버튼 색깔 지정
+                  cancelButtonColor: '#d33', // cancel 버튼 색깔 지정
+                  confirmButtonText: '승인', // confirm 버튼 텍스트 지정
+                  cancelButtonText: '취소', // cancel 버튼 텍스트 지정
+                  
+                }).then(result => {
+                    // 만약 Promise리턴을 받으면,
+                    if (result.isConfirmed) { // 만약 모달창에서 confirm 버튼을 눌렀다면                    
+                      
+                      fetch(
+                        `${process.env.REACT_APP_API_URL}/teams/${teamId}/delete`,
+                        {
+                          method: "POST",
+                          headers: {
+                            "refresh-token": refresh_token,
+                            "login-token": login_token, //헤더로 로그인 토큰 넣어야 삭제됨
+                          },
+                        }
+                      )
+                        .then((response) => response.json())
+                        .then(Swal.fire('삭제 되었습니다!', 'success'))
+                        .then(() => navigate(`/list/team`));
+                    }
+                });
+                
               }}
             >
               삭제하기

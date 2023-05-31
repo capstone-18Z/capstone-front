@@ -1,5 +1,7 @@
 import React from 'react';
 import "./mypagelist.css";
+import Swal from "sweetalert2";
+
 const BASE_URL = `${process.env.REACT_APP_API_URL}`;
 
 function MyPageList(request) {
@@ -16,7 +18,11 @@ function MyPageList(request) {
             }                                       
         })                            
         .then((response) => response.json())
-        .then((obj)=>{alert(obj.message); window.location.reload()})
+        .then((obj)=>{
+            Swal.fire({
+                title: obj.message,      
+                icon: 'warning',
+            }); window.location.reload()})
     }
     return (
         <div className='MyPageList_profile' key={request.waitingId}>             

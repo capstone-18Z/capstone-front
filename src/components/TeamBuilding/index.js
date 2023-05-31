@@ -11,12 +11,7 @@ import Languages from "../TechniqueStack/language";
 import Framework from "../TechniqueStack/framework";
 import Database from "../TechniqueStack/database";
 import { Autocomplete } from "@mui/material";
-
-import dayjs from 'dayjs';
-import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import Swal from "sweetalert2";
 
 function TeamBuilding() {
     //로그인 토큰 저장
@@ -108,7 +103,10 @@ function TeamBuilding() {
           });
           console.log(newinputs);
           console.log(response.data);
-          alert(response.data.message);
+          Swal.fire({
+            title: response.data.message,      
+            icon: 'success',
+          })
           navigate(`/list/team?page=1`)
         } catch (error) {
           console.error(error);
