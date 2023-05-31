@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
-import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
+import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "../../../node_modules/chart.js/dist/chart";
 import { Doughnut } from "react-chartjs-2";
 import ConstructionIcon from "@mui/icons-material/Construction";
 import QuestionMarkIcon from "@mui/icons-material/QuestionMark";
