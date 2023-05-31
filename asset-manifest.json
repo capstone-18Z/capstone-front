@@ -1,0 +1,24 @@
+{
+  "files": {
+    "main.css": "/capstone-front/static/css/main.dfe9be9c.css",
+    "main.js": "/capstone-front/static/js/main.1b507382.js",
+    "static/js/787.54ba1f79.chunk.js": "/capstone-front/static/js/787.54ba1f79.chunk.js",
+    "static/media/HansungMatingBanner.png": "/capstone-front/static/media/HansungMatingBanner.67ae0137e83a2c4e28f8.png",
+    "static/media/index.cjs": "/capstone-front/static/media/index.c05687ef19f5bac24939.cjs",
+    "static/media/HansungMatingBannerM.png": "/capstone-front/static/media/HansungMatingBannerM.ee704ad20bd883082d82.png",
+    "static/media/human.png": "/capstone-front/static/media/human.d0ef971e86fbf0a12aa8.png",
+    "static/media/hansungmating.svg": "/capstone-front/static/media/hansungmating.136981e664ac06f5a6be2d99d62aaebe.svg",
+    "static/media/slick.svg": "/capstone-front/static/media/slick.2630a3e3eab21c607e21.svg",
+    "static/media/slick.eot": "/capstone-front/static/media/slick.a4e97f5a2a64f0ab1323.eot",
+    "static/media/slick.ttf": "/capstone-front/static/media/slick.c94f7671dcc99dce43e2.ttf",
+    "static/media/slick.woff": "/capstone-front/static/media/slick.295183786cd8a1389865.woff",
+    "index.html": "/capstone-front/index.html",
+    "main.dfe9be9c.css.map": "/capstone-front/static/css/main.dfe9be9c.css.map",
+    "main.1b507382.js.map": "/capstone-front/static/js/main.1b507382.js.map",
+    "787.54ba1f79.chunk.js.map": "/capstone-front/static/js/787.54ba1f79.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.dfe9be9c.css",
+    "static/js/main.1b507382.js"
+  ]
+}
