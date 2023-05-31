@@ -12,6 +12,7 @@ import BadgeIcon from "@mui/icons-material/Badge";
 import MemberCard from "../MemberCard/index";
 import "./teamDetail.css";
 import Swal from "sweetalert2";
+import "./myAlert.css"
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
@@ -89,6 +90,9 @@ function TeamDetail() {
       Swal.fire({
         title: obj.message,
         icon: 'success',
+        customClass: {
+          icon: 'my-custom-icon-class',
+        }
       }));
   };
   const test = () => {
@@ -408,6 +412,11 @@ function TeamDetail() {
                   title: '정말로 삭제 하시겠습니까?',
                   text: '다시 되돌릴 수 없습니다. 신중하세요.',
                   icon: 'warning',
+                  customClass: {
+                    icon: 'my-custom-icon-class',
+                    actions: 'my-custom-actions-class',
+                    footer: 'my-custom-actions-class',
+                  },
                   
                   showCancelButton: true, // cancel버튼 보이기. 기본은 원래 없음
                   confirmButtonColor: '#3085d6', // confrim 버튼 색깔 지정
@@ -430,7 +439,14 @@ function TeamDetail() {
                         }
                       )
                         .then((response) => response.json())
-                        .then(Swal.fire('삭제 되었습니다!', 'success'))
+                        .then(Swal.fire({
+                        title: '삭제 되었습니다!',
+                        icon: 'success',
+                        customClass: {
+                          icon: 'my-custom-icon-class',
+                          actions: 'my-custom-actions-class',
+                          footer: 'my-custom-actions-class',
+                        }}))
                         .then(() => navigate(`/list/team`));
                     }
                 });

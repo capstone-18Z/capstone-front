@@ -1,0 +1,7 @@
+.my-custom-icon-class{
+    margin: 2.5em auto 0.6em;
+}
+.my-custom-actions-class > button{
+    padding: 15px;
+    margin: 15px;
+}

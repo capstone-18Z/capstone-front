@@ -8,6 +8,7 @@ import {
 
 import { useState } from "react";
 import Swal from "sweetalert2";
+import "./myAlert.css"
 
 function Request({ teamId, setShowRequest }) {
   const login_token = localStorage.getItem("login-token");
@@ -51,12 +52,20 @@ function Request({ teamId, setShowRequest }) {
           Swal.fire({
             title: obj.message,      
             icon: 'success',
+            customClass: {
+              icon: 'my-custom-icon-class',
+              actions: 'my-custom-actions-class',
+            },
           })
         }
         else{
           Swal.fire({
             title: obj.message,      
             icon: 'warning',
+            customClass: {
+              icon: 'my-custom-icon-class',
+              actions: 'my-custom-actions-class',
+            },
           })
         }
         
