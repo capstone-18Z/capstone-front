@@ -8,7 +8,7 @@ import {
 
 import { useState } from "react";
 import Swal from "sweetalert2";
-import "./myAlert.css"
+import "../../myAlert.css"
 
 function Request({ teamId, setShowRequest }) {
   const login_token = localStorage.getItem("login-token");

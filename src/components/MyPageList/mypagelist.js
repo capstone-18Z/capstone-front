@@ -1,6 +1,7 @@
 import React from 'react';
 import "./mypagelist.css";
 import Swal from "sweetalert2";
+import "../../myAlert.css"
 
 const BASE_URL = `${process.env.REACT_APP_API_URL}`;
 
@@ -22,6 +23,10 @@ function MyPageList(request) {
             Swal.fire({
                 title: obj.message,      
                 icon: 'warning',
+                customClass: {
+                    icon: 'my-custom-icon-class',
+                    actions: 'my-custom-actions-class',
+                },
             }); window.location.reload()})
     }
     return (

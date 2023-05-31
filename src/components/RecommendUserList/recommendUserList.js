@@ -6,6 +6,7 @@ import axios from 'axios';
 import MemberCard from '../MemberCard';
 import "./recommendUserList.css"
 import Swal from "sweetalert2";
+import "../../myAlert.css"
 
 function RecommendUserList({team, selectedTeam}) {
     const [userList, setUserList] = useState(null);
@@ -35,6 +36,10 @@ function RecommendUserList({team, selectedTeam}) {
             Swal.fire({
               title: response.data.message,      
               icon: 'success',
+              customClass: {
+                icon: 'my-custom-icon-class',
+                actions: 'my-custom-actions-class',
+              },
             })
           });
       };

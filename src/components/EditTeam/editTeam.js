@@ -11,6 +11,7 @@ import Languages from "../TechniqueStack/language";
 import Framework from "../TechniqueStack/framework";
 import Database from "../TechniqueStack/database";
 import Swal from "sweetalert2";
+import "../../myAlert.css"
 
 function EditTeam() {
     //로그인 토큰 저장
@@ -155,6 +156,10 @@ function EditTeam() {
           Swal.fire({
             title: response.data.message,      
             icon: 'warning',
+            customClass: {
+                icon: 'my-custom-icon-class',
+                actions: 'my-custom-actions-class',
+              },
           })
           navigate(`/list/team/${teamId}`)
         } catch (error) {

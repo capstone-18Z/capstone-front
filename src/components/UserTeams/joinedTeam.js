@@ -4,6 +4,7 @@ import { MyTeamCard } from "./myTeamCard"
 import { useNavigate } from 'react-router-dom';
 import "./joinedTeam.css"
 import Swal from "sweetalert2";
+import "../../myAlert.css"
 
 function JoinedTeam(){
   const refresh_token = localStorage.getItem("refresh-token");
@@ -40,6 +41,10 @@ function JoinedTeam(){
               Swal.fire({
                 title: obj.message,
                 icon: 'success',
+                customClass: {
+                  icon: 'my-custom-icon-class',
+                  actions: 'my-custom-actions-class',
+                },
               })
               setJoinedTeams(joinedTeams.filter(data=>{
                 return data.teamId!=teamId

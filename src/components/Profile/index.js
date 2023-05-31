@@ -22,6 +22,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import useInput from "../../hooks/useInput";
 import Swal from "sweetalert2";
+import "../../myAlert.css"
 
 function Profile({ payload }) {
   const navigate = useNavigate();
@@ -83,6 +84,10 @@ function Profile({ payload }) {
           Swal.fire({
             title: response.data.message,      
             icon: 'success',
+            customClass: {
+              icon: 'my-custom-icon-class',
+              actions: 'my-custom-actions-class',
+            },
           })
         }
       })
@@ -91,6 +96,10 @@ function Profile({ payload }) {
         Swal.fire({
           title: err.response.data.message,      
           icon: 'warning',
+          customClass: {
+            icon: 'my-custom-icon-class',
+            actions: 'my-custom-actions-class',
+          },
         })
       });
   };

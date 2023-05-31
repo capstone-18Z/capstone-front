@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { MyTeamCard } from "../UserTeams/myTeamCard";
 import "./invitedTeamList.css";
 import Swal from "sweetalert2";
+import "../../myAlert.css"
 
 function InvitedTeamList() {
   const [invitedTeamList, setInvitedTeamList] = useState(null);
@@ -51,6 +52,10 @@ function InvitedTeamList() {
           Swal.fire({
             title: "신청을 수락했습니다.",      
             icon: 'success',
+            customClass: {
+              icon: 'my-custom-icon-class',
+              actions: 'my-custom-actions-class',
+            },
           })
         });
     }
@@ -75,6 +80,10 @@ function InvitedTeamList() {
           Swal.fire({
             title: "신청을 거절했습니다.",      
             icon: 'error',
+            customClass: {
+              icon: 'my-custom-icon-class',
+              actions: 'my-custom-actions-class',
+            },
           })
         });
     }
