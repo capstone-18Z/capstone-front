@@ -53,7 +53,7 @@ function ChatSetting(props) {
             position: toast.POSITION.TOP_RIGHT,
             autoClose: 3000,
             onClick: () => {
-              window.location.href = "http://localhost:3000/mypage/team";
+              window.location.href = "http://localhost:3000/mypage/teamMembers";
             },
           });
         }

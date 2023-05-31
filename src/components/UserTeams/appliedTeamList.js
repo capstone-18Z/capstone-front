@@ -23,7 +23,7 @@ function AppliedTeamList() {
       });
   }, []);
 
-  const 채팅 = (teamLeader,waitingId)=>{
+  const 채팅 = (teamLeader, waitingId) => {
     const chatWindow = window.open(
       `/chat?teamLeader=${teamLeader}&waitingId=${waitingId}&mode=user`,
       "",
@@ -47,10 +47,10 @@ function AppliedTeamList() {
       // 오른쪽으로 100px 이동하고 아래로 200px 이동
       chatWindow.moveTo(100, 200);
     });
-  }
-  const 취소=(waitingId)=>{
+  };
+  const 취소 = (waitingId) => {
     fetch(`${process.env.REACT_APP_API_URL}/user-to-team/${waitingId}/delete`, {
-      method : "post",
+      method: "post",
       headers: {
         "refresh-token": refresh_token,
         "login-token": login_token,
@@ -58,9 +58,15 @@ function AppliedTeamList() {
     })
       .then((response) => response.json())
       .then((obj) => {
-        console.log(obj)
+        if (obj.message == "신청을 취소했습니다.") {
+          setAppliedTeamsList(
+            appliedTeamsList.filter((data) => {
+              return data.id != waitingId;
+            })
+          );
+        }
       });
-  }
+  };
   const goTeam = (link) => {
     navigate(`/list/team/${link}`);
   };
@@ -84,19 +90,25 @@ function AppliedTeamList() {
         <div>지원한 팀이 없습니다.</div>
       ) : (
         appliedTeamsList.map((data) => {
-          console.log("Data",data)
-          return(
-          <div key={data.info.teamId} className="joined-team-card-ryu">
-            <MyTeamCard team={data.info} />
-            <div className="joinedTeam-card-bottom">
-              <p>수락 대기중</p>
-              <button className="chatBtn" onClick={() => 채팅(data.info.teamLeader,data.id)}>
-                채팅
-              </button>
-              <button className="exitBtn" onClick={()=>취소(data.id)}>취소</button>
+          console.log("Data", data);
+          return (
+            <div key={data.info.teamId} className="joined-team-card-ryu">
+              <MyTeamCard team={data.info} />
+              <div className="joinedTeam-card-bottom">
+                <p>수락 대기중</p>
+                <button
+                  className="app-chatBtn"
+                  onClick={() => 채팅(data.info.teamLeader, data.id)}
+                >
+                  채팅
+                </button>
+                <button className="app-exitBtn" onClick={() => 취소(data.id)}>
+                  취소
+                </button>
+              </div>
             </div>
-          </div>);
-})
+          );
+        })
       )}
     </div>
   );

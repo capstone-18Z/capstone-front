@@ -52,7 +52,30 @@
     border-radius: 5px;
     cursor: pointer;
   }
-  
+  .app-chatBtn{
+    position: absolute;
+    bottom: 5px;
+    right: 90px;
+    padding: 5px 10px;
+    font-size: 14px;
+    color: #fff;
+    background-color: #96bfff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  .app-exitBtn{
+    position: absolute;
+    bottom: 5px;
+    right: 15px;
+    padding: 5px 10px;
+    font-size: 14px;
+    color: #fff;
+    background-color: #e53935;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
   .exitBtn:hover {
     background-color: #c62828;
   }
