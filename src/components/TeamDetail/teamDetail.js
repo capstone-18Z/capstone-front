@@ -165,20 +165,20 @@ function TeamDetail() {
         }).then((response) => response.json())
         .then(obj=>{console.log("member",obj.memberKeywords);
         setLeaderInfo(obj);
-        setLeaderImg(obj.profileImageUrl)})
-        .then(() => {
-          if(check==0){
-            Swal.fire({
-              title: '이미 마감된 공고입니다',
-              text: '다른 공고를 찾아보세요',
-              icon: 'warning',
-              customClass: {
-                icon: 'my-custom-icon-class',
-                actions: 'my-custom-actions-class',
-              },
-            })
-          }
-        });    
+        setLeaderImg(obj.profileImageUrl)})        ;    
+      })
+      .then(() => {
+        if(check==0){            
+          Swal.fire({
+            title: '이미 마감된 공고입니다',
+            text: '다른 공고를 찾아보세요',
+            icon: 'warning',
+            customClass: {
+              icon: 'my-custom-icon-class',
+              actions: 'my-custom-actions-class',
+            },
+          })
+        }
       });
   }, []);
 
