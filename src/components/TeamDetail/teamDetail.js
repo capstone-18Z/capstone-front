@@ -85,7 +85,11 @@ function TeamDetail() {
       }),
     })
       .then((response) => response.json())
-      .then((obj) => alert(obj.message));
+      .then((obj) => 
+      Swal.fire({
+        title: obj.message,
+        icon: 'success',
+      }));
   };
   const test = () => {
     console.log(uppercasedData);
