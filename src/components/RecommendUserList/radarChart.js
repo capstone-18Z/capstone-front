@@ -9,7 +9,7 @@ import {
   Title,
   Tooltip,
   Legend,
-} from 'chart.js';
+} from "chart.js";
 ChartJS.register(
   CategoryScale,
   LinearScale,
