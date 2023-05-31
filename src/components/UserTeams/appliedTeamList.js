@@ -48,6 +48,19 @@ function AppliedTeamList() {
       chatWindow.moveTo(100, 200);
     });
   }
+  const 취소=(waitingId)=>{
+    fetch(`${process.env.REACT_APP_API_URL}/user-to-team/${waitingId}/delete`, {
+      method : "post",
+      headers: {
+        "refresh-token": refresh_token,
+        "login-token": login_token,
+      },
+    })
+      .then((response) => response.json())
+      .then((obj) => {
+        console.log(obj)
+      });
+  }
   const goTeam = (link) => {
     navigate(`/list/team/${link}`);
   };
@@ -70,7 +83,9 @@ function AppliedTeamList() {
       {appliedTeamsList == null ? (
         <div>지원한 팀이 없습니다.</div>
       ) : (
-        appliedTeamsList.map((data) => (
+        appliedTeamsList.map((data) => {
+          console.log("Data",data)
+          return(
           <div key={data.info.teamId} className="joined-team-card-ryu">
             <MyTeamCard team={data.info} />
             <div className="joinedTeam-card-bottom">
@@ -78,10 +93,10 @@ function AppliedTeamList() {
               <button className="chatBtn" onClick={() => 채팅(data.info.teamLeader,data.id)}>
                 채팅
               </button>
-              <button className="exitBtn">취소</button>
+              <button className="exitBtn" onClick={()=>취소(data.id)}>취소</button>
             </div>
-          </div>
-        ))
+          </div>);
+})
       )}
     </div>
   );
