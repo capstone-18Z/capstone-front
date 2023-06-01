@@ -18,6 +18,9 @@ function Header() {
   const isTablet = useMediaQuery({ maxWidth: 1000 });
   const isSmallMobile = useMediaQuery({ maxWidth: 500 });
 
+  const refresh_token = localStorage.getItem("refresh-token");
+  const login_token = localStorage.getItem("login-token");
+
   const handleLoginOpen = () => {
     setLoginOpen(true);
   };
@@ -48,6 +51,13 @@ function Header() {
 
   const logout = () => {
     setLoginOpen(false);
+    fetch(`${process.env.REACT_APP_API_URL}/member/logout`,{
+      headers: {
+        'refresh-token': refresh_token,
+        'login-token': login_token,
+    },    
+    }).then((response) => response.json())        
+    .then((obj) => console.log(obj))
     localStorage.removeItem("refresh-token");
     localStorage.removeItem("login-token");
     localStorage.removeItem("userId");
