@@ -53,7 +53,7 @@ function ChatSetting(props) {
             position: toast.POSITION.TOP_RIGHT,
             autoClose: 3000,
             onClick: () => {
-              window.location.href = "http://localhost:3000/mypage/teamMembers";
+              window.location.href = "http://52.79.194.24:3000/mypage/teamMembers";
             },
           });
         }
@@ -62,7 +62,7 @@ function ChatSetting(props) {
             position: toast.POSITION.TOP_RIGHT,
             autoClose: 3000,
             onClick: () => {
-              window.location.href = "http://localhost:3000/chat";
+              window.location.href = "http://52.79.194.24:3000/chat";
             },
           });
         }
