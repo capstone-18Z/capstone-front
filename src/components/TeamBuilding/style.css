@@ -32,9 +32,9 @@
   gap: 20px;
 }
 @media (max-width: 768px) {
-  .team_form {  
+  .team_form {
     padding: 10px;
-    width: 350px;
+    width: 95%;
   }
   .team_item{
     width: 100%; 
