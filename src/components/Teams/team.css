@@ -78,6 +78,6 @@
 @media  (max-width:1050px) {
   .team-card-container {
     grid-gap: 10vw;
-    grid-template-columns: repeat(1, minmax(400px, 0.25fr)); 
+    grid-template-columns: repeat(1, minmax(300px, 0.25fr)); 
   } 
 }
