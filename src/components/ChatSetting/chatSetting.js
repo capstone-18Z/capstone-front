@@ -53,7 +53,12 @@ function ChatSetting(props) {
             position: toast.POSITION.TOP_RIGHT,
             autoClose: 3000,
             onClick: () => {
-              window.location.href = "http://52.79.194.24:3000/mypage/teamMembers";
+             if(data.message=="팀원 신청이 왔습니다.") {
+                window.location.href = "http://52.79.194.24:3000/mypage/teamMembers";
+             }
+            if("신청이 수락되었습니다."){
+              window.location.href = "http://52.79.194.24:3000/mypage/userTeams";
+            }
             },
           });
         }
